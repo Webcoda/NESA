@@ -9,11 +9,11 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }) {
 	const configObject = get(pageProps, "data.config", null);
 
-	const font = get(
-		configObject,
-		"item.elements.font.value[0].codename",
-		null
-	);
+	// const font = get(
+	// 	configObject,
+	// 	"item.elements.font.value[0].codename",
+	// 	null
+	// );
 	/* const fontName =
 		font === "nunito_sans"
 			? "Nunito Sans"
@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
 			? "Fira Sans"
 			: "Arial"; */
 
-	const fontName = 'Public Sans'
+	const fontName = "Public Sans";
 
 	let title = get(configObject, "item.elements.title.value", "");
 	if (title) {

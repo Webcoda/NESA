@@ -2,14 +2,9 @@
 // import Toolbar from "@material-ui/core/Toolbar";
 // import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-// import get from "lodash.get";
-// import { Action, Image, Link, SideDrawer } from ".";
-// import { Container, Hidden } from "@material-ui/core";
-import React from "react";
-import dynamic from "next/dynamic";
-import { SkipTo } from "../lib/nsw-ds-react/src/component/header/skipTo";
-import { Masthead } from "../lib/nsw-ds-react/src/component/header/masthead";
 import { Header as NswHeader } from "../lib/nsw-ds-react/src/component/header/header";
+import { Masthead } from "../lib/nsw-ds-react/src/component/header/masthead";
+import { SkipTo } from "../lib/nsw-ds-react/src/component/header/skipTo";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Header = (props) => {
+const Header = () => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>

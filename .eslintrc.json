@@ -19,7 +19,7 @@
     "plugins": [
         "react"
     ],
-    "ignorePatterns": [".next/**/*", "out/**/*"],
+    "ignorePatterns": [".next/**/*", "out/**/*", "lib/**/*", "components/legacy/*"],
     "rules": {
         "semi": ["error", "always"],
         "quotes": ["error", "double"],
