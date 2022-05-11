@@ -1,5 +1,6 @@
 import { Box, makeStyles } from "@material-ui/core";
 import { Footer, Header, PreviewBar } from ".";
+import "nsw-design-system/dist/css/main.css";
 
 
 const useStyles = makeStyles((_theme) => ({

@@ -2416,6 +2416,16 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
+nsw-design-system@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/nsw-design-system/-/nsw-design-system-3.1.0.tgz#19e15513b62f6a9bfc26f5c4c66abdb4a16ce1bc"
+  integrity sha512-ulnWGm1sHQaS772SncECH0K916lYCGrB4UFn7pUvvqTLHMwSXfJrcnVTuAKnFpO3cSOgRJ/5Zlbnw7ycMkXjfg==
+
+nsw-ds-react@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nsw-ds-react/-/nsw-ds-react-1.0.1.tgz#f54564bec6586318a22bcd5f2eac1f8e9bd31c21"
+  integrity sha512-d1zMECb8jokZv4xctVo2r2xyKyQHanuyzq1fMGsmnzRnd9+/kSHBtu5ZNx5GPiBmumWu3xiNbicqOjID+WFwXg==
+
 object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"

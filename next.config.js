@@ -3,5 +3,6 @@ module.exports = {
   images: {
     loader: "custom",
   },
-  target: "serverless"
+  target: "serverless",
+  productionBrowserSourceMaps: true,
 };
