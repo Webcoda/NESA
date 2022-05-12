@@ -1,32 +1,33 @@
-import { Box, makeStyles } from "@material-ui/core";
-import { Footer, Header, PreviewBar } from ".";
-import "nsw-design-system/dist/css/main.css";
-
+import { Box, makeStyles } from '@material-ui/core'
+import { Footer, Header, PreviewBar } from '.'
+import 'nsw-design-system/dist/css/main.css'
 
 const useStyles = makeStyles((_theme) => ({
-  root: {
-    minHeight: "100vh"
-  },
-  flex: {
-    flexGrow: 1
-  }
-}));
+	root: {
+		minHeight: '100vh',
+	},
+	flex: {
+		flexGrow: 1,
+	},
+}))
 
 function Layout(props) {
-  const classes = useStyles();
+	const classes = useStyles()
 
-  return (
-    <Box display="flex" flexDirection="column" alignItems="stretch" alignContent="space-between" className={classes.root}>
-      {props.preview && (
-        <PreviewBar {...props} />
-      )}
-      <Header {...props} />
-      <main className={classes.flex}>
-        {props.children}
-      </main>
-      <Footer {...props} />
-    </Box>
-  );
+	return (
+		<Box
+			display="flex"
+			flexDirection="column"
+			alignItems="stretch"
+			alignContent="space-between"
+			className={classes.root}
+		>
+			{props.preview && <PreviewBar {...props} />}
+			<Header {...props} />
+			<main className={classes.flex}>{props.children}</main>
+			<Footer {...props} />
+		</Box>
+	)
 }
 
-export default Layout;
+export default Layout
