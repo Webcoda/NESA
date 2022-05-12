@@ -23,7 +23,7 @@
     "ignorePatterns": [".next/**/*", "out/**/*", "lib/**/*", "components/legacy/*"],
     "rules": {
         "semi": "off",
-        "quotes": ["error", "double"],
+        "quotes": "off",
         "react/prop-types": "off",  // we don't want to validate props yet
         "react/display-name": "off",
         "react/react-in-jsx-scope": "off",  // suppress errors for missing 'import React' in files - next.js does it implicitly
