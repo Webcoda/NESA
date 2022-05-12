@@ -54,13 +54,13 @@ const Header = (props) => {
 			<SkipTo content="#content" nav="#nav" />
 			<Masthead />
 			<NswHeader
-				headerUrl="#"
+				headerUrl="/"
 				onSubmit={function noRefCheck() {}}
 				siteDescriptor="NSW Education Standard Authority"
 				siteTitle="NSW Curriculum"
 				search={false}
 			/>
-			<MainNav navItems={navItems} megaMenu/>
+			<MainNav navItems={navItems} megaMenu />
 
 			<details>
 				<summary>JSON of navItems</summary>
