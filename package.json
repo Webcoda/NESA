@@ -40,7 +40,6 @@
 		"tailwindcss": "^3.0.24"
 	},
 	"devDependencies": {
-		"@babel/eslint-parser": "^7.17.0",
 		"@kentico/kontent-model-generator": "^4.1.0",
 		"@storybook/react": "^6.4.22",
 		"@types/node": "^17.0.33",
