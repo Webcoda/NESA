@@ -106,12 +106,13 @@ function PageStage(props) {
 									.map((item) => (
 										<Accordion
 											key={item.system.id + 'overview'}
-											kontent-id={item.system.id}
 											header={item.elements.title.value}
 											body={
-												<SanitisedHTMLContainer kontent-codename="overview">
-													{item.elements.overview.value}
-												</SanitisedHTMLContainer>
+												<div kontent-id={item.system.id}>
+													<SanitisedHTMLContainer kontent-codename="overview">
+														{item.elements.overview.value}
+													</SanitisedHTMLContainer>
+												</div>
 											}
 											isOpen
 										></Accordion>
@@ -130,9 +131,11 @@ function PageStage(props) {
 											header={item.elements.title.value}
 											kontent-id={item.system.id}
 											body={
-												<SanitisedHTMLContainer kontent-codename="rationale">
-													{item.elements.rationale.value}
-												</SanitisedHTMLContainer>
+												<div kontent-id={item.system.id}>
+													<SanitisedHTMLContainer kontent-codename="rationale">
+														{item.elements.rationale.value}
+													</SanitisedHTMLContainer>
+												</div>
 											}
 											isOpen
 										></Accordion>
@@ -151,9 +154,11 @@ function PageStage(props) {
 											header={item.elements.title.value}
 											kontent-id={item.system.id}
 											body={
-												<SanitisedHTMLContainer kontent-codename="aim">
-													{item.elements.aim.value}
-												</SanitisedHTMLContainer>
+												<div kontent-id={item.system.id}>
+													<SanitisedHTMLContainer kontent-codename="aim">
+														{item.elements.aim.value}
+													</SanitisedHTMLContainer>
+												</div>
 											}
 											isOpen
 										></Accordion>
@@ -163,8 +168,7 @@ function PageStage(props) {
 					</TabSection>
 					<TabSection urlHash="outcomes">
 						<div className="nsw-grid nsw-grid--spaced">
-							<div className="nsw-col nsw-col-md-6">
-							</div>
+							<div className="nsw-col nsw-col-md-6"></div>
 						</div>
 					</TabSection>
 					<TabSection urlHash="content">{}</TabSection>

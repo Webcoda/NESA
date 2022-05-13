@@ -99,7 +99,7 @@ function MyApp({ Component, pageProps }) {
 				projectId: process.env.KONTENT_PROJECT_ID,
 				languageCodename: "default",
 			},
-			queryParam: "preview"
+			queryParam: "preview-mode"
 		});
 
 		return () => {
