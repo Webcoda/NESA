@@ -9,6 +9,7 @@ import React from "react";
 import "../styles/main.css";
 
 
+
 function MyApp({ Component, pageProps }) {
 	const configObject = get(pageProps, "data.config", null);
 
@@ -96,11 +97,11 @@ function MyApp({ Component, pageProps }) {
 		// HTML markup should still contain all necessary data-attributes (e.g. PageSection component).
 		const kontentSmartLink = KontentSmartLink.initialize({
 			defaultDataAttributes: {
-				projectId: process.env.KONTENT_PROJECT_ID,
-				languageCodename: "default",
+				projectId: process.env.NEXT_PUBLIC_KONTENT_PROJECT_ID,
+				languageCodename: 'default',
 			},
-			queryParam: "preview-mode"
-		});
+			queryParam: 'preview-mode',
+		})
 
 		return () => {
 			kontentSmartLink.destroy();
