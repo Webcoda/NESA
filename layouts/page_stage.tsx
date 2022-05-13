@@ -108,8 +108,8 @@ function PageStage(props) {
 											key={item.system.id + 'overview'}
 											header={item.elements.title.value}
 											body={
-												<div data-kontent-id={item.system.id}>
-													<SanitisedHTMLContainer data-kontent-codename="overview">
+												<div data-kontent-item-id={item.system.id}>
+													<SanitisedHTMLContainer data-kontent-element-codename="overview">
 														{item.elements.overview.value}
 													</SanitisedHTMLContainer>
 												</div>
@@ -129,10 +129,10 @@ function PageStage(props) {
 										<Accordion
 											key={item.system.id + 'rationale'}
 											header={item.elements.title.value}
-											data-kontent-id={item.system.id}
+											data-kontent-item-id={item.system.id}
 											body={
-												<div data-kontent-id={item.system.id}>
-													<SanitisedHTMLContainer data-kontent-codename="rationale">
+												<div data-kontent-item-id={item.system.id}>
+													<SanitisedHTMLContainer data-kontent-element-codename="rationale">
 														{item.elements.rationale.value}
 													</SanitisedHTMLContainer>
 												</div>
@@ -152,10 +152,10 @@ function PageStage(props) {
 										<Accordion
 											key={item.system.id + 'aim'}
 											header={item.elements.title.value}
-											data-kontent-id={item.system.id}
+											data-kontent-item-id={item.system.id}
 											body={
-												<div data-kontent-id={item.system.id}>
-													<SanitisedHTMLContainer data-kontent-codename="aim">
+												<div data-kontent-item-id={item.system.id}>
+													<SanitisedHTMLContainer data-kontent-element-codename="aim">
 														{item.elements.aim.value}
 													</SanitisedHTMLContainer>
 												</div>
