@@ -1,8 +1,8 @@
 module.exports = {
-  // https://github.com/vercel/next.js/issues/21079
-  images: {
-    loader: "custom",
-  },
-  target: "serverless",
-  productionBrowserSourceMaps: true,
-};
+	// https://github.com/vercel/next.js/issues/21079
+	images: {
+		loader: 'custom',
+	},
+	target: 'serverless',
+	productionBrowserSourceMaps: true,
+}

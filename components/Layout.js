@@ -1,6 +1,5 @@
-import { Box, makeStyles } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import { Footer, Header, PreviewBar } from '.'
-import 'nsw-design-system/dist/css/main.css'
 
 const useStyles = makeStyles((_theme) => ({
 	root: {
@@ -15,18 +14,16 @@ function Layout(props) {
 	const classes = useStyles()
 
 	return (
-		<Box
-			display="flex"
-			flexDirection="column"
-			alignItems="stretch"
-			alignContent="space-between"
+		<div
 			className={classes.root}
 		>
 			{props.preview && <PreviewBar {...props} />}
 			<Header {...props} />
-			<main className={classes.flex}>{props.children}</main>
+			<main>
+				{props.children}
+			</main>
 			<Footer {...props} />
-		</Box>
+		</div>
 	)
 }
 
