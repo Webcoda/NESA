@@ -78,12 +78,11 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 		const currentItem = data.linkedItems[pageCodename]
 		const pageSlug = parentSlug.concat(currentItem.elements.slug.value)
 		const currentItemContentWrapper = data.linkedItems[currentItem.elements.content.value[0]]
-
 		paths.push({
 			params: {
 				slug: pageSlug,
 				navigationItem: currentItem.system, // will be ignored by next in getContentPaths
-				contentItem: currentItemContentWrapper.system, // will be ignored by next in getContentPaths
+				contentItem: currentItemContentWrapper?.system || {}, // will be ignored by next in getContentPaths
 			},
 		})
 
