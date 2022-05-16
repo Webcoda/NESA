@@ -1,0 +1,70 @@
+// CSS to rewrite Material UI accordion to match with NESA
+.nesa-accordion {
+  border: 0;
+  border-left: 4px solid $blue-primary;
+  background-color: $light10 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin-top: 0.5rem !important;
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: black;
+  }
+
+  &__icon {
+    color: $blue-primary;
+    font-size: 1.875rem;
+  }
+
+  &__content {
+    display: flex;
+    @include not-ie{
+      flex-flow: column nowrap;
+    }
+
+    @include ie-only {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    background: white;
+    padding: 1rem !important;
+
+    .custom-syllabus-card {
+      box-shadow: none;
+
+      &__list {
+        padding-left: 2rem;
+      }
+    }
+    p{
+      margin-top: 0!important;
+    }
+  }
+
+  &__header {
+    min-height: 64px !important;
+
+    p {
+      font-weight: 600;
+    }
+  }
+
+
+  &__active {
+    border-bottom: 2px solid $red-primary !important;
+  }
+
+  &__header:hover {
+    background-color: rgba(0, 133, 179, .2) !important;
+  }
+
+  // hiding expand icon of accordion if disabled
+  .Mui-disabled {
+    .MuiAccordionSummary-expandIcon {
+      display: none;
+    }
+  }
+}
