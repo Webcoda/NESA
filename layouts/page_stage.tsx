@@ -177,7 +177,6 @@ function PageStage(props) {
 									.map((syllabus) => {
 									return syllabus.elements.focus_areas.linkedItems.map((focusArea: FocusArea) => {
 										return focusArea.elements.outcomes.linkedItems.map((outcome: Outcome) => {
-											console.log(outcome.elements)
 											return (
 												<Card
 													key={syllabus.system.id + '-' + outcome.system.id}
