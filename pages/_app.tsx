@@ -5,10 +5,8 @@ import get from "lodash.get";
 import Head from "next/head";
 import 'nsw-design-system/dist/css/main.css';
 import React from "react";
-// import '../legacy/sass/app.scss';
-import "../styles/main.css";
-
-
+import '@/legacy-ported/sass/app.scss';
+// import "../styles/main.css";
 
 function MyApp({ Component, pageProps }) {
 	const configObject = get(pageProps, "data.config", null);

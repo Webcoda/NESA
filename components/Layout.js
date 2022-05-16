@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import { Footer, Header, PreviewBar } from '.'
+import NavPage from "@/legacy-ported/containers/NavPage";
 
 const useStyles = makeStyles((_theme) => ({
 	root: {
@@ -17,12 +18,13 @@ function Layout(props) {
 		<div
 			className={classes.root}
 		>
-			{props.preview && <PreviewBar {...props} />}
+			{/* {props.preview && <PreviewBar {...props} />}
 			<Header {...props} />
 			<main>
 				{props.children}
 			</main>
-			<Footer {...props} />
+			<Footer {...props} /> */}
+			<NavPage {...props}></NavPage>
 		</div>
 	)
 }
