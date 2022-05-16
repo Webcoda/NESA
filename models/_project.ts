@@ -906,5 +906,113 @@ export const projectModel = {
       },
     },
   },
-  taxonomies: {},
+  taxonomies: {
+    interacting: {
+      codename: 'interacting',
+      name: 'Literacy Interacting',
+      terms: {
+        eci1a: {
+          codename: 'eci1a',
+          name: 'ECI1a',
+          terms: {},
+        },
+        eci1b: {
+          codename: 'eci1b',
+          name: 'ECI1b',
+          terms: {},
+        },
+        int1: {
+          codename: 'int1',
+          name: 'InT1',
+          terms: {},
+        },
+        int2: {
+          codename: 'int2',
+          name: 'InT2',
+          terms: {},
+        },
+        int3: {
+          codename: 'int3',
+          name: 'InT3',
+          terms: {},
+        },
+        int4: {
+          codename: 'int4',
+          name: 'InT4',
+          terms: {},
+        },
+        int5: {
+          codename: 'int5',
+          name: 'InT5',
+          terms: {},
+        },
+        int6: {
+          codename: 'int6',
+          name: 'InT6',
+          terms: {},
+        },
+        int7: {
+          codename: 'int7',
+          name: 'InT7',
+          terms: {},
+        },
+      },
+    },
+    listening: {
+      codename: 'listening',
+      name: 'Literacy Listening',
+      terms: {
+        ecl1a: {
+          codename: 'ecl1a',
+          name: 'ECL1a',
+          terms: {},
+        },
+        ecl1b: {
+          codename: 'ecl1b',
+          name: 'ECL1b',
+          terms: {},
+        },
+        lis1: {
+          codename: 'lis1',
+          name: 'LiS1',
+          terms: {},
+        },
+        lis2: {
+          codename: 'lis2',
+          name: 'LiS2',
+          terms: {},
+        },
+        lis3: {
+          codename: 'lis3',
+          name: 'LiS3',
+          terms: {},
+        },
+        lis4: {
+          codename: 'lis4',
+          name: 'LiS4',
+          terms: {},
+        },
+        lis5: {
+          codename: 'lis5',
+          name: 'LiS5',
+          terms: {},
+        },
+        lis6: {
+          codename: 'lis6',
+          name: 'LiS6',
+          terms: {},
+        },
+        lis7: {
+          codename: 'lis7',
+          name: 'LiS7',
+          terms: {},
+        },
+        lis8: {
+          codename: 'lis8',
+          name: 'LiS8',
+          terms: {},
+        },
+      },
+    },
+  },
 };

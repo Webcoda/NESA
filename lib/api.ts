@@ -145,8 +145,16 @@ export async function getSitemapMappings(preview = false) {
 	return pathsFromKontent.concat(...subPaths)
 }
 
-function getAllItemsByType<T extends IContentItem>(type, preview) {
-	return client.items<T>().type(type).queryConfig({ usePreviewMode: true }).toPromise().then(fnReturnData)
+function getAllItemsByType<T extends IContentItem>({
+	type,
+	depth = 2,
+	preview
+}) {
+	return client.items<T>()
+		.type(type)
+		.depthParameter(depth)
+		.queryConfig({ usePreviewMode: preview })
+		.toPromise().then(fnReturnData)
 }
 
 export async function getPageStaticPropsForPath(params, preview = false) {
@@ -278,9 +286,18 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		}
 
 		const [syllabuses, keyLearningAreas, glossaries] = await Promise.all([
-			getAllItemsByType<Syllabus>('syllabus', preview),
-			getAllItemsByType<KeyLearningArea>('key_learning_area', preview),
-			getAllItemsByType<Glossary>('glossary', preview),
+			getAllItemsByType<Syllabus>({
+				type: 'syllabus',
+				preview
+			}),
+			getAllItemsByType<KeyLearningArea>({
+				type: 'key_learning_area',
+				preview
+			}),
+			getAllItemsByType<Glossary>({
+				type: 'glossary',
+				preview
+			}),
 		])
 
 		_result.data.syllabuses = syllabuses

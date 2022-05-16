@@ -8,8 +8,8 @@
 		"start": "next start",
 		"lint": "eslint --ext .js,.jsx .",
 		"lint-fix": "eslint --fix --ext .js,.jsx .",
-		"gm": "cd ./models && kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd",
-		"generate-model": "cd ./models && kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd"
+		"gm": "cd ./models && npx kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd",
+		"generate-model": "cd ./models && npx kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd"
 	},
 	"dependencies": {
 		"@kentico/kontent-delivery": "^11.2.1",
