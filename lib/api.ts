@@ -1,4 +1,5 @@
-import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery';
+import { Stage } from '@/models/stage';
+import { DeliveryClient, IContentItem, SortOrder } from '@kentico/kontent-delivery';
 import get from 'lodash.get';
 import { Syllabus } from "../models/syllabus";
 import packageInfo from '../package.json';
@@ -148,13 +149,17 @@ export async function getSitemapMappings(preview = false) {
 function getAllItemsByType<T extends IContentItem>({
 	type,
 	depth = 2,
+	order = null,
 	preview
 }) {
-	return client.items<T>()
+	let temp = client.items<T>()
 		.type(type)
 		.depthParameter(depth)
-		.queryConfig({ usePreviewMode: preview })
-		.toPromise().then(fnReturnData)
+	if(order) {
+		temp = temp.orderParameter(order?.element, order?.sortOrder)
+	}
+
+	return temp.queryConfig({ usePreviewMode: preview }).toPromise().then(fnReturnData)
 }
 
 export async function getPageStaticPropsForPath(params, preview = false) {
@@ -282,27 +287,41 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				syllabuses: [],
 				keyLearningAreas: [],
 				glossaries: [],
+				stages: [],
 			},
 		}
 
-		const [syllabuses, keyLearningAreas, glossaries] = await Promise.all([
+		const [syllabuses, keyLearningAreas, glossaries, stages] = await Promise.all([
 			getAllItemsByType<Syllabus>({
 				type: 'syllabus',
-				preview
+				preview,
 			}),
 			getAllItemsByType<KeyLearningArea>({
 				type: 'key_learning_area',
-				preview
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
 			}),
 			getAllItemsByType<Glossary>({
 				type: 'glossary',
-				preview
+				preview,
+			}),
+			getAllItemsByType<Stage>({
+				type: 'stage',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
 			}),
 		])
 
 		_result.data.syllabuses = syllabuses
 		_result.data.keyLearningAreas = keyLearningAreas
 		_result.data.glossaries = glossaries
+		_result.data.stages = stages
 		return _result
 	}
 

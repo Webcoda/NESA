@@ -6,4 +6,6 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
 export type FocusAreaItem = IContentItem<{
   examples: Elements.CustomElement;
   title: Elements.TextElement;
+  nesa_tags__literacy_interacting: Elements.TaxonomyElement;
+  nesa_tags__literacy_listening: Elements.TaxonomyElement;
 }>;

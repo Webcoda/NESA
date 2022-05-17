@@ -150,7 +150,6 @@ const StagesHeader = (props: StagesHeaderProps) => {
 													<h4>{subject.label}</h4>
 												</a> */}
 												{/* TODO: Remove after MVP */}
-												{console.log(subject.elements.available.value)}
 												{subject.elements.available.value.length ? (
 													<a
 														href={`#${subject.system.id}`}

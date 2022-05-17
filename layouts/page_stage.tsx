@@ -1,16 +1,17 @@
 import { Layout, UnknownComponent } from '@/components'
+import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
 import SyllabusContentSection from '@/legacy-ported/components/syllabus/SyllabusContentSection'
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
-import { KlaWithSyllabuses } from '@/legacy-ported/types'
+import { FocusArea } from '@/models/focus_area'
 import { Glossary } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
+import { Stage } from '@/models/stage'
 import { Syllabus } from '@/models/syllabus'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
-import intersection from 'lodash.intersection'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -26,6 +27,7 @@ function PageStage(props) {
 	const classes = useStyles()
 	const page = get(props, 'data.page.item', null)
 	const syllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
+	const stages: Stage[] = get(props, 'data.stages.items', null)
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
 
@@ -65,16 +67,21 @@ function PageStage(props) {
 
 	const title = get(page, 'elements.stage.linkedItems.0.elements.title.value', null)
 
-	const getKeyLearningAreasBasedContentNameAndSyllabusKla = (type: string, kla : KeyLearningArea) => (syllabus) => {
+	const getKeyLearningAreasBasedContentNameAndSyllabusKla = (type: string, kla: KeyLearningArea) => (syllabus) => {
 		return (
 			syllabus.elements[type].value &&
 			syllabus.elements.key_learning_area.value.some((_kla) => _kla == kla.system.codename)
 		)
 	}
 
-	const allKeyLearningAreasSortedByOrder = allKeyLearningAreas.sort(
-		(a, b) => a.elements.order.value - b.elements.order.value,
-	)
+	const mapFnIncludeSyllabusesOnKla = (kla: KeyLearningArea) => ({
+		...kla,
+		syllabuses: syllabuses.filter((syllabus) =>
+			syllabus.elements.key_learning_area.linkedItems.some((_kla: KeyLearningArea) => _kla.system.id === kla.system.id),
+		),
+	})
+
+	const allKeyLearningAreasWithSyllabuses = allKeyLearningAreas.map(mapFnIncludeSyllabusesOnKla)
 
 	return (
 		<Layout className={`syllabus-overview syllabus-overview--{subject}`} {...props}>
@@ -86,7 +93,7 @@ function PageStage(props) {
 						title={title}
 						area={'area'}
 						selectedStages={selectedStages}
-						learningAreas={allKeyLearningAreasSortedByOrder}
+						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={() => {
 							console.log('🚀 ~ file: page_stage.tsx ~ line 58 ~ PageStage ~ onStagesHeaderConfirm')
 						}}
@@ -112,14 +119,7 @@ function PageStage(props) {
 							<StageTabPanel
 								id={syllabusTabs[0].id}
 								tabValue={tabValue}
-								learningAreas={allKeyLearningAreasSortedByOrder.map((kla: KeyLearningArea) => {
-									return {
-										...kla,
-										syllabuses: syllabuses.filter(
-											getKeyLearningAreasBasedContentNameAndSyllabusKla('overview', kla),
-										),
-									} as KlaWithSyllabuses
-								})}
+								learningAreas={allKeyLearningAreasWithSyllabuses}
 								body={(syl: Syllabus) => {
 									return <SyllabusContentSection innerHtml={syl.elements.overview.value} />
 								}}
@@ -128,42 +128,39 @@ function PageStage(props) {
 							<StageTabPanel
 								id={syllabusTabs[1].id}
 								tabValue={tabValue}
-								learningAreas={allKeyLearningAreasSortedByOrder.map((kla: KeyLearningArea) => {
-									return {
-										...kla,
-										syllabuses: syllabuses.filter(
-											getKeyLearningAreasBasedContentNameAndSyllabusKla('rationale', kla),
-										),
-									} as KlaWithSyllabuses
-								})}
+								learningAreas={allKeyLearningAreasWithSyllabuses}
 								body={(syl) => <SyllabusContentSection innerHtml={syl.elements.rationale.value} />}
 							/>
 							{/* aim */}
 							<StageTabPanel
 								id={syllabusTabs[2].id}
 								tabValue={tabValue}
-								learningAreas={allKeyLearningAreasSortedByOrder.map((kla: KeyLearningArea) => {
-									return {
-										...kla,
-										syllabuses: syllabuses.filter(
-											getKeyLearningAreasBasedContentNameAndSyllabusKla('aim', kla),
-										),
-									} as KlaWithSyllabuses
-								})}
+								learningAreas={allKeyLearningAreasWithSyllabuses}
 								body={(syl) => <SyllabusContentSection innerHtml={syl.elements.aim.value} />}
 							/>
 							{/* outcomes */}
-							{/* <StageTabPanel
+							<StageTabPanel
 								id={syllabusTabs[3].id}
 								tabValue={tabValue}
-								learningAreas={learningAreas}
-								body={(syl) => (
-									<Outcomes
-										outcomes={syl.outcomes}
-										scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
-									/>
-								)}
-							/> */}
+								learningAreas={allKeyLearningAreasWithSyllabuses}
+								body={(syl: Syllabus) => {
+									const outcomes = syl.elements.focus_areas.linkedItems.reduce(
+										(outcomes, focusArea: FocusArea) => {
+											// console.log("🚀 ~ file: page_stage.tsx ~ line 153 ~ PageStage ~ focusArea", focusArea)
+											return [...outcomes, ...focusArea.elements.outcomes.linkedItems]
+										},
+										[],
+									)
+									// console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
+									return (
+										<Outcomes
+											stages={stages}
+											outcomes={outcomes}
+											// scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
+										/>
+									)
+								}}
+							/>
 							{/* content-organisers */}
 							{/* <StageTabPanel
 								id={syllabusTabs[4].id}
