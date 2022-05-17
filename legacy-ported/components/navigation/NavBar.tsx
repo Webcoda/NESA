@@ -1,13 +1,12 @@
 import { Paper, Popover } from '@material-ui/core'
 // import PATHS from '../../constants/pathConstants'
 import Link from 'next/link'
+import { useRouter } from "next/router"
 import React, { useState } from 'react'
 // import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
 import { NavGroup } from '../../utilities/hooks/useNavGroups'
 // import SearchBar from '../base/SearchBar'
 import NavBarMenu from './NavBarMenu'
-import Image from "next/image";
-
 export interface PureNavBarProps {
 	/**
 	 * List of nav destinations to display
@@ -55,7 +54,7 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 	const [currentNavId, setCurrentNavId] = useState(destinations?.length > 0 ? destinations[0].id : '')
 
 	const handleHoverLinkStart = (e: React.MouseEvent<HTMLButtonElement>, link?: NavGroup) => {
-		if (link && link.subNav) {
+		if (link && link.subNav?.length) {
 			setPopoverAnchor(e.currentTarget)
 			setMenuContent(link.subNav)
 			setHoverLink(true)
@@ -84,6 +83,10 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 		// useFocusTabIndex(hoverLink, currentNavButton)
 	}
 
+	const router = useRouter()
+	const isHome = router.asPath == '/'
+    console.log("🚀 ~ file: NavBar.tsx ~ line 87 ~ router", router)
+
 	return (
 		<header className={`navbar ${className || ''} column`}>
 			<Link href="/">
@@ -102,7 +105,13 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 						<nav className="nav-links">
 							{navItems.map((link) => {
 								// TODO: fix this
-								const isActive = false
+								let isActive = false;
+								if(isHome) {
+									isActive = (link.url === '/' || link.url === '')
+								} else {
+									isActive = (link.url === '/' || link.url === '') ? false : router.asPath.match(new RegExp(link.url, 'ig'))?.length > 0
+								}
+
 								if (link.subNav) {
 									return (
 										<button
@@ -110,9 +119,7 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 											type="button"
 											tabIndex={0}
 											id={`${link.id}-nav`}
-											className={`button button--transparent button--text-align-center
-                      ${isActive ? 'nav-links__link active' : 'nav-links__link'}
-                    `}
+											className={`button button--transparent button--text-align-center ${isActive ? 'nav-links__link active' : 'nav-links__link'}`}
 											onClick={(e) => handleHoverLinkStart(e, link)}
 											onMouseEnter={(e) => handleHoverLinkStart(e, link)}
 											onMouseLeave={handleHoverPopoverEnd}

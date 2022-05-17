@@ -1,14 +1,14 @@
-import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead';
-import { Grid } from '@material-ui/core';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
+import { Grid } from '@material-ui/core'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 // import PATHS from '../../constants/pathConstants'
 // import { UrlLink } from '../../utilities/frontendTypes'
 // import BetaSiteBanner from '../base/BetaSiteBanner'
-import get from "lodash.get";
+import get from 'lodash.get'
 // import { Link, useHistory } from 'react-router-dom'
-import Link from "next/link";
-import React, { useRef, useState } from 'react';
-import NavBar from './NavBar';
+import Link from 'next/link'
+import React, { useRef, useState } from 'react'
+import NavBar from './NavBar'
 
 export interface HeaderProps {
 	/**
@@ -93,7 +93,6 @@ const Header = (props: HeaderProps): JSX.Element => {
 	const createNavItem = (item, parentSlug) => {
 		const slug = parentSlug + '/' + item.elements.navigation_item?.linkedItems?.[0].elements.slug.value || ''
 		const subNav = item.elements?.actions?.linkedItems?.map((_item) => createNavItem(_item, slug))
-
 		return {
 			description: '',
 			id: item.system.id,
@@ -128,8 +127,7 @@ const Header = (props: HeaderProps): JSX.Element => {
 							breadcrumbs.length > 0 &&
 							breadcrumbs.map((bc) => (
 								<Link href="#" key={bc.url}>
-									<a className="header__breadcrumb-link">
-									</a>
+									<a className="header__breadcrumb-link"></a>
 								</Link>
 							))}
 					</div>
