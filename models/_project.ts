@@ -287,6 +287,14 @@ export const projectModel = {
           codename: 'title',
           name: 'Title',
         },
+        nesa_tags__literacy_interacting: {
+          codename: 'nesa_tags__literacy_interacting',
+          name: 'Literacy Interacting',
+        },
+        nesa_tags__literacy_listening: {
+          codename: 'nesa_tags__literacy_listening',
+          name: 'Literacy Listening',
+        },
       },
     },
     focus_area_section: {
@@ -843,9 +851,17 @@ export const projectModel = {
       codename: 'stage',
       name: 'Stage',
       elements: {
+        order: {
+          codename: 'order',
+          name: 'Order',
+        },
         title: {
           codename: 'title',
           name: 'Title',
+        },
+        available: {
+          codename: 'available',
+          name: 'Available',
         },
         tag: {
           codename: 'tag',
@@ -871,6 +887,10 @@ export const projectModel = {
       codename: 'syllabus',
       name: 'Syllabus',
       elements: {
+        available: {
+          codename: 'available',
+          name: 'Available',
+        },
         key_learning_area: {
           codename: 'key_learning_area',
           name: 'Key Learning Area',
@@ -894,6 +914,10 @@ export const projectModel = {
         title: {
           codename: 'title',
           name: 'Title',
+        },
+        rich_text: {
+          codename: 'rich_text',
+          name: 'Rich text',
         },
         rationale: {
           codename: 'rationale',

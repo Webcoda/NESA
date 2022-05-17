@@ -109,8 +109,6 @@ const Header = (props: HeaderProps): JSX.Element => {
 		[],
 	).map((item) => createNavItem(item, ''))
 
-	console.log(navItems)
-
 	return (
 		<div className={`header ${className || ''}`}>
 			<Masthead text="A NSW Government website" />

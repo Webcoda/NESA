@@ -17,15 +17,15 @@ export const StageTabPanel = (props: StageTabPanelProps) => {
 			{learningAreas.map((kla) => (
 				<div id={kla.system.id} key={kla.system.id}>
 					{kla.syllabuses
-						// .filter((syl) => syl.available)
+						.filter((syl) => syl.elements.available.value.length)
 						.map((syl) => (
-						<CustomAccordion
+							<CustomAccordion
 								id={syl.system.id}
 								key={syl.system.id}
 								title={syl.elements.title.value}
 								// TODO: Remove isComingSoon condition after MVP
-								startOpen={true}
-								isComingSoon={!true}
+								startOpen={!!syl.elements.available.value.length}
+								isComingSoon={!syl.elements.available.value.length}
 							>
 								{body(syl)}
 							</CustomAccordion>
@@ -36,19 +36,18 @@ export const StageTabPanel = (props: StageTabPanelProps) => {
 			{learningAreas.map((kla) => (
 				<div id={`${kla.system.id}|unavailable`} key={kla.system.id}>
 					{kla.syllabuses
-						// .filter((syl) => !syl.available)
+						.filter((syl) => !syl.elements.available.value.length)
 						.map((syl) => (
-							// <CustomAccordion
-							// 	id={syl.id}
-							// 	key={syl.code}
-							// 	title={syl.syllabusName}
-							// 	// TODO: Remove isComingSoon condition after MVP
-							// 	startOpen={syl.available}
-							// 	isComingSoon={!syl.available}
-							// >
-							// 	{body(syl)}
-							// </CustomAccordion>
-							null
+							<CustomAccordion
+								id={syl.system.id}
+								key={syl.system.id}
+								title={syl.elements.title.value}
+								// TODO: Remove isComingSoon condition after MVP
+								startOpen={!!syl.elements.available.value.length}
+								isComingSoon={!syl.elements.available.value.length}
+							>
+								{body(syl)}
+							</CustomAccordion>
 						))}
 				</div>
 			))}

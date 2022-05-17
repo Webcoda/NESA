@@ -2,11 +2,11 @@ import { Paper, Popover } from '@material-ui/core'
 // import PATHS from '../../constants/pathConstants'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import logo from '../../assets/images/nsw-gov-logo-75-high.svg'
 // import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
 import { NavGroup } from '../../utilities/hooks/useNavGroups'
 // import SearchBar from '../base/SearchBar'
 import NavBarMenu from './NavBarMenu'
+import Image from "next/image";
 
 export interface PureNavBarProps {
 	/**
@@ -88,7 +88,7 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 		<header className={`navbar ${className || ''} column`}>
 			<Link href="/">
 				<div className="navbar__title-container">
-					<img className="navbar__logo" src={logo} alt="NSW Government Logo" />
+					<img className="navbar__logo" src="/nsw-gov-logo-75-high.svg" alt="NSW Government Logo" />
 					<div className="column">
 						<h1 className="navbar__title">NSW Curriculum</h1>
 						<h2 className="navbar__sub-title">NSW Education Standards Authority</h2>
