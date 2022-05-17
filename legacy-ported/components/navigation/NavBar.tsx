@@ -1,10 +1,10 @@
 import { Paper, Popover } from '@material-ui/core'
-// import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
-import useNavGroups, { NavGroup, NavGroupSection } from '../../utilities/hooks/useNavGroups'
 // import PATHS from '../../constants/pathConstants'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import logo from '../../assets/images/nsw-gov-logo-75-high.svg'
+// import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
+import { NavGroup } from '../../utilities/hooks/useNavGroups'
 // import SearchBar from '../base/SearchBar'
 import NavBarMenu from './NavBarMenu'
 

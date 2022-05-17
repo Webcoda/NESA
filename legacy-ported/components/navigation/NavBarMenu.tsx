@@ -14,7 +14,8 @@ export interface NavBarMenuSectionProps {
 	/**
 	 * The list of links to be displayed, sorted into columns
 	 */
-	links: UrlLink[]
+	// links: UrlLink[]
+	links: any
 
 	/**
 	 * Call back when link click
