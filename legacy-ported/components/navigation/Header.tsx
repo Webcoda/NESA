@@ -14,7 +14,8 @@ export interface HeaderProps {
 	/**
 	 * A list of urls to display as the breadcrumb links
 	 */
-	breadcrumbs?: UrlLink[]
+	// TODO: fix breadcrumbs?: UrlLink[]
+	breadcrumbs?: any
 
 	/**
 	 * Callback fired on Download view button pressed. If this is not present the button is hidden.

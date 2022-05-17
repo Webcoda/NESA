@@ -22,11 +22,13 @@
 		"classnames": "^2.3.1",
 		"clsx": "^1.1.1",
 		"detect-browser": "^5.3.0",
+		"docx": "^7.3.0",
 		"html-react-parser": "^1.2.7",
 		"lodash.camelcase": "^4.3.0",
 		"lodash.get": "^4.4.2",
 		"lodash.intersection": "^4.4.0",
 		"lodash.upperfirst": "^4.3.1",
+		"moment": "^2.29.3",
 		"next": "^11.1.0",
 		"nsw-design-system": "^3.1.0",
 		"nsw-ds-react": "^1.0.1",
@@ -39,6 +41,8 @@
 		"rfs": "9.0.4",
 		"sanitize-html": "^2.7.0",
 		"sass": "^1.51.0",
+		"simple-html-tokenizer": "^0.5.11",
+		"striptags": "^3.2.0",
 		"tailwindcss": "^3.0.24"
 	},
 	"devDependencies": {
