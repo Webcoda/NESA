@@ -4,6 +4,7 @@ import Link from "next/link";
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
 // import { NavGroupSection, useRowCount } from '../../utilities/hooks/useNavGroups'
+import { useRouter } from "next/router";
 
 export interface NavBarMenuSectionProps {
 	/**
@@ -89,7 +90,6 @@ export interface NavBarMenuProps {
 
 const NavBarMenu = (props: NavBarMenuProps) => {
 	const { sections, onLinkClick } = props
-	console.log(sections)
 	return (
 		<div className="navbar-menu">
 			{sections.map((sec) => (

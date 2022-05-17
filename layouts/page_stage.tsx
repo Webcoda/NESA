@@ -8,12 +8,14 @@ import { syllabusTabs } from '@/legacy-ported/constants/index'
 import { FocusArea } from '@/models/focus_area'
 import { Glossary } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
+import { PageStage as PageStageType } from '@/models/page_stage'
 import { Stage } from '@/models/stage'
 import { Syllabus } from '@/models/syllabus'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
+
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) as any
 
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PageStage(props) {
 	const classes = useStyles()
-	const page = get(props, 'data.page.item', null)
+	const page: PageStageType = get(props, 'data.page.item', null)
 	const syllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
 	const stages: Stage[] = get(props, 'data.stages.items', null)
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
@@ -33,7 +35,7 @@ function PageStage(props) {
 
 	const theme = useTheme()
 	const imageSizes = `${theme.breakpoints.values.md}px`
-	const [selectedStages, setSelectedStages] = useState([...page.elements.stage.value])
+	const [selectedStages, setSelectedStages] = useState<Stage[]>(page.elements.stage.linkedItems.map((item : Stage) => item))
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
@@ -89,10 +91,10 @@ function PageStage(props) {
 				<ReactJson src={props} collapsed />
 				<div className="syllabus-overview-page__container">
 					<StagesHeader
-						tag="K"
+						tag={selectedStages.length === 1? selectedStages[0]?.elements.tag.value : 'Custom View'}
 						title={title}
 						area={'area'}
-						selectedStages={selectedStages}
+						selectedStages={selectedStages.map(stage => stage.system.codename)}
 						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={() => {
 							console.log('🚀 ~ file: page_stage.tsx ~ line 58 ~ PageStage ~ onStagesHeaderConfirm')
@@ -144,14 +146,14 @@ function PageStage(props) {
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreasWithSyllabuses}
 								body={(syl: Syllabus) => {
+									console.log(syl.elements.title.value, syl.elements.focus_areas)
 									const outcomes = syl.elements.focus_areas.linkedItems.reduce(
 										(outcomes, focusArea: FocusArea) => {
-											// console.log("🚀 ~ file: page_stage.tsx ~ line 153 ~ PageStage ~ focusArea", focusArea)
 											return [...outcomes, ...focusArea.elements.outcomes.linkedItems]
 										},
 										[],
 									)
-									// console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
+									console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
 									return (
 										<Outcomes
 											stages={stages}
