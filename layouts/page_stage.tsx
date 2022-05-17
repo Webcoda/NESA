@@ -1,4 +1,5 @@
 import { Layout, UnknownComponent } from '@/components'
+import Content from '@/legacy-ported/components/syllabus/Content'
 import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
@@ -16,7 +17,6 @@ import get from 'lodash.get'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) as any
 
 const useStyles = makeStyles((theme) => ({
@@ -33,9 +33,13 @@ function PageStage(props) {
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
 
+	const stageId = page.elements.stage.linkedItems?.[0]?.system.id
+
 	const theme = useTheme()
 	const imageSizes = `${theme.breakpoints.values.md}px`
-	const [selectedStages, setSelectedStages] = useState<Stage[]>(page.elements.stage.linkedItems.map((item : Stage) => item))
+	const [selectedStages, setSelectedStages] = useState<Stage[]>(
+		page.elements.stage.linkedItems.map((item: Stage) => item),
+	)
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
@@ -79,7 +83,9 @@ function PageStage(props) {
 	const mapFnIncludeSyllabusesOnKla = (kla: KeyLearningArea) => ({
 		...kla,
 		syllabuses: syllabuses.filter((syllabus) =>
-			syllabus.elements.key_learning_area.linkedItems.some((_kla: KeyLearningArea) => _kla.system.id === kla.system.id),
+			syllabus.elements.key_learning_area.linkedItems.some(
+				(_kla: KeyLearningArea) => _kla.system.id === kla.system.id,
+			),
 		),
 	})
 
@@ -91,10 +97,10 @@ function PageStage(props) {
 				<ReactJson src={props} collapsed />
 				<div className="syllabus-overview-page__container">
 					<StagesHeader
-						tag={selectedStages.length === 1? selectedStages[0]?.elements.tag.value : 'Custom View'}
+						tag={selectedStages.length === 1 ? selectedStages[0]?.elements.tag.value : 'Custom View'}
 						title={title}
 						area={'area'}
-						selectedStages={selectedStages.map(stage => stage.system.codename)}
+						selectedStages={selectedStages.map((stage) => stage.system.codename)}
 						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={() => {
 							console.log('🚀 ~ file: page_stage.tsx ~ line 58 ~ PageStage ~ onStagesHeaderConfirm')
@@ -146,14 +152,14 @@ function PageStage(props) {
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreasWithSyllabuses}
 								body={(syl: Syllabus) => {
-									console.log(syl.elements.title.value, syl.elements.focus_areas)
+									// console.log(syl.elements.title.value, syl.elements.focus_areas)
 									const outcomes = syl.elements.focus_areas.linkedItems.reduce(
 										(outcomes, focusArea: FocusArea) => {
 											return [...outcomes, ...focusArea.elements.outcomes.linkedItems]
 										},
 										[],
 									)
-									console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
+									// console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
 									return (
 										<Outcomes
 											stages={stages}
@@ -164,20 +170,23 @@ function PageStage(props) {
 								}}
 							/>
 							{/* content-organisers */}
-							{/* <StageTabPanel
+							<StageTabPanel
 								id={syllabusTabs[4].id}
 								tabValue={tabValue}
-								learningAreas={learningAreas}
-								body={(syl) => (
+								learningAreas={allKeyLearningAreasWithSyllabuses}
+								body={(syl: Syllabus) => (
 									<Content
-										defaultOffsetTop={SYLLABUS.CONTENT_DEFAULT_OFFSET_TOP.STAGES}
+										stages={stages}
+										// TODO: add defaultOffsetTop
+										// defaultOffsetTop={SYLLABUS.CONTENT_DEFAULT_OFFSET_TOP.STAGES}
+										defaultOffsetTop={0}
 										stageId={stageId}
-										supportElementId={syl.id}
-										content={syl.contents?.filter((c) => c.stageIds.includes(stageId))}
-										files={syl.files?.filter((c) => c.stageIds.includes(stageId)) ?? []}
+										supportElementId={syl.system.id}
+										content={syl.elements.focus_areas.linkedItems}
+										// files={syl.files?.filter((c) => c.stageIds.includes(stageId)) ?? []}
 									/>
 								)}
-							/> */}
+							/>
 							{/* Assessment */}
 							{/* <StageTabPanel
 								id={syllabusTabs[5].id}
