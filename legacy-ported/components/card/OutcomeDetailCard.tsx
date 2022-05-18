@@ -1,9 +1,8 @@
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { FocusAreaItem } from '@/models/focus_area_item'
-import { FocusAreaSection } from '@/models/focus_area_section'
+import { FocusAreaGroup } from '@/models/focus_area_group'
 import { Paper } from '@material-ui/core'
 import React from 'react'
-import { IContentsGroup } from '../../utilities/backendTypes'
 // import { findTag } from '../../store/mock/tags';
 
 export interface OutcomeDetailCardProps {
@@ -15,12 +14,12 @@ export interface OutcomeDetailCardProps {
 	/**
 	 * Syllabus Content
 	 */
-	content: FocusAreaSection[]
+	groups: FocusAreaGroup[]
 
 	/**
 	 * Syllabus Access Point
 	 */
-	accessPoints?: IContentsGroup[]
+	accessPoints?: FocusAreaGroup[]
 
 	/**
 	 * Whether show the access point content
@@ -41,8 +40,8 @@ export interface OutcomeDetailCardProps {
 }
 
 export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
-	const { title, content, accessPoints, showAccessPoints, showTags, showExamples, defaultBackgroundColor } = props
-    console.log("🚀 ~ file: OutcomeDetailCard.tsx ~ line 45 ~ OutcomeDetailCard ~ content", content)
+	const { title, groups, accessPoints, showAccessPoints, showTags, showExamples, defaultBackgroundColor } = props
+    console.log("🚀 ~ file: OutcomeDetailCard.tsx ~ line 45 ~ OutcomeDetailCard ~ groups", groups)
 
 	return (
 		<Paper
@@ -57,26 +56,26 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 				</div>
 			)}
 			<div className="outcome-detail-card__detail">
-				{accessPoints && accessPoints.length > 0 && showAccessPoints && (
+				{accessPoints?.length > 0 && showAccessPoints && (
 					<div className="filtered">
 						<h2>Access content points</h2>
 						<hr />
-						{accessPoints?.map((a) => (
-							<div key={a.content_group}>
+						{accessPoints?.map((a: FocusAreaGroup) => (
+							<div key={a.system.id}>
 								<span className="outcome-detail-card__subtitle">
-									<SanitisedHTMLContainer>{a.content_group}</SanitisedHTMLContainer>
+									<SanitisedHTMLContainer>{a.elements.title.value}</SanitisedHTMLContainer>
 								</span>
 								<div>
-									{a.rows.map((row) => (
-										<div key={row.description}>
+									{a.elements.focus_area_items.linkedItems.map((row: FocusAreaItem) => (
+										<div key={row.system.id}>
 											<ul>
 												<li>
-													<SanitisedHTMLContainer>{row.description}</SanitisedHTMLContainer>
+													<SanitisedHTMLContainer>{row.elements.title.value}</SanitisedHTMLContainer>
 												</li>
 											</ul>
-											{row.example && showExamples && (
+											{!!row.elements.examples.value?.length && showExamples && (
 												<span className="outcome-detail-card__example">
-													<SanitisedHTMLContainer>{row.example}</SanitisedHTMLContainer>
+													<SanitisedHTMLContainer>{row.elements.examples.value}</SanitisedHTMLContainer>
 												</span>
 											)}
 										</div>
@@ -86,32 +85,36 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 						))}
 					</div>
 				)}
-				{content?.map((group) => (
+				{groups?.map((group) => (
 					<div key={group.system.id}>
-						<h2>{group.elements.title}</h2>
-						<ul>
-							{group.elements.focus_area_items.linkedItems.map((row: FocusAreaItem) => (
-								<li key={row.system.id}>
-									<SanitisedHTMLContainer>{row.elements.title.value}</SanitisedHTMLContainer>
-									{row.elements.examples.value && showExamples && (
-										<SanitisedHTMLContainer className="example">
-											{row.elements.examples.value}
-										</SanitisedHTMLContainer>
-									)}
-									{showTags && row.elements.nesa_tags__literacy_listening.value.length > 0 && (
-										<div className="tags">
-											{row.elements.nesa_tags__literacy_listening.value
-												// .filter((t) => showTags.includes(t))
-												.map((tag) => {
-													return null
-													// todo: fix tag
-													// <p className="tag">{findTag(tag).tag}</p>
-												})}
-										</div>
-									)}
-								</li>
-							))}
-						</ul>
+						<h2>{group.elements.title.value}</h2>
+						{
+							!!group.elements.focus_area_items.linkedItems?.length && (
+								<ul>
+									{group.elements.focus_area_items.linkedItems.map((row: FocusAreaItem) => (
+										<li key={row.system.id}>
+											<SanitisedHTMLContainer>{row.elements.title.value}</SanitisedHTMLContainer>
+											{row.elements.examples.value && showExamples && (
+												<SanitisedHTMLContainer className="example">
+													{row.elements.examples.value}
+												</SanitisedHTMLContainer>
+											)}
+											{showTags && row.elements.nesa_tags__literacy_listening.value.length > 0 && (
+												<div className="tags">
+													{row.elements.nesa_tags__literacy_listening.value
+														// .filter((t) => showTags.includes(t))
+														.map((tag) => {
+															return null
+															// todo: fix tag
+															// <p className="tag">{findTag(tag).tag}</p>
+														})}
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							)
+						}
 					</div>
 				))}
 			</div>

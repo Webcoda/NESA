@@ -182,7 +182,7 @@ function PageStage(props) {
 										defaultOffsetTop={0}
 										stageId={stageId}
 										supportElementId={syl.system.id}
-										content={syl.elements.focus_areas.linkedItems}
+										content={syl.elements.focus_areas.linkedItems as FocusArea[]}
 										// files={syl.files?.filter((c) => c.stageIds.includes(stageId)) ?? []}
 									/>
 								)}

@@ -39,6 +39,20 @@ export const projectModel = {
         },
       },
     },
+    assessment: {
+      codename: 'assessment',
+      name: 'Assessment',
+      elements: {
+        years: {
+          codename: 'years',
+          name: 'Years',
+        },
+        content: {
+          codename: 'content',
+          name: 'Content',
+        },
+      },
+    },
     author: {
       codename: 'author',
       name: 'Author',
@@ -265,13 +279,35 @@ export const projectModel = {
           codename: 'outcomes',
           name: 'Outcomes',
         },
+        access_points: {
+          codename: 'access_points',
+          name: 'Access Points',
+        },
         title: {
           codename: 'title',
           name: 'Title',
         },
-        focus_area_sections: {
-          codename: 'focus_area_sections',
-          name: 'Focus Area Sections',
+        teaching_advice: {
+          codename: 'teaching_advice',
+          name: 'Teaching Advice',
+        },
+        focus_area_groups: {
+          codename: 'focus_area_groups',
+          name: 'Focus Area Groups',
+        },
+      },
+    },
+    focus_area_group: {
+      codename: 'focus_area_group',
+      name: 'Focus Area Group',
+      elements: {
+        focus_area_items: {
+          codename: 'focus_area_items',
+          name: 'Focus Area Items',
+        },
+        title: {
+          codename: 'title',
+          name: 'Title',
         },
       },
     },
@@ -294,20 +330,6 @@ export const projectModel = {
         nesa_tags__literacy_listening: {
           codename: 'nesa_tags__literacy_listening',
           name: 'Literacy Listening',
-        },
-      },
-    },
-    focus_area_section: {
-      codename: 'focus_area_section',
-      name: 'Focus Area Section',
-      elements: {
-        focus_area_items: {
-          codename: 'focus_area_items',
-          name: 'Focus Area Items',
-        },
-        title: {
-          codename: 'title',
-          name: 'Title',
         },
       },
     },
@@ -926,6 +948,16 @@ export const projectModel = {
         focus_areas: {
           codename: 'focus_areas',
           name: 'Focus Areas',
+        },
+      },
+    },
+    teaching_advice: {
+      codename: 'teaching_advice',
+      name: 'Teaching Advice',
+      elements: {
+        content: {
+          codename: 'content',
+          name: 'Content',
         },
       },
     },

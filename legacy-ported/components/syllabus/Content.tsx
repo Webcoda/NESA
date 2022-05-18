@@ -16,7 +16,9 @@ import { IContents, IResource } from '../../utilities/backendTypes'
 import { Stage } from '@/models/stage'
 import { FocusArea } from '@/models/focus_area'
 import { Outcome } from '@/models/outcome'
-// import TeachingSupportCard from '../card/TeachingSupportCard'
+import { FocusAreaGroup } from '@/models/focus_area_group'
+import { TeachingAdvice } from '@/models/teaching_advice'
+import TeachingSupportCard from '../card/TeachingSupportCard'
 
 export const tagList = [
 	{
@@ -198,7 +200,7 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	}
 
 	const scrollToSupportElement = () => {
-		let supportId = `${stageId}-${supportElementId}-support-${currentContentOrganiser!.code}`
+		let supportId = `${stageId}-${supportElementId}-support-${currentContentOrganiser!.system.id}`
 
 		// DC-353 Prefix the id for mobile so the id's are unique
 		if (window.innerWidth < 959) {
@@ -409,7 +411,6 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 			<Grid className="content-organizer">
 				<Grid container spacing={2} className="content-organizer__body">
 					<Grid item xs={12} md={6} lg={4}>
-						{console.log(content)}
 						{content?.map((organiser, index) => (
 							<div
 								// eslint-disable-next-line react/no-array-index-key
@@ -436,25 +437,38 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 									currentContentOrganiser === organiser && (
 										<div
 											className="content-organizer__mobile-content"
-											id={`${stageId}-card-detail-${organiser.code}`}
+											id={`${stageId}-card-detail-${organiser.system.id}`}
 											ref={activeContentBody}
 										>
-											{/* TODO: OutcomeDetailCard fix */}
+											{/* TODO: OutcomeDetailCard - access points fix */}
 											<OutcomeDetailCard
 												title={organiser.elements.title.value}
-												content={organiser.groups}
-												accessPoints={[]}
+												groups={
+													organiser.elements.focus_area_groups
+														.linkedItems as FocusAreaGroup[]
+												}
+												accessPoints={
+													organiser.elements.access_points.linkedItems as FocusAreaGroup[]
+												}
 												showAccessPoints={showAccessPoints}
 												showTags={tagIds}
 												showExamples={showExamples}
 											/>
 											{showTeachingSupport && (
-												<Grid id={`m_${stageId}-${supportElementId}-support-${organiser.code}`}>
-													{organiser.teaching_advice &&
-														// TODO: addTeachingSupportCard
-														// <TeachingSupportCard content={organiser.teaching_advice} />
-														null}
-													{files && <DownloadList files={files} colour="secondary" />}
+												<Grid
+													id={`m_${stageId}-${supportElementId}-support-${organiser.system.id}`}
+												>
+													{!!organiser.elements.teaching_advice.value?.length &&
+														organiser.elements.teaching_advice.linkedItems.map(
+															(teachingAdvice: TeachingAdvice) => (
+																<TeachingSupportCard
+																	key={teachingAdvice.system.id}
+																	content={teachingAdvice.elements.content.value}
+																/>
+															),
+														)}
+													{/*TODO: Fix DownloadList  */}
+													{/* {files && <DownloadList files={files} colour="secondary" />} */}
 												</Grid>
 											)}
 										</div>
@@ -528,24 +542,40 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 						</Grid>
 						{
 							// on desktop we display the content on the right
-							currentContentOrganiser &&
+							currentContentOrganiser && (
 								/* TODO: OutcomeDetailCard fix */
-								// <OutcomeDetailCard
-								// 	title={currentContentOrganiser.content_organiser}
-								// 	content={currentContentOrganiser.groups}
-								// 	accessPoints={currentContentOrganiser.accessPoints}
-								// 	showAccessPoints={showAccessPoints}
-								// 	showTags={tagIds}
-								// 	showExamples={showExamples}
-								// />
-								null
+								<OutcomeDetailCard
+									title={currentContentOrganiser.elements.title.value}
+									groups={
+										currentContentOrganiser.elements.focus_area_groups
+											.linkedItems as FocusAreaGroup[]
+									}
+									accessPoints={
+										currentContentOrganiser.elements.access_points
+											.linkedItems as FocusAreaGroup[]
+									}
+									showAccessPoints={showAccessPoints}
+									showTags={tagIds}
+									showExamples={showExamples}
+								/>
+							)
+							// null
 						}
 						{showTeachingSupport && currentContentOrganiser && (
-							<Grid id={`${stageId}-${supportElementId}-support-${currentContentOrganiser.code}`}>
-								{currentContentOrganiser.teaching_advice &&
+							<Grid id={`${stageId}-${supportElementId}-support-${currentContentOrganiser.system.id}`}>
+								{
 									// TODO: add TeachingSupportCard
-									// <TeachingSupportCard content={currentContentOrganiser.teaching_advice} />
-									null}
+									!!currentContentOrganiser.elements.teaching_advice.value?.length &&
+										// TODO: addTeachingSupportCard
+										currentContentOrganiser.elements.teaching_advice.linkedItems.map(
+											(teachingAdvice: TeachingAdvice) => (
+												<TeachingSupportCard
+													key={teachingAdvice.system.id}
+													content={teachingAdvice.elements.content.value}
+												/>
+											),
+										)
+								}
 								{/* TODO: fix */}
 								{/* {files && <DownloadList files={files} colour="secondary" />} */}
 							</Grid>
