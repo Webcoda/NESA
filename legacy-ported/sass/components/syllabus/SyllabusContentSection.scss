@@ -1,0 +1,49 @@
+@use "./legacy-ported/sass/abstracts/variables";
+
+.syllabus-content-section {
+  border-bottom: solid 1px variables.$light40;
+  padding: 15px;
+
+  @include all-mobile-devices {
+    padding: 0px;
+  }
+
+  .divider {
+    border-bottom: solid 1px variables.$dark70;
+  }
+
+  &:first-child {
+    padding-top: 20px;
+
+    @include all-mobile-devices {
+      padding: 15px;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.cms-content-formatting {
+
+  p, h2, h3, h4, h5, h6 {
+    margin-top: 15px !important;
+  }
+
+  ul, ol {
+    margin-top: 15px;
+    padding-left: 35px;
+  }
+
+  .ql-align-center {
+    text-align: center;
+  }
+
+  @for $i from 0 through 5 {
+    .ql-indent-#{$i} {
+      margin-left: #{1.5 * $i}rem;
+    }
+  }
+}

@@ -1,0 +1,118 @@
+@use './legacy-ported/sass/abstracts/variables';
+@use './legacy-ported/sass/abstracts/mixins';
+
+.tree-picker {
+  display: flex;
+  flex-flow: column nowrap;
+  overflow-y: auto;
+
+  @include ie-only {
+    &__element-wrapper:last-child {
+      border: 0px;
+    }
+  }
+
+  @include all-mobile-devices {
+    &__element-wrapper {
+      border-bottom: solid 2px variables.$light40
+    }
+
+    &__element-wrapper:last-child {
+      border-bottom: 2px solid white;
+    }
+  }
+
+  &__element {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    @include ie-only {
+      margin-left: 12px;
+    }
+
+    @include mixins.all-mobile-devices {
+      padding: 5px 0px;
+      margin: 5px 0px;
+    }
+
+    .MuiFormControlLabel-label {
+      font-size: 16px;
+    }
+
+    &--depth-0 .MuiFormControlLabel-label {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &--depth-1 .MuiFormControlLabel-label {
+      font-weight: 500;
+    }
+
+    .MuiFormControlLabel-root {
+      margin-left: unset;
+      @include mixins.ie-only{
+        margin-left: 0;
+      }
+    }
+
+  }
+
+  &__subtree {
+    width: 100%;
+    border-bottom: solid 2px variables.$light40
+  }
+
+  &__subtree:last-child {
+    border-bottom: unset;
+
+    @include ie-only {
+      border: 0px;
+    }
+  }
+
+  &__subtree-children {
+    padding-left: 30px;
+
+    @include mobile {
+      padding-left: 20px;
+    }
+
+    @include mobile-large {
+      padding-left: 20px;
+    }
+  }
+
+  .tree-picker__checkbox {
+    color: variables.$black;
+    &.Mui-checked, &.MuiCheckbox-indeterminate {
+      color: variables.$blue-primary;
+
+      &.Mui-disabled {
+        color: change-color(variables.$blue-primary, $alpha: 0.2);
+      }
+    }
+
+    @include all-mobile-devices {
+      &--selected {
+        background: $light10;
+      }
+    }
+
+  }
+
+  &__info {
+    border-left: 2px solid $blue-primary;
+  }
+
+  &__info-detail {
+    padding: 10px 15px;
+  }
+
+  &__tooltip-icon {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+}

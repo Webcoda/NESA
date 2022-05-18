@@ -1,0 +1,8 @@
+@use "../../abstracts/variables";
+
+.glossary-page {
+  &__body {
+    padding-top: 27px;
+    border-top: solid 2px variables.$light40;
+  }
+}
