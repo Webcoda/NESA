@@ -5,6 +5,8 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
  */
 export type FocusArea = IContentItem<{
   outcomes: Elements.LinkedItemsElement<IContentItem>;
+  access_points: Elements.LinkedItemsElement<IContentItem>;
   title: Elements.TextElement;
-  focus_area_sections: Elements.LinkedItemsElement<IContentItem>;
+  teaching_advice: Elements.LinkedItemsElement<IContentItem>;
+  focus_area_groups: Elements.LinkedItemsElement<IContentItem>;
 }>;

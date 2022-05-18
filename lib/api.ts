@@ -294,6 +294,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		const [syllabuses, keyLearningAreas, glossaries, stages] = await Promise.all([
 			getAllItemsByType<Syllabus>({
 				type: 'syllabus',
+				depth: 4,
 				preview,
 			}),
 			getAllItemsByType<KeyLearningArea>({

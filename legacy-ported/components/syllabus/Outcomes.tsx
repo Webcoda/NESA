@@ -245,7 +245,6 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 										),
 									)
 									.map((outcome) => {
-										console.log('🚀 ~ file: Outcomes.tsx ~ line 243 ~ .map ~ outcome', outcome)
 										return (
 											<OutcomeCard
 												key={outcome.system.id}
