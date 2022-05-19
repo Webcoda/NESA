@@ -11,6 +11,10 @@ import SyllabusContentSection from '@/legacy-ported/components/syllabus/Syllabus
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
 import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
+import { Sections } from '@/legacy-ported/constants/pathConstants'
+import { SecondaryStages } from '@/legacy-ported/constants/stages'
+import { PrimaryStages, SeniorStages } from '@/legacy-ported/store/mock/stages'
+import { customSyllabusQueryString } from '@/legacy-ported/utilities/functions'
 import { Assessment } from '@/models/assessment'
 import { FocusArea } from '@/models/focus_area'
 import { Glossary } from '@/models/glossary'
@@ -23,6 +27,7 @@ import { convertGlossaryToIGlossary } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) as any
@@ -41,10 +46,9 @@ function PageStage(props) {
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
 	const allStageCategories: StageCategory[] = get(props, 'data.stageCategories.items', null)
-    console.log("🚀 ~ file: page_stage.tsx ~ line 44 ~ PageStage ~ allStageCategories", allStageCategories)
 
 	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
-	const terms = convertGlossaryToIGlossary(allGlossaries);
+	const terms = convertGlossaryToIGlossary(allGlossaries)
 
 	const stageId = page.elements.stage.linkedItems?.[0]?.system.id
 
@@ -61,6 +65,8 @@ function PageStage(props) {
 		sections: terms,
 	})
 
+	const history = useRouter()
+
 	if (!page) {
 		return (
 			<UnknownComponent>
@@ -70,6 +76,38 @@ function PageStage(props) {
 	}
 
 	// Methods
+	const onStagesHeaderConfirm = (ids: string[]) => {
+		const tabsForCustomPage = currentTabs.map((t) => t.id)
+		const syllabusesForCustomPage = syllabuses.map((s) => s.system.id)
+
+		// If more than 1 stages are selected redirect to Custom Syllabus page
+		if (ids.length > 1) {
+			history.push({
+				pathname: Sections.CUSTOM_SYLLABUS.url,
+				search: customSyllabusQueryString({
+					stageIds: ids as string[],
+					tabIds: tabsForCustomPage,
+					syllabusIds: syllabusesForCustomPage,
+				}),
+			})
+		} else {
+			const newStageId = ids[0]
+			if (PrimaryStages.some((s) => s.id === newStageId)) {
+				history.replace({
+					pathname: `${Sections.STAGES.pages.PRIMARY.url}/${newStageId}`,
+				})
+			} else if (SecondaryStages.some((s) => s.id === newStageId)) {
+				history.replace({
+					pathname: `${Sections.STAGES.pages.SECONDARY.url}/${newStageId}`,
+				})
+			} else if (SeniorStages.some((s) => s.id === newStageId)) {
+				history.replace({
+					pathname: `${Sections.STAGES.pages.SENIOR.url}/${newStageId}`,
+				})
+			}
+		}
+	}
+
 	const handleTabChange = (newTabValue: string) => {
 		setTabValue(newTabValue)
 	}
@@ -113,15 +151,15 @@ function PageStage(props) {
 			<div className="syllabus-overview-page">
 				<ReactJson src={props} collapsed />
 				<div className="syllabus-overview-page__container">
+					{/* TODO: fix onStagesHeaderConfirm */}
 					<StagesHeader
 						tag={selectedStages.length === 1 ? selectedStages[0]?.elements.tag.value : 'Custom View'}
 						title={title}
 						area={'area'}
 						selectedStages={selectedStages.map((stage) => stage.system.codename)}
+						stageCategories={allStageCategories}
 						learningAreas={allKeyLearningAreas}
-						onStagesHeaderConfirm={() => {
-							console.log('🚀 ~ file: page_stage.tsx ~ line 58 ~ PageStage ~ onStagesHeaderConfirm')
-						}}
+						onStagesHeaderConfirm={onStagesHeaderConfirm}
 					/>
 
 					{/* stages tabs */}
