@@ -1,3 +1,4 @@
+import { StageCategory } from './../models/stage_category';
 import { Stage } from '@/models/stage';
 import { DeliveryClient, IContentItem, SortOrder } from '@kentico/kontent-delivery';
 import get from 'lodash.get';
@@ -288,10 +289,11 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				keyLearningAreas: [],
 				glossaries: [],
 				stages: [],
+				stageCategories: [],
 			},
 		}
 
-		const [syllabuses, keyLearningAreas, glossaries, stages] = await Promise.all([
+		const [syllabuses, keyLearningAreas, glossaries, stages, stageCategories] = await Promise.all([
 			getAllItemsByType<Syllabus>({
 				type: 'syllabus',
 				depth: 4,
@@ -321,12 +323,21 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 					sortOrder: 'asc',
 				},
 			}),
+			getAllItemsByType<StageCategory>({
+				type: 'stage_category',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
+			}),
 		])
 
 		_result.data.syllabuses = syllabuses
 		_result.data.keyLearningAreas = keyLearningAreas
 		_result.data.glossaries = glossaries
 		_result.data.stages = stages
+		_result.data.stageCategories = stageCategories
 		return _result
 	}
 

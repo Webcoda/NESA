@@ -5,5 +5,6 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
  */
 export type StageCategory = IContentItem<{
   title: Elements.TextElement;
+  order: Elements.NumberElement;
   stages: Elements.LinkedItemsElement<IContentItem>;
 }>;

@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { Grid, IconButton } from '@material-ui/core'
-import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons'
-import { isMobile, isTablet, isIPad13, withOrientationChange } from 'react-device-detect'
-// import OutcomeCard from '../card/OutcomeCard'
-import SYLLABUS from '../../constants/syllabusConstants'
-// import { AllStages } from '../../store/mock/stages'
-// import StageSelectOverlay from './StageSelectOverlay'
+import OutcomeCard from '@/legacy-ported/components/card/OutcomeCard'
 import { Outcome } from '@/models/outcome'
 import { Stage } from '@/models/stage'
-import OutcomeCard from '@/legacy-ported/components/card/OutcomeCard'
+import { StageCategory } from '@/models/stage_category'
+import { Grid, IconButton } from '@material-ui/core'
+import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons'
+import React, { useState } from 'react'
+import { isMobile, isTablet, withOrientationChange } from 'react-device-detect'
+// import OutcomeCard from '../card/OutcomeCard'
+import SYLLABUS from '../../constants/syllabusConstants'
+import StageSelectOverlay from './StageSelectOverlay'
 
 export interface OutcomesProps {
 	/**
@@ -17,7 +17,8 @@ export interface OutcomesProps {
 	scrollOffset?: number
 	isLandscape?: boolean
 	outcomes?: Outcome[]
-	stages: Stage[]
+	stages: Stage[],
+	stageCategories: StageCategory[],
 }
 
 const Outcomes = (props: OutcomesProps): JSX.Element => {
@@ -26,6 +27,7 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 		isLandscape,
 		outcomes,
 		stages: AllStages,
+		stageCategories,
 	} = props
 
 	const [displayModal, setDisplayModal] = useState(false)
@@ -284,8 +286,9 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 				)}
 			</div>
 
-			{/* {displayModal &&
+			{displayModal && (
 				<StageSelectOverlay
+					stageCategories={stageCategories}
 					selected={activeStageIds}
 					title="Include Stages"
 					popoverStatus={displayModal}
@@ -293,7 +296,7 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 					onConfirm={handleStageSelection}
 					onCancel={handleStageOverlayClose}
 				/>
-			} */}
+			)}
 		</Grid>
 	)
 }
