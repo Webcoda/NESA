@@ -308,6 +308,10 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			getAllItemsByType<Glossary>({
 				type: 'glossary',
 				preview,
+				order: {
+					element: 'elements.title',
+					sortOrder: 'asc',
+				},
 			}),
 			getAllItemsByType<Stage>({
 				type: 'stage',

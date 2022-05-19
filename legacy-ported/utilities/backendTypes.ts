@@ -2,6 +2,7 @@
 
 import { Omit } from '@material-ui/core';
 import { IFile } from './frontendTypes';
+import type { Glossary } from '@/models/glossary';
 
 export interface KeyValue<K, V> {
   key: K;
@@ -269,7 +270,7 @@ export interface IGlossaryRecord extends Omit<IGlossaryRecordRaw, 'syllabus'> {
 
 export interface IGlossary {
   section: string;
-  records: IGlossaryRecord[];
+  records: Glossary[];
 }
 
 export interface IWebpageSectionRaw {

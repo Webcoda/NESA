@@ -367,10 +367,6 @@ export const projectModel = {
       codename: 'glossary',
       name: 'Glossary',
       elements: {
-        syllabuses: {
-          codename: 'syllabuses',
-          name: 'Syllabuses',
-        },
         title: {
           codename: 'title',
           name: 'Title',
@@ -378,6 +374,10 @@ export const projectModel = {
         description: {
           codename: 'description',
           name: 'Description',
+        },
+        key_learning_area: {
+          codename: 'key_learning_area',
+          name: 'Key Learning Area',
         },
       },
     },
@@ -916,6 +916,10 @@ export const projectModel = {
         key_learning_area: {
           codename: 'key_learning_area',
           name: 'Key Learning Area',
+        },
+        assessments: {
+          codename: 'assessments',
+          name: 'Assessments',
         },
         aim: {
           codename: 'aim',
