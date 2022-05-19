@@ -17,6 +17,7 @@ import { Glossary } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
 import { PageStage as PageStageType } from '@/models/page_stage'
 import { Stage } from '@/models/stage'
+import { StageCategory } from '@/models/stage_category'
 import { Syllabus } from '@/models/syllabus'
 import { convertGlossaryToIGlossary } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
@@ -39,6 +40,8 @@ function PageStage(props) {
 	const stages: Stage[] = get(props, 'data.stages.items', null)
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
+	const allStageCategories: StageCategory[] = get(props, 'data.stageCategories.items', null)
+    console.log("🚀 ~ file: page_stage.tsx ~ line 44 ~ PageStage ~ allStageCategories", allStageCategories)
 
 	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
 	const terms = convertGlossaryToIGlossary(allGlossaries);
@@ -173,10 +176,10 @@ function PageStage(props) {
 										},
 										[],
 									)
-									// console.log("🚀 ~ file: page_stage.tsx ~ line 158 ~ PageStage ~ outcomes", outcomes)
 									return (
 										<Outcomes
 											stages={stages}
+											stageCategories={allStageCategories}
 											outcomes={outcomes}
 											// scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
 										/>

@@ -899,6 +899,10 @@ export const projectModel = {
           codename: 'title',
           name: 'Title',
         },
+        order: {
+          codename: 'order',
+          name: 'Order',
+        },
         stages: {
           codename: 'stages',
           name: 'Stages',
