@@ -85,7 +85,6 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 
 	const router = useRouter()
 	const isHome = router.asPath == '/'
-    console.log("🚀 ~ file: NavBar.tsx ~ line 87 ~ router", router)
 
 	return (
 		<header className={`navbar ${className || ''} column`}>

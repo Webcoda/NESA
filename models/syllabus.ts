@@ -6,6 +6,7 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
 export type Syllabus = IContentItem<{
   available: Elements.MultipleChoiceElement;
   key_learning_area: Elements.LinkedItemsElement<IContentItem>;
+  assessments: Elements.LinkedItemsElement<IContentItem>;
   aim: Elements.CustomElement;
   overview: Elements.CustomElement;
   code: Elements.TextElement;

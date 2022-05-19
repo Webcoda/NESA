@@ -1,17 +1,24 @@
 import { Layout, UnknownComponent } from '@/components'
+import { useGlossary } from '@/legacy-ported/components/base/Glossary'
+import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
+import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
 import Content from '@/legacy-ported/components/syllabus/Content'
+import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerformance'
 import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
 import SyllabusContentSection from '@/legacy-ported/components/syllabus/SyllabusContentSection'
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
+import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
+import { Assessment } from '@/models/assessment'
 import { FocusArea } from '@/models/focus_area'
 import { Glossary } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
 import { PageStage as PageStageType } from '@/models/page_stage'
 import { Stage } from '@/models/stage'
 import { Syllabus } from '@/models/syllabus'
+import { convertGlossaryToIGlossary } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
 import dynamic from 'next/dynamic'
@@ -33,6 +40,9 @@ function PageStage(props) {
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
 
+	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
+	const terms = convertGlossaryToIGlossary(allGlossaries);
+
 	const stageId = page.elements.stage.linkedItems?.[0]?.system.id
 
 	const theme = useTheme()
@@ -43,6 +53,10 @@ function PageStage(props) {
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
+
+	const [glossaryHeaderProps, glossaryFilter] = useGlossary({
+		sections: terms,
+	})
 
 	if (!page) {
 		return (
@@ -188,17 +202,21 @@ function PageStage(props) {
 								)}
 							/>
 							{/* Assessment */}
-							{/* <StageTabPanel
+							<StageTabPanel
 								id={syllabusTabs[5].id}
 								tabValue={tabValue}
-								learningAreas={learningAreas}
-								body={(syl) => <CoursePerformance sections={syl.grades} />}
-							/> */}
+								learningAreas={allKeyLearningAreasWithSyllabuses}
+								body={(syl: Syllabus) => (
+									<CoursePerformance
+										sections={syl.elements.assessments.linkedItems as Assessment[]}
+									/>
+								)}
+							/>
 							{/* glossary */}
-							{/* <SyllabusTabPanel id={syllabusTabs[6].id} tabValue={tabValue}>
+							<SyllabusTabPanel id={syllabusTabs[6].id} tabValue={tabValue}>
 								<GlossaryHeader {...glossaryHeaderProps} />
 								<GlossaryBody sections={glossaryFilter(terms)} />
-							</SyllabusTabPanel> */}
+							</SyllabusTabPanel>
 							{/* teaching-and-learning */}
 							{/* <StageTabPanel
 								id={syllabusTabs[7].id}
