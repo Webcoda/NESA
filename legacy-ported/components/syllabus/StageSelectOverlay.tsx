@@ -9,8 +9,8 @@ import { StageCategory } from '@/models/stage_category'
 export interface StageSelectOverlayProps
 	extends Pick<CustomPopoverProps, 'title' | 'popoverStatus' | 'popoverAnchor' | 'onCancel'> {
 	selected: IStage['id'][]
-	onConfirm: (selected: IStage['id'][]) => void
 	stageCategories: StageCategory[]
+	onConfirm: (selected: IStage['id'][]) => void
 }
 
 const StageSelectOverlay = (props: StageSelectOverlayProps): JSX.Element => {

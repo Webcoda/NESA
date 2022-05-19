@@ -1,12 +1,11 @@
-import React from 'react'
-import { Grid } from '@material-ui/core'
-import { TreeElement } from './treeUtils'
-import TreePicker from './TreePicker'
-import { FixedTreePickerProps } from './TagPicker'
-import { StageCategory } from '@/models/stage_category'
-import { STAGE_CATEGORY_PRIMARY, STAGE_CATEGORY_SECONDARY } from '@/constants'
 import { Stage } from '@/models/stage'
+import { StageCategory } from '@/models/stage_category'
+import { Grid } from '@material-ui/core'
 import intersection from 'lodash.intersection'
+import React from 'react'
+import { FixedTreePickerProps } from './TagPicker'
+import TreePicker from './TreePicker'
+import { TreeElement } from './treeUtils'
 
 export type StagePickerProps = FixedTreePickerProps & {
 	stageCategories: StageCategory[]
@@ -14,7 +13,6 @@ export type StagePickerProps = FixedTreePickerProps & {
 
 const StagePicker = (props: StagePickerProps): JSX.Element => {
 	const { selected, stageCategories, ...others } = props
-    console.log("🚀 ~ file: StagePicker.tsx ~ line 17 ~ stageCategories", stageCategories)
 
 	return (
 		<>
@@ -25,13 +23,13 @@ const StagePicker = (props: StagePickerProps): JSX.Element => {
 						<TreePicker
 							rootElements={stageCategory.elements.stages.linkedItems.map<TreeElement>((s: Stage) => {
 								return {
-									id: s.system.id,
+									id: s.system.codename,
 									label: s.elements.title.value,
 									disabled: !s.elements.available.value.length,
 								}
 							})}
 							selected={
-								intersection(selected, stageCategory.elements.stages.linkedItems.map(item => item.system.id))?.join(',')
+								intersection(selected, stageCategory.elements.stages.linkedItems.map(item => item.system.codename))
 							}
 							{...others}
 						/>

@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs'
 import { makeStyles } from '@material-ui/core/styles'
 import { KeyLearningArea } from '@/models/key_learning_area'
 import SyllabusStagesHeader from './SyllabusStagesHeader'
+import { StageCategory } from '@/models/stage_category'
 // import { ILearningArea } from '../../utilities/backendTypes'
 // import { KlaIds } from '../../store/mock/keyLearningAreas'
 
@@ -28,6 +29,10 @@ export interface StagesHeaderProps {
 	 * Subject tag
 	 */
 	learningAreas: KeyLearningArea[]
+	/**
+	 * Stage Categories (Parent)
+	 */
+	stageCategories: StageCategory[]
 	/**
 	 * Callback fired when version history is clicked
 	 */
@@ -63,6 +68,7 @@ const StagesHeader = (props: StagesHeaderProps) => {
 		onVersionHistoryClick,
 		onEditViewClick,
 		selectedStages,
+		stageCategories,
 		area,
 		onStagesHeaderConfirm,
 	} = props
@@ -87,6 +93,7 @@ const StagesHeader = (props: StagesHeaderProps) => {
 							<SyllabusStagesHeader
 								title={title}
 								selectedStages={selectedStages}
+								stageCategories={stageCategories}
 								area={area}
 								isMainHeader
 								onStagesHeaderConfirm={onStagesHeaderConfirm}
