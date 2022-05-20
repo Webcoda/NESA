@@ -15,16 +15,14 @@ const CoursePerformance = (props: CoursePerformanceProps): JSX.Element => {
 	const { sections } = props
 
 	return (
-		<Grid className="syllabus-content-section cms-content-formatting">
+		<Grid className="syllabus-content-section">
 			{sections?.map((sec: Assessment) => (
-				<Grid
-					key={sec.system.id}
-					className="assessment__container"
-				>
-					<CustomAccordion
-						title={sec.elements.years.value.map((year) => year.name).join(', ')}
-					>
-						<SyllabusContentSection innerHtml={sec.elements.content.value} />
+				<Grid key={sec.system.id} className="assessment__container">
+					<CustomAccordion title={'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'}>
+						{/* TODO: Syllabus Content */}
+						<SyllabusContentSection
+							innerHtml={'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'}
+						/>
 					</CustomAccordion>
 				</Grid>
 			))}

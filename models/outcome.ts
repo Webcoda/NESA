@@ -6,5 +6,8 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
 export type Outcome = IContentItem<{
   description: Elements.CustomElement;
   code: Elements.TextElement;
+  relatedlifeskillsoutcomes: Elements.LinkedItemsElement<IContentItem>;
+  syllabustype__type: Elements.MultipleChoiceElement;
+  isoverarching: Elements.MultipleChoiceElement;
   stages: Elements.LinkedItemsElement<IContentItem>;
 }>;

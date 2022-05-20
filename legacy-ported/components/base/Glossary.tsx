@@ -5,9 +5,17 @@ import GlossaryBody from './GlossaryBody'
 import { IGlossary, IGlossaryRecord } from '../../utilities/backendTypes'
 import { Glossary as GlossaryType } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
+import { Syllabus } from '@/models/syllabus'
 
-const matchesSearch = (text: string, record: GlossaryType) =>
-	[record.elements.title.value, record.elements.description.value, record.elements.key_learning_area.linkedItems.map((kla: KeyLearningArea) => kla.elements.title.value)].join().toLowerCase().includes(text.toLowerCase())
+const matchesSearch = (text: string, record: GlossaryType) => {
+	const keyLearningTitles: string[] = record.elements.syllabus.linkedItems.flatMap((syllabus: Syllabus) => {
+		return syllabus.elements.key_learning_area.linkedItems.map(item => item as KeyLearningArea).map(item => item.elements.title.value)
+	})
+	return [record.elements.title.value, record.elements.description.value, keyLearningTitles]
+		.join()
+		.toLowerCase()
+		.includes(text.toLowerCase())
+}
 
 export interface GlossaryProps {
 	/**
@@ -34,12 +42,19 @@ const applySearchAndFilter = (
 ): IGlossary[] => {
 	if(!filterSections) return []
 	return filterSections?.filter(({ section }) => !selectedFilter || section === selectedFilter)
-		?.map(({ section, records }) => ({
-			section,
-			records: records
-				.filter((r) => !klaFilter || r.elements.key_learning_area.value.includes(klaFilter) || !r.elements.key_learning_area.value.length)
-				.filter((r) => !searchTerm || matchesSearch(searchTerm, r)),
-		}))
+		?.map(({ section, records }) => {
+			return ({
+				section,
+				records: records
+					.filter((r) => {
+						const keyLearningValues : string[] = r.elements.syllabus.linkedItems.flatMap((syllabus: Syllabus) => {
+							return syllabus.elements.key_learning_area.value
+						})
+						return !klaFilter || keyLearningValues.includes(klaFilter) || !keyLearningValues.length
+					})
+					.filter((r) => !searchTerm || matchesSearch(searchTerm, r)),
+			})
+		})
 		?.filter(({ records }) => records.length)
 }
 

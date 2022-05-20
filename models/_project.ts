@@ -41,15 +41,99 @@ export const projectModel = {
     },
     assessment: {
       codename: 'assessment',
-      name: 'Assessment',
+      name: 'Syllabus Assessment',
       elements: {
-        years: {
-          codename: 'years',
+        pbd_3: {
+          codename: 'pbd_3',
+          name: 'PBD - 3',
+        },
+        sba_12: {
+          codename: 'sba_12',
+          name: 'SBA - 12',
+        },
+        life_skills: {
+          codename: 'life_skills',
+          name: 'Life Skills',
+        },
+        majorwork_supportingtext: {
+          codename: 'majorwork_supportingtext',
+          name: 'Major Work - Supporting Text',
+        },
+        majorwork_advice: {
+          codename: 'majorwork_advice',
+          name: 'Major Work - Advice',
+        },
+        sba_supportingtext: {
+          codename: 'sba_supportingtext',
+          name: 'SBA - Supporting Text',
+        },
+        related_ace_rules: {
+          codename: 'related_ace_rules',
+          name: 'Related ACE Rules',
+        },
+        pbd_5: {
+          codename: 'pbd_5',
+          name: 'PBD - 5',
+        },
+        examspecs_hscspecification: {
+          codename: 'examspecs_hscspecification',
+          name: 'Exam Specs - HSC Specification',
+        },
+        pbd_1: {
+          codename: 'pbd_1',
+          name: 'PBD - 1',
+        },
+        sba_11: {
+          codename: 'sba_11',
+          name: 'SBA - 11',
+        },
+        introduction: {
+          codename: 'introduction',
+          name: 'Introduction',
+        },
+        examspecs_samplematerial: {
+          codename: 'examspecs_samplematerial',
+          name: 'Exam Specs - Sample Material',
+        },
+        common_grade_scale: {
+          codename: 'common_grade_scale',
+          name: 'Common Grade Scale',
+        },
+        other_information: {
+          codename: 'other_information',
+          name: 'Other Information',
+        },
+        examspecs_supportingtext: {
+          codename: 'examspecs_supportingtext',
+          name: 'Exam Specs - Supporting Text',
+        },
+        pbd_supporting_text: {
+          codename: 'pbd_supporting_text',
+          name: 'PBD - Supporting Text',
+        },
+        course_performance_descriptions: {
+          codename: 'course_performance_descriptions',
+          name: 'Course Performance Descriptions',
+        },
+        pbd_6: {
+          codename: 'pbd_6',
+          name: 'PBD - 6',
+        },
+        stagesyears__years: {
+          codename: 'stagesyears__years',
           name: 'Years',
         },
-        content: {
-          codename: 'content',
-          name: 'Content',
+        pbd_2: {
+          codename: 'pbd_2',
+          name: 'PBD - 2',
+        },
+        pbd_4: {
+          codename: 'pbd_4',
+          name: 'PBD - 4',
+        },
+        stagesyears__stages: {
+          codename: 'stagesyears__stages',
+          name: 'Stages',
         },
       },
     },
@@ -160,6 +244,20 @@ export const projectModel = {
         image: {
           codename: 'image',
           name: 'Image',
+        },
+      },
+    },
+    course: {
+      codename: 'course',
+      name: 'Course',
+      elements: {
+        code: {
+          codename: 'code',
+          name: 'Code',
+        },
+        title: {
+          codename: 'title',
+          name: 'Title',
         },
       },
     },
@@ -287,6 +385,10 @@ export const projectModel = {
           codename: 'title',
           name: 'Title',
         },
+        syllabustype__type: {
+          codename: 'syllabustype__type',
+          name: 'Type',
+        },
         teaching_advice: {
           codename: 'teaching_advice',
           name: 'Teaching Advice',
@@ -331,6 +433,42 @@ export const projectModel = {
           codename: 'nesa_tags__literacy_listening',
           name: 'Literacy Listening',
         },
+        tags: {
+          codename: 'tags',
+          name: 'Tags',
+        },
+      },
+    },
+    focus_area_tag: {
+      codename: 'focus_area_tag',
+      name: 'Focus Area Tag',
+      elements: {
+        title: {
+          codename: 'title',
+          name: 'Title',
+        },
+        description: {
+          codename: 'description',
+          name: 'Description',
+        },
+      },
+    },
+    focus_area_tag_category: {
+      codename: 'focus_area_tag_category',
+      name: 'Focus Area Tag Category',
+      elements: {
+        title: {
+          codename: 'title',
+          name: 'Title',
+        },
+        sub_category: {
+          codename: 'sub_category',
+          name: 'Sub Category',
+        },
+        tags: {
+          codename: 'tags',
+          name: 'Tags',
+        },
       },
     },
     form: {
@@ -367,6 +505,10 @@ export const projectModel = {
       codename: 'glossary',
       name: 'Glossary',
       elements: {
+        syllabus: {
+          codename: 'syllabus',
+          name: 'Syllabus',
+        },
         title: {
           codename: 'title',
           name: 'Title',
@@ -374,10 +516,6 @@ export const projectModel = {
         description: {
           codename: 'description',
           name: 'Description',
-        },
-        key_learning_area: {
-          codename: 'key_learning_area',
-          name: 'Key Learning Area',
         },
       },
     },
@@ -635,6 +773,18 @@ export const projectModel = {
           codename: 'code',
           name: 'Code',
         },
+        relatedlifeskillsoutcomes: {
+          codename: 'relatedlifeskillsoutcomes',
+          name: 'RelatedLifeSkillsOutcomes',
+        },
+        syllabustype__type: {
+          codename: 'syllabustype__type',
+          name: 'Type',
+        },
+        isoverarching: {
+          codename: 'isoverarching',
+          name: 'IsOverarching',
+        },
         stages: {
           codename: 'stages',
           name: 'Stages',
@@ -847,6 +997,16 @@ export const projectModel = {
         },
       },
     },
+    sharedcontent_richtext: {
+      codename: 'sharedcontent_richtext',
+      name: 'SharedContent_RichText',
+      elements: {
+        content: {
+          codename: 'content',
+          name: 'Content',
+        },
+      },
+    },
     simple_page: {
       codename: 'simple_page',
       name: 'Simple page',
@@ -913,49 +1073,145 @@ export const projectModel = {
       codename: 'syllabus',
       name: 'Syllabus',
       elements: {
+        courseoverview_organisationofcontent: {
+          codename: 'courseoverview_organisationofcontent',
+          name: 'Course Overview - Organisation Of Content',
+        },
+        courseoverview_coursenumbers: {
+          codename: 'courseoverview_coursenumbers',
+          name: 'Course Overview - Course Numbers',
+        },
         available: {
           codename: 'available',
           name: 'Available',
+        },
+        courseoverview_learning1_10: {
+          codename: 'courseoverview_learning1_10',
+          name: 'Course Overview - Learning 1-10',
         },
         key_learning_area: {
           codename: 'key_learning_area',
           name: 'Key Learning Area',
         },
+        courseoverview_introduction: {
+          codename: 'courseoverview_introduction',
+          name: 'Course Overview - Introduction',
+        },
+        from_date: {
+          codename: 'from_date',
+          name: 'From Date',
+        },
+        courseoverview_achievementhsc: {
+          codename: 'courseoverview_achievementhsc',
+          name: 'Course Overview - Achievement HSC',
+        },
+        courseoverview_prerequisits: {
+          codename: 'courseoverview_prerequisits',
+          name: 'Course Overview - Prerequisites',
+        },
         assessments: {
           codename: 'assessments',
           name: 'Assessments',
+        },
+        courseoverview_learning11: {
+          codename: 'courseoverview_learning11',
+          name: 'Course Overview - Learning 11',
+        },
+        courseoverview_syllabustype: {
+          codename: 'courseoverview_syllabustype',
+          name: 'Course Overview - Syllabus Type',
+        },
+        related_life_skills_syllabus: {
+          codename: 'related_life_skills_syllabus',
+          name: 'Related Life Skills Syllabus',
+        },
+        courseoverview_learning12: {
+          codename: 'courseoverview_learning12',
+          name: 'Course Overview - Learning 12',
+        },
+        courseoverview_selftuition: {
+          codename: 'courseoverview_selftuition',
+          name: 'Course Overview - Self Tuition',
         },
         aim: {
           codename: 'aim',
           name: 'Aim',
         },
+        courseoverview_200hourrules: {
+          codename: 'courseoverview_200hourrules',
+          name: 'Course Overview - 200 Hour Rules',
+        },
         overview: {
           codename: 'overview',
           name: 'Overview',
+        },
+        outcomes: {
+          codename: 'outcomes',
+          name: 'Outcomes',
         },
         code: {
           codename: 'code',
           name: 'Code',
         },
-        stages: {
-          codename: 'stages',
-          name: 'Stages',
+        courseoverview_endorsementtype: {
+          codename: 'courseoverview_endorsementtype',
+          name: 'Course Overview - Endorsement Type',
+        },
+        courseoverview_exclusions: {
+          codename: 'courseoverview_exclusions',
+          name: 'Course Overview - Exclusions',
+        },
+        courseoverview_achievementstage4_5: {
+          codename: 'courseoverview_achievementstage4_5',
+          name: 'Course Overview - Achievement Stage 4-5',
+        },
+        courseoverview_enrolmenttype: {
+          codename: 'courseoverview_enrolmenttype',
+          name: 'Course Overview - Enrolment Type',
+        },
+        to_date: {
+          codename: 'to_date',
+          name: 'To Date',
         },
         title: {
           codename: 'title',
           name: 'Title',
         },
-        rich_text: {
-          codename: 'rich_text',
-          name: 'Rich text',
+        stagesyears__years: {
+          codename: 'stagesyears__years',
+          name: 'Years',
+        },
+        courseoverview_eligibility: {
+          codename: 'courseoverview_eligibility',
+          name: 'Course Overview - Eligibility',
+        },
+        courseoverview_corequisites: {
+          codename: 'courseoverview_corequisites',
+          name: 'Course Overview - Corequisites',
+        },
+        courseoverview_100hourrules: {
+          codename: 'courseoverview_100hourrules',
+          name: 'Course Overview - 100 Hour Rules',
         },
         rationale: {
           codename: 'rationale',
           name: 'Rationale',
         },
+        courseoverview_courcerequirements: {
+          codename: 'courseoverview_courcerequirements',
+          name: 'Course Overview - Cource Requirements',
+        },
+        courseoverview_otherinfo: {
+          codename: 'courseoverview_otherinfo',
+          name: 'Course Overview - Other Info',
+        },
         focus_areas: {
           codename: 'focus_areas',
           name: 'Focus Areas',
+        },
+        stagesyears__stages: {
+          codename: 'stagesyears__stages',
+          name: 'Stages',
         },
       },
     },
@@ -971,6 +1227,17 @@ export const projectModel = {
     },
   },
   taxonomies: {
+    bands: {
+      codename: 'bands',
+      name: 'Bands',
+      terms: {
+        n1: {
+          codename: 'n1',
+          name: '1',
+          terms: {},
+        },
+      },
+    },
     interacting: {
       codename: 'interacting',
       name: 'Literacy Interacting',
