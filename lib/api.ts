@@ -1,11 +1,12 @@
-import { StageCategory } from './../models/stage_category';
-import { Stage } from '@/models/stage';
-import { DeliveryClient, IContentItem, SortOrder } from '@kentico/kontent-delivery';
+import type { Glossary } from '@/models/glossary';
+import type { KeyLearningArea } from '@/models/key_learning_area';
+import type { Stage } from '@/models/stage';
+import type { StageCategory } from '@/models/stage_category';
+import type { Mapping } from '@/types/index';
+import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery';
 import get from 'lodash.get';
 import { Syllabus } from "../models/syllabus";
 import packageInfo from '../package.json';
-import { Glossary } from './../models/glossary';
-import { KeyLearningArea } from './../models/key_learning_area';
 
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
@@ -132,7 +133,7 @@ export async function getSitemapMappings(preview = false) {
 		.then(fnReturnData)
 
 	const rootSlug = []
-	const pathsFromKontent = [
+	const pathsFromKontent : Mapping[] = [
 		{
 			params: {
 				slug: rootSlug,
@@ -166,7 +167,6 @@ function getAllItemsByType<T extends IContentItem>({
 export async function getPageStaticPropsForPath(params, preview = false) {
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
 	const mappings = await getSitemapMappings(preview) // TODO could be cached
-	// console.log("🚀 ~ file: api.js ~ line 117 ~ getPageStaticPropsForPath ~ mappings", JSON.stringify(mappings))
 
 	const slugValue = params && params.slug ? params.slug : []
 

@@ -1,8 +1,10 @@
-import getUrlFromMapping from './getUrlFromMapping'
-import kontentImageLoader from './kontentImageLoader'
-import srcIsKontentAsset from './srcIsKontentAsset'
-import { Glossary } from '@/models/glossary'
-import { IGlossary } from '@/legacy-ported/utilities/backendTypes'
+import { NAVIGATION_ITEM_STAGES } from './../constants/index';
+import type { IGlossary } from '@/legacy-ported/utilities/backendTypes';
+import type { Glossary } from '@/models/glossary';
+import type { DeliveryClient } from '@kentico/kontent-delivery';
+import getUrlFromMapping from './getUrlFromMapping';
+import kontentImageLoader from './kontentImageLoader';
+import srcIsKontentAsset from './srcIsKontentAsset';
 
 export const convertGlossaryToIGlossary = (glossaries: Glossary[]): IGlossary[] => {
 	return glossaries.reduce((acc, glossary: Glossary) => {
@@ -23,7 +25,7 @@ export const convertGlossaryToIGlossary = (glossaries: Glossary[]): IGlossary[] 
 	}, [])
 }
 
-export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }
+export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset };
 
 export default {
 	getUrlFromMapping,

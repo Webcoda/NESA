@@ -23,6 +23,7 @@ import { PageStage as PageStageType } from '@/models/page_stage'
 import { Stage } from '@/models/stage'
 import { StageCategory } from '@/models/stage_category'
 import { Syllabus } from '@/models/syllabus'
+import { Mapping, MappingParams } from '@/types'
 import { convertGlossaryToIGlossary } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
@@ -38,6 +39,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
+
+/**
+ * Notes: Vic: For the stage picker to work, we need to match "part" of the navigation item codename with the stage codename
+ * the codename convention I use for these two is [type]__[value]
+ * e.g.navigation_item__early_stage_1 and stage__early_stage_1
+ * so if we omit navigation_item__ and stage__, we'll get early_stage_1
+ * */
+
+
 function PageStage(props) {
 	const classes = useStyles()
 	const page: PageStageType = get(props, 'data.page.item', null)
@@ -46,6 +56,8 @@ function PageStage(props) {
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
 	const allStageCategories: StageCategory[] = get(props, 'data.stageCategories.items', null)
+	const mappings : Mapping[] = get(props, 'mappings', null)
+	const title = get(page, 'elements.stage.linkedItems.0.elements.title.value', null)
 
 	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
 	const terms = convertGlossaryToIGlossary(allGlossaries)
@@ -92,18 +104,17 @@ function PageStage(props) {
 			})
 		} else {
 			const newStageId = ids[0]
-			if (PrimaryStages.some((s) => s.id === newStageId)) {
+			const mappingItem = mappings.find(map => {
+				const { navigationItem } = map.params
+				return navigationItem.codename.includes(newStageId.replace('stage__', `${navigationItem.type}__`))
+			});
+
+			if(mappingItem) {
 				history.replace({
-					pathname: `${Sections.STAGES.pages.PRIMARY.url}/${newStageId}`,
+					pathname: mappingItem.params.slug.join('/'),
 				})
-			} else if (SecondaryStages.some((s) => s.id === newStageId)) {
-				history.replace({
-					pathname: `${Sections.STAGES.pages.SECONDARY.url}/${newStageId}`,
-				})
-			} else if (SeniorStages.some((s) => s.id === newStageId)) {
-				history.replace({
-					pathname: `${Sections.STAGES.pages.SENIOR.url}/${newStageId}`,
-				})
+			} else {
+				console.error('mappingItem not found')
 			}
 		}
 	}
@@ -112,6 +123,19 @@ function PageStage(props) {
 		setTabValue(newTabValue)
 	}
 
+	const mapFnIncludeSyllabusesOnKla = (kla: KeyLearningArea) => ({
+		...kla,
+		syllabuses: syllabuses.filter((syllabus) =>
+			syllabus.elements.key_learning_area.linkedItems.some(
+				(_kla: KeyLearningArea) => _kla.system.id === kla.system.id,
+			),
+		),
+	})
+
+	// Computed
+	const allKeyLearningAreasWithSyllabuses = allKeyLearningAreas.map(mapFnIncludeSyllabusesOnKla)
+
+	// Effects
 	useEffect(() => {
 		;(async () => {
 			const { Accordion: NswAccordion, Tabs: NswTabs } = await import('nsw-design-system/dist/js/main')
@@ -126,25 +150,7 @@ function PageStage(props) {
 		})()
 	}, [])
 
-	const title = get(page, 'elements.stage.linkedItems.0.elements.title.value', null)
 
-	const getKeyLearningAreasBasedContentNameAndSyllabusKla = (type: string, kla: KeyLearningArea) => (syllabus) => {
-		return (
-			syllabus.elements[type].value &&
-			syllabus.elements.key_learning_area.value.some((_kla) => _kla == kla.system.codename)
-		)
-	}
-
-	const mapFnIncludeSyllabusesOnKla = (kla: KeyLearningArea) => ({
-		...kla,
-		syllabuses: syllabuses.filter((syllabus) =>
-			syllabus.elements.key_learning_area.linkedItems.some(
-				(_kla: KeyLearningArea) => _kla.system.id === kla.system.id,
-			),
-		),
-	})
-
-	const allKeyLearningAreasWithSyllabuses = allKeyLearningAreas.map(mapFnIncludeSyllabusesOnKla)
 
 	return (
 		<Layout className={`syllabus-overview syllabus-overview--{subject}`} {...props}>

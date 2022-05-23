@@ -3,6 +3,7 @@
 import { Omit } from '@material-ui/core';
 import { IFile } from './frontendTypes';
 import type { Glossary } from '@/models/glossary';
+import { Syllabus } from '@/models/syllabus';
 
 export interface KeyValue<K, V> {
   key: K;
@@ -264,8 +265,8 @@ export interface IGlossaryRaw {
   };
 }
 
-export interface IGlossaryRecord extends Omit<IGlossaryRecordRaw, 'syllabus'> {
-  klaId: string | null;
+export interface IGlossaryRecord extends IGlossaryRecordRaw {
+  syllabuses: Syllabus[];
 }
 
 export interface IGlossary {
