@@ -6,6 +6,5 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
 export type Stage = IContentItem<{
   order: Elements.NumberElement;
   title: Elements.TextElement;
-  available: Elements.MultipleChoiceElement;
-  tag: Elements.TextElement;
+  years: Elements.MultipleChoiceElement;
 }>;

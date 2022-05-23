@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import StageSelectOverlay from './StageSelectOverlay'
-import { StageCategory } from '@/models/stage_category'
+import { StageGroup } from '@/models/stage_group'
 // import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
 
 export interface SyllabusStagesHeaderProps {
@@ -26,7 +26,7 @@ export interface SyllabusStagesHeaderProps {
 	/**
 	 * All Stage Categories
 	 */
-	stageCategories: StageCategory[]
+	stageGroups: StageGroup[]
 
 	/**
 	 * Fire when stages header popover confirm button clicked
@@ -36,7 +36,7 @@ export interface SyllabusStagesHeaderProps {
 }
 
 const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => {
-	const { title, selectedStages, area, isMainHeader, stageCategories, onStagesHeaderConfirm } = props
+	const { title, selectedStages, area, isMainHeader, stageGroups, onStagesHeaderConfirm } = props
 
 	const stageHeaderButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -79,7 +79,7 @@ const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => 
 				{/* <p className="syllabus-header__subtitle">Current Syllabus</p> */}
 				<StageSelectOverlay
 					title={title}
-					stageCategories={stageCategories}
+					stageGroups={stageGroups}
 					popoverStatus={displayStageModal}
 					popoverAnchor={popoverAnchor}
 					onConfirm={handleStageModalConfirm}

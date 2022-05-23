@@ -1,18 +1,22 @@
-import React, { ReactNode, useEffect, useState } from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Action } from '@/models/action'
+import { Mapping, KontentData } from '@/types'
+import { Button } from '@material-ui/core'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
-import { Helmet } from 'react-helmet'
 // import { useHistory } from 'react-router-dom'
 import { detect } from 'detect-browser'
-// import NavFooter from '../components/navigation/NavFooter'
-// import SiteFooter from '../components/navigation/SiteFooter'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 // import MobileHeader from '../components/navigation/MobileHeader'
 import Header, { HeaderProps } from '../components/navigation/Header'
+import NavFooter from '../components/navigation/NavFooter'
+import SiteFooter from '../components/navigation/SiteFooter'
 // import { frontendPages } from '../utilities/hooks/useNavGroups'
 // import CustomModal from '../components/base/CustomModal'
 
 export interface NavPageProps extends Omit<HeaderProps, 'onSearch'> {
 	children?: ReactNode
+	mappings: Mapping[]
+	data: KontentData
 }
 
 /**
@@ -118,9 +122,12 @@ const NavPage = (props: NavPageProps) => {
 			{/* <MobileHeader className="nav-page__mobile-header" onSearch={handleSearchSubmit} /> */}
 			<Header className="nav-page__main-header" onSearch={handleSearchSubmit} {...headerProps} />
 			<main className={`nav-page__content ${className || ''} nsw-container`}>{children}</main>
-			{/* <NavFooter />
-			<SiteFooter /> */}
-
+			<NavFooter {...props} />
+			<SiteFooter
+				mappings={props.mappings}
+				acknowledge={props.data.config.item.elements.acknowledgement.value}
+				menu={props.data.config.item.elements.footer_bottom_menu.linkedItems.map(item => item as Action)}
+			/>
 			{/* {isIE && (
 				<CustomModal
 					title="Internet Explorer 11"

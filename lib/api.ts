@@ -1,7 +1,7 @@
 import type { Glossary } from '@/models/glossary';
 import type { KeyLearningArea } from '@/models/key_learning_area';
 import type { Stage } from '@/models/stage';
-import type { StageCategory } from '@/models/stage_category';
+import type { StageGroup } from '@/models/stage_group';
 import type { Mapping } from '@/types/index';
 import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery';
 import get from 'lodash.get';
@@ -44,6 +44,7 @@ async function loadWebsiteConfig(preview = false) {
 			'content',
 			'icon',
 			'icon_position',
+			'icon_only',
 			'role',
 			'options',
 			'footer_sections',
@@ -62,7 +63,10 @@ async function loadWebsiteConfig(preview = false) {
 			'configuration',
 			'palette',
 			'font',
-			'copyright',
+			'acknowledgement',
+			'footer_top_top_sections',
+			'footer_top_menu_sections',
+			'footer_bottom_menu',
 			'menu',
 		])
 		.queryConfig({
@@ -289,11 +293,11 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				keyLearningAreas: [],
 				glossaries: [],
 				stages: [],
-				stageCategories: [],
+				stageGroups: [],
 			},
 		}
 
-		const [syllabuses, keyLearningAreas, glossaries, stages, stageCategories] = await Promise.all([
+		const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] = await Promise.all([
 			getAllItemsByType<Syllabus>({
 				type: 'syllabus',
 				depth: 4,
@@ -323,8 +327,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 					sortOrder: 'asc',
 				},
 			}),
-			getAllItemsByType<StageCategory>({
-				type: 'stage_category',
+			getAllItemsByType<StageGroup>({
+				type: 'stage_group',
 				preview,
 				order: {
 					element: 'elements.order',
@@ -337,7 +341,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		_result.data.keyLearningAreas = keyLearningAreas
 		_result.data.glossaries = glossaries
 		_result.data.stages = stages
-		_result.data.stageCategories = stageCategories
+		_result.data.stageGroups = stageGroups
 		return _result
 	}
 

@@ -1,24 +1,23 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true,
-        // we need document and window API available
-        "browser": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "next",
-		"prettier"
-    ],
-    "ignorePatterns": [".next/**/*", "out/**/*", "lib/**/*", "components/legacy/*"],
-    "rules": {
-        "semi": "off",
-        "quotes": "off",
-        "react/prop-types": "off",  // we don't want to validate props yet
-        "react/display-name": "off",
-        "react/react-in-jsx-scope": "off",  // suppress errors for missing 'import React' in files - next.js does it implicitly
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],  // allow jsx syntax in js files (for next.js project),
-        "no-unused-vars": ["warn", {"args": "all", "argsIgnorePattern": "^_"}], // ignore ones with underscore
-		"@next/next/no-document-import-in-page": "warn"
-    }
+	"env": {
+		"es2021": true,
+		"node": true,
+		// we need document and window API available
+		"browser": true
+	},
+	"extends": ["eslint:recommended", "next", "prettier"],
+	"ignorePatterns": [".next/**/*", "out/**/*", "lib/**/*", "components/legacy/*"],
+	"rules": {
+		"semi": "off",
+		"quotes": "off",
+		"react/prop-types": "off", // we don't want to validate props yet
+		"react/display-name": "off",
+		"react/react-in-jsx-scope": "off", // suppress errors for missing 'import React' in files - next.js does it implicitly
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }], // allow jsx syntax in js files (for next.js project),
+		"no-unused-vars": ["warn", { "args": "all", "argsIgnorePattern": "^_" }], // ignore ones with underscore
+		"@next/next/no-document-import-in-page": "warn",
+		"react/jsx-max-props-per-line": [1, { "maximum": 1, "when": "multiline" }],
+		"react/jsx-indent-props": [1, "tab"],
+		"react/jsx-closing-bracket-location": [1, "tag-aligned"]
+	}
 }

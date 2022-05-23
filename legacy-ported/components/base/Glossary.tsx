@@ -8,7 +8,7 @@ import { KeyLearningArea } from '@/models/key_learning_area'
 import { Syllabus } from '@/models/syllabus'
 
 const matchesSearch = (text: string, record: GlossaryType) => {
-	const keyLearningTitles: string[] = record.elements.syllabus.linkedItems.flatMap((syllabus: Syllabus) => {
+	const keyLearningTitles: string[] = record.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
 		return syllabus.elements.key_learning_area.linkedItems.map(item => item as KeyLearningArea).map(item => item.elements.title.value)
 	})
 	return [record.elements.title.value, record.elements.description.value, keyLearningTitles]
@@ -47,7 +47,7 @@ const applySearchAndFilter = (
 				section,
 				records: records
 					.filter((r) => {
-						const keyLearningValues : string[] = r.elements.syllabus.linkedItems.flatMap((syllabus: Syllabus) => {
+						const keyLearningValues : string[] = r.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
 							return syllabus.elements.key_learning_area.value
 						})
 						return !klaFilter || keyLearningValues.includes(klaFilter) || !keyLearningValues.length

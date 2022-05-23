@@ -1,15 +1,14 @@
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
-import { Glossary } from '@/models/glossary'
-import { Syllabus } from '@/models/syllabus'
+import type { Glossary } from '@/models/glossary'
+import type { Syllabus } from '@/models/syllabus'
+import type { IContentItemSystemAttributes } from '@kentico/kontent-delivery'
 import React from 'react'
 import { IGlossaryRecord } from '../../utilities/backendTypes'
 import CustomAccordion from '../custom/CustomAccordion'
 import Chip from './Chip'
 import { GlossaryProps } from './Glossary'
 
-interface GlossaryDefinition extends Pick<IGlossaryRecord, 'description' | 'syllabuses'>{
-	id: string
-}
+type GlossaryDefinition = Pick<IGlossaryRecord, 'description' | 'syllabuses'>  & Pick<IContentItemSystemAttributes, 'id'>
 
 interface GlossaryTerm {
 	term: IGlossaryRecord['term']
@@ -24,7 +23,7 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 		.flatMap((s) => s.records)
 		.reduce<GlossaryTerm[]>((acc, currentGlosssary: Glossary) => {
 			const found = acc.find((r) => r.key === currentGlosssary.elements.title.value)
-			const syllabussesOfCurrentGlossary = currentGlosssary.elements.syllabus.linkedItems.map((item) => item as Syllabus);
+			const syllabussesOfCurrentGlossary = currentGlosssary.elements.syllabuses.linkedItems.map((item) => item as Syllabus);
 			const description = currentGlosssary.elements.description.value;
 
 			if (found) {

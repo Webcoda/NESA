@@ -5,5 +5,5 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery';
  */
 export type Icon = IContentItem<{
   icon_position: Elements.MultipleChoiceElement;
-  icon: Elements.MultipleChoiceElement;
+  icon: Elements.CustomElement;
 }>;
