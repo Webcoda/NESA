@@ -21,10 +21,10 @@ import { Glossary } from '@/models/glossary'
 import { KeyLearningArea } from '@/models/key_learning_area'
 import { PageStage as PageStageType } from '@/models/page_stage'
 import { Stage } from '@/models/stage'
-import { StageCategory } from '@/models/stage_category'
+import { StageGroup } from '@/models/stage_group'
 import { Syllabus } from '@/models/syllabus'
 import { Mapping, MappingParams } from '@/types'
-import { convertGlossaryToIGlossary } from '@/utils'
+import { convertGlossaryToIGlossary, getTagFromYears } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
 import dynamic from 'next/dynamic'
@@ -55,7 +55,7 @@ function PageStage(props) {
 	const stages: Stage[] = get(props, 'data.stages.items', null)
 	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
 	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
-	const allStageCategories: StageCategory[] = get(props, 'data.stageCategories.items', null)
+	const allStageGroups: StageGroup[] = get(props, 'data.stageGroups.items', null)
 	const mappings : Mapping[] = get(props, 'mappings', null)
 	const title = get(page, 'elements.stage.linkedItems.0.elements.title.value', null)
 
@@ -157,13 +157,13 @@ function PageStage(props) {
 			<div className="syllabus-overview-page">
 				<ReactJson src={props} collapsed />
 				<div className="syllabus-overview-page__container">
-					{/* TODO: fix onStagesHeaderConfirm */}
+					{/* TODO: fix area */}
 					<StagesHeader
-						tag={selectedStages.length === 1 ? selectedStages[0]?.elements.tag.value : 'Custom View'}
+						tag={selectedStages.length === 1 ? getTagFromYears(selectedStages[0]?.elements.years.value) : 'Custom View'}
 						title={title}
-						area={'area'}
+						area=""
 						selectedStages={selectedStages.map((stage) => stage.system.codename)}
-						stageCategories={allStageCategories}
+						stageGroups={allStageGroups}
 						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={onStagesHeaderConfirm}
 					/>
@@ -223,7 +223,7 @@ function PageStage(props) {
 									return (
 										<Outcomes
 											stages={stages}
-											stageCategories={allStageCategories}
+											stageGroups={allStageGroups}
 											outcomes={outcomes}
 											// scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
 										/>

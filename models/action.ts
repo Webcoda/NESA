@@ -8,6 +8,6 @@ export type Action = IContentItem<{
   label: Elements.TextElement;
   icon: Elements.LinkedItemsElement<IContentItem>;
   actions: Elements.LinkedItemsElement<IContentItem>;
-  role: Elements.MultipleChoiceElement;
+  icon_only: Elements.MultipleChoiceElement;
   navigation_item: Elements.LinkedItemsElement<IContentItem>;
 }>;

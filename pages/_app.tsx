@@ -119,61 +119,8 @@ function MyApp({ Component, pageProps }) {
 					<link rel="canonical" href={get(pageProps, 'seo.canonicalUrl', null)} />
 				)}
 				{get(pageProps, 'seo.noIndex', null) && <meta name="robots" content="noindex,follow" />}
-				{/* {font !== "system-sans" && (
-					<link
-						rel="preconnect"
-						href="https://fonts.gstatic.com"
-						crossOrigin="true"
-					/>
-				)}
-				{font === "nunito_sans"
-					? [
-							<link
-								key="0"
-								href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-								as="style"
-								rel="preload"
-							/>,
-							<link
-								key="1"
-								href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-								rel="stylesheet"
-								media="print"
-								onLoad="this.media='all'"
-							/>,
-							<noscript key="2">
-								<link
-									rel="stylesheet"
-									href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-								/>
-							</noscript>,
-					  ]
-					: font === "fira_sans" && [
-							<link
-								key="0"
-								href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap"
-								as="style"
-								rel="preload"
-							/>,
-							<link
-								key="1"
-								href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,600;1,400;1,600&display=swap"
-								rel="stylesheet"
-								media="print"
-								onLoad="this.media='all'"
-							/>,
-							<noscript key="2">
-								<link
-									rel="stylesheet"
-									href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-								/>
-							</noscript>,
-					  ]} */}
-				<link
-					href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&display=swap"
-					rel="stylesheet"
-				/>
 				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+				<script src="https://kit.fontawesome.com/f93c22870f.js" crossOrigin="anonymous"></script>
 			</Head>
 			<ThemeProvider theme={theme}>
 				<Component {...pageProps} />

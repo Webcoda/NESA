@@ -1,6 +1,7 @@
+import { Action } from '@/models/action';
 import { ReactNode } from 'react';
 // import { makeLearningAreaUrl, Sections } from '../../constants/pathConstants';
-// import { UrlLink } from '../frontendTypes';
+import { UrlLink } from '../frontendTypes';
 // import useWebpages from './useWebpages';
 // import { IWebpage } from '../backendTypes';
 // import { AllKeyLearningAreas } from '../../store/mock/keyLearningAreas';
@@ -16,10 +17,10 @@ export interface NavGroup {
   subNav?: NavGroup[];
 }
 
-// export interface NavGroupSection {
-//   label: string;
-//   links: UrlLink[];
-// }
+export interface NavGroupSection {
+  label: string;
+  links: Action[];
+}
 
 // export const stagesPrimary: NavGroupSection = {
 //   label: Sections.STAGES.pages.PRIMARY.title,
@@ -285,15 +286,15 @@ export interface NavGroup {
 //     },
 //   ];
 // };
-// /**
-//  * Decides how many rows the list should use, based on what will give the 'fullest' appearance.
-//  * @param length
-//  */
-// export const useRowCount = (length: number) => {
-//   // Find the number of empty spaces left in the last group,
-//   // if the length is divided into groups of X items.
-//   const four = 3 - ((length - 1) % 4); // [1,2,3,4,5,6] -> [3,2,1,0,3,2]
-//   const five = 4 - ((length - 1) % 5); // [1,2,3,4,5,6] -> [4,3,2,1,0,4]
+/**
+ * Decides how many rows the list should use, based on what will give the 'fullest' appearance.
+ * @param length
+ */
+export const useRowCount = (length: number) => {
+  // Find the number of empty spaces left in the last group,
+  // if the length is divided into groups of X items.
+  const four = 3 - ((length - 1) % 4); // [1,2,3,4,5,6] -> [3,2,1,0,3,2]
+  const five = 4 - ((length - 1) % 5); // [1,2,3,4,5,6] -> [4,3,2,1,0,4]
 
-//   return four < five ? 4 : 5;
-// };
+  return four < five ? 4 : 5;
+};

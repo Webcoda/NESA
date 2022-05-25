@@ -1,7 +1,7 @@
 import OutcomeCard from '@/legacy-ported/components/card/OutcomeCard'
 import { Outcome } from '@/models/outcome'
 import { Stage } from '@/models/stage'
-import { StageCategory } from '@/models/stage_category'
+import { StageGroup } from '@/models/stage_group'
 import { Grid, IconButton } from '@material-ui/core'
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons'
 import React, { useState } from 'react'
@@ -18,7 +18,7 @@ export interface OutcomesProps {
 	isLandscape?: boolean
 	outcomes?: Outcome[]
 	stages: Stage[],
-	stageCategories: StageCategory[],
+	stageGroups: StageGroup[],
 }
 
 const Outcomes = (props: OutcomesProps): JSX.Element => {
@@ -27,7 +27,7 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 		isLandscape,
 		outcomes,
 		stages: AllStages,
-		stageCategories,
+		stageGroups: stageCategories,
 	} = props
 
 	const [displayModal, setDisplayModal] = useState(false)
@@ -42,7 +42,10 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 	const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement>()
 
 	const [activeStageIds, setActiveStageIds] = useState(
-		AllStages.filter((s) => !!s.elements.available.value.length).map((s) => s.system.id),
+		//TODO: fix - active stages are stages that assigned to a syllabus
+		[]
+
+		// AllStages.filter((s) => !!s.elements.available.value.length).map((s) => s.system.id),
 	)
 
 	const stages = AllStages.filter((stage) => activeStageIds.includes(stage.system.id))
@@ -288,7 +291,7 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 
 			{displayModal && (
 				<StageSelectOverlay
-					stageCategories={stageCategories}
+					stageGroups={stageCategories}
 					selected={activeStageIds}
 					title="Include Stages"
 					popoverStatus={displayModal}

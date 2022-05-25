@@ -29,9 +29,9 @@ export const projectModel = {
           codename: 'actions',
           name: 'Actions',
         },
-        role: {
-          codename: 'role',
-          name: 'Role',
+        icon_only: {
+          codename: 'icon_only',
+          name: 'Icon Only',
         },
         navigation_item: {
           codename: 'navigation_item',
@@ -393,6 +393,10 @@ export const projectModel = {
           codename: 'teaching_advice',
           name: 'Teaching Advice',
         },
+        stages: {
+          codename: 'stages',
+          name: 'Stages',
+        },
         focus_area_groups: {
           codename: 'focus_area_groups',
           name: 'Focus Area Groups',
@@ -505,9 +509,9 @@ export const projectModel = {
       codename: 'glossary',
       name: 'Glossary',
       elements: {
-        syllabus: {
-          codename: 'syllabus',
-          name: 'Syllabus',
+        syllabuses: {
+          codename: 'syllabuses',
+          name: 'Related Syllabuses',
         },
         title: {
           codename: 'title',
@@ -549,10 +553,6 @@ export const projectModel = {
           codename: 'header_logo',
           name: 'Header Logo',
         },
-        font: {
-          codename: 'font',
-          name: 'Font',
-        },
         subpages: {
           codename: 'subpages',
           name: 'Subpages',
@@ -564,6 +564,10 @@ export const projectModel = {
         seo__options: {
           codename: 'seo__options',
           name: 'Options',
+        },
+        acknowledgement: {
+          codename: 'acknowledgement',
+          name: 'Acknowledgement',
         },
         palette: {
           codename: 'palette',
@@ -577,13 +581,13 @@ export const projectModel = {
           codename: 'seo__canonical_url',
           name: 'Canonical URL',
         },
+        footer_top_top_sections: {
+          codename: 'footer_top_top_sections',
+          name: 'Footer Top - Top Sections',
+        },
         site_prefix: {
           codename: 'site_prefix',
           name: 'Site Prefix',
-        },
-        copyright: {
-          codename: 'copyright',
-          name: 'Copyright',
         },
         content: {
           codename: 'content',
@@ -592,6 +596,10 @@ export const projectModel = {
         main_menu: {
           codename: 'main_menu',
           name: 'Main Menu',
+        },
+        footer_bottom_menu: {
+          codename: 'footer_bottom_menu',
+          name: 'Footer Bottom Menu',
         },
         seo__keywords: {
           codename: 'seo__keywords',
@@ -605,9 +613,9 @@ export const projectModel = {
           codename: 'seo__title',
           name: 'Title',
         },
-        footer_sections: {
-          codename: 'footer_sections',
-          name: 'Footer sections',
+        footer_top_menu_sections: {
+          codename: 'footer_top_menu_sections',
+          name: 'Footer Top - Menu Sections',
         },
         favicon: {
           codename: 'favicon',
@@ -635,7 +643,7 @@ export const projectModel = {
       elements: {
         order: {
           codename: 'order',
-          name: 'Order',
+          name: 'Sort Order',
         },
         title: {
           codename: 'title',
@@ -775,7 +783,7 @@ export const projectModel = {
         },
         relatedlifeskillsoutcomes: {
           codename: 'relatedlifeskillsoutcomes',
-          name: 'RelatedLifeSkillsOutcomes',
+          name: 'Related Life Skills Outcomes',
         },
         syllabustype__type: {
           codename: 'syllabustype__type',
@@ -783,7 +791,7 @@ export const projectModel = {
         },
         isoverarching: {
           codename: 'isoverarching',
-          name: 'IsOverarching',
+          name: 'Is Overarching',
         },
         stages: {
           codename: 'stages',
@@ -1035,25 +1043,21 @@ export const projectModel = {
       elements: {
         order: {
           codename: 'order',
-          name: 'Order',
+          name: 'Sort Order',
         },
         title: {
           codename: 'title',
           name: 'Title',
         },
-        available: {
-          codename: 'available',
-          name: 'Available',
-        },
-        tag: {
-          codename: 'tag',
-          name: 'Tag',
+        years: {
+          codename: 'years',
+          name: 'Years',
         },
       },
     },
-    stage_category: {
-      codename: 'stage_category',
-      name: 'Stage Category',
+    stage_group: {
+      codename: 'stage_group',
+      name: 'Stage Group',
       elements: {
         title: {
           codename: 'title',
@@ -1062,6 +1066,10 @@ export const projectModel = {
         order: {
           codename: 'order',
           name: 'Order',
+        },
+        years: {
+          codename: 'years',
+          name: 'Years',
         },
         stages: {
           codename: 'stages',
