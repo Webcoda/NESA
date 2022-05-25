@@ -1,13 +1,13 @@
-import type { Glossary } from '@/models/glossary';
-import type { KeyLearningArea } from '@/models/key_learning_area';
-import type { Stage } from '@/models/stage';
-import type { StageGroup } from '@/models/stage_group';
-import type { Mapping } from '@/types/index';
-import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery';
-import get from 'lodash.get';
-import { Syllabus } from "../models/syllabus";
-import packageInfo from '../package.json';
-
+import intersection from 'lodash.intersection';
+import type { Glossary } from '@/models/glossary'
+import type { KeyLearningArea } from '@/models/key_learning_area'
+import type { Stage } from '@/models/stage'
+import type { StageGroup } from '@/models/stage_group'
+import type { HomepageConfig, KontentCurriculumResult, Mapping, Seo } from '@/types/index'
+import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery'
+import get from 'lodash.get'
+import { Syllabus } from '../models/syllabus'
+import packageInfo from '../package.json'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -24,7 +24,7 @@ const client = new DeliveryClient({
 	],
 })
 
-async function loadWebsiteConfig(preview = false) {
+async function loadWebsiteConfig(preview = false) : Promise<HomepageConfig> {
 	const config = await client
 		.item('homepage')
 		.depthParameter(10)
@@ -125,7 +125,7 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 	return paths
 }
 
-export async function getSitemapMappings(preview = false) {
+export async function getSitemapMappings(preview = false) : Promise<Mapping[]> {
 	const data = await client
 		.item('homepage')
 		.depthParameter(4) // depends on the sitemap level (+1 for content type to download)
@@ -137,7 +137,7 @@ export async function getSitemapMappings(preview = false) {
 		.then(fnReturnData)
 
 	const rootSlug = []
-	const pathsFromKontent : Mapping[] = [
+	const pathsFromKontent: Mapping[] = [
 		{
 			params: {
 				slug: rootSlug,
@@ -152,21 +152,15 @@ export async function getSitemapMappings(preview = false) {
 	return pathsFromKontent.concat(...subPaths)
 }
 
-function getAllItemsByType<T extends IContentItem>({
-	type,
-	depth = 2,
-	order = null,
-	preview
-}) {
-	let temp = client.items<T>()
-		.type(type)
-		.depthParameter(depth)
-	if(order) {
+function getAllItemsByType<T extends IContentItem>({ type, depth = 2, order = null, preview }) {
+	let temp = client.items<T>().type(type).depthParameter(depth)
+	if (order) {
 		temp = temp.orderParameter(order?.element, order?.sortOrder)
 	}
 
 	return temp.queryConfig({ usePreviewMode: preview }).toPromise().then(fnReturnData)
 }
+
 
 export async function getPageStaticPropsForPath(params, preview = false) {
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
@@ -184,7 +178,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	}
 
 	// TODO could be loaded right in getSitemapMappings
-	const seoData = await client
+	const seoData : Seo = await client
 		.item(navigationItemSystemInfo.codename)
 		.elementsParameter([
 			'seo__title',
@@ -237,8 +231,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			...result,
 			data: {
 				...result.data,
-				listingItems: {}
-			}
+				listingItems: {},
+			},
 		}
 
 		const linkedItemsResponse = await client
@@ -285,7 +279,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			return _result
 		}
 	} else if (isStagePage) {
-		const _result = {
+		const _result: KontentCurriculumResult = {
 			...result,
 			data: {
 				...result.data,
@@ -337,11 +331,22 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			}),
 		])
 
-		_result.data.syllabuses = syllabuses
-		_result.data.keyLearningAreas = keyLearningAreas
-		_result.data.glossaries = glossaries
-		_result.data.stages = stages
-		_result.data.stageGroups = stageGroups
+		_result.data.syllabuses = syllabuses.items
+		_result.data.keyLearningAreas = keyLearningAreas.items
+		_result.data.glossaries = glossaries.items
+		_result.data.stages = stages.items
+
+		const allYearsAssignedToSyllabus = _result.data.syllabuses.flatMap(syllabus => syllabus.elements.stagesyears__years.value.flatMap(item => item.name));
+
+		_result.data.stages = _result.data.stages.filter(stage =>  {
+			return intersection(stage.elements.years.value.flatMap(item => item.name), allYearsAssignedToSyllabus).length > 0
+		})
+
+		_result.data.stageGroups = stageGroups.items
+		_result.data.stageGroups = _result.data.stageGroups.filter(stageGroup => {
+			return intersection(stageGroup.elements.years.value.flatMap(item => item.name), allYearsAssignedToSyllabus).length > 0
+		})
+
 		return _result
 	}
 

@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
 function PageStage(props) {
 	const classes = useStyles()
 	const page: PageStageType = get(props, 'data.page.item', null)
-	const syllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
-	const stages: Stage[] = get(props, 'data.stages.items', null)
-	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas.items', null)
-	const allGlossaries: Glossary[] = get(props, 'data.glossaries.items', null)
-	const allStageGroups: StageGroup[] = get(props, 'data.stageGroups.items', null)
+	const syllabuses: Syllabus[] = get(props, 'data.syllabuses', null)
+	const stages: Stage[] = get(props, 'data.stages', null)
+	const allKeyLearningAreas: KeyLearningArea[] = get(props, 'data.keyLearningAreas', null)
+	const allGlossaries: Glossary[] = get(props, 'data.glossaries', null)
+	const allStageGroups: StageGroup[] = get(props, 'data.stageGroups', null)
 	const mappings : Mapping[] = get(props, 'mappings', null)
 	const title = get(page, 'elements.stage.linkedItems.0.elements.title.value', null)
 

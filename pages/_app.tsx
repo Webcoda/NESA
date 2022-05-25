@@ -120,7 +120,6 @@ function MyApp({ Component, pageProps }) {
 				)}
 				{get(pageProps, 'seo.noIndex', null) && <meta name="robots" content="noindex,follow" />}
 				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-				<script src="https://kit.fontawesome.com/f93c22870f.js" crossOrigin="anonymous"></script>
 			</Head>
 			<ThemeProvider theme={theme}>
 				<Component {...pageProps} />

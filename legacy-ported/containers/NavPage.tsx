@@ -1,5 +1,5 @@
 import { Action } from '@/models/action'
-import { Mapping, KontentData } from '@/types'
+import { Mapping, KontentCurriculumResultData } from '@/types'
 import { Button } from '@material-ui/core'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 // import { useHistory } from 'react-router-dom'
@@ -16,7 +16,7 @@ import SiteFooter from '../components/navigation/SiteFooter'
 export interface NavPageProps extends Omit<HeaderProps, 'onSearch'> {
 	children?: ReactNode
 	mappings: Mapping[]
-	data: KontentData
+	data: KontentCurriculumResultData
 }
 
 /**

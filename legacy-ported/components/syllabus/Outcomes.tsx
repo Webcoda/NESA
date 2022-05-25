@@ -43,7 +43,7 @@ const Outcomes = (props: OutcomesProps): JSX.Element => {
 
 	const [activeStageIds, setActiveStageIds] = useState(
 		//TODO: fix - active stages are stages that assigned to a syllabus
-		[]
+		AllStages.map(s => s.system.id)
 
 		// AllStages.filter((s) => !!s.elements.available.value.length).map((s) => s.system.id),
 	)

@@ -8,7 +8,6 @@ import { ContentSection } from '@/models/content_section'
 import { Menu } from '@/models/menu'
 import { Mapping } from '@/types'
 import { IContentItem } from '@kentico/kontent-delivery'
-import dynamic from 'next/dynamic'
 import React, { Fragment } from 'react'
 
 interface SectionProps {
@@ -18,8 +17,6 @@ interface SectionProps {
 	sections: NavGroupSection[]
 	mappings: Mapping[]
 }
-
-const ReactJson = dynamic(() => import('react-json-view'), { ssr: false }) as any
 
 const FooterGroup = (props: SectionProps) => {
 	const { sections, mappings } = props
@@ -113,7 +110,7 @@ export const PureNavFooter = (props): JSX.Element => {
 											key={action.system.id}
 											className={isSocialMenu ? 'no-icon' : ''}
 											action={action}
-											{...props}
+											mappings={props.mappings}
 										/>
 									)
 								})}
@@ -127,8 +124,6 @@ export const PureNavFooter = (props): JSX.Element => {
 				{menus
 					?.filter((g) => !!g.elements.actions.value.length)
 					?.map((g) => {
-						console.log(g)
-
 						const sections: NavGroupSection[] = [{
 							label: g.elements.label.value,
 							links: g.elements.actions.linkedItems.map(item => item as Action)
@@ -138,14 +133,12 @@ export const PureNavFooter = (props): JSX.Element => {
 							<FooterGroup
 								key={g.system.id}
 								sections={sections}
-								{...props}
+								mappings={props.mappings}
 							/>
 						)
 					})
 				}
 			</div>
-
-			<ReactJson src={props} collapsed />
 		</footer>
 	)
 }
@@ -155,10 +148,6 @@ export const PureNavFooter = (props): JSX.Element => {
  * @param props
  * @constructor
  */
-export default (props) => {
-	// TODO: fix
-	// const navGroups = useNavGroups(true)
-
-	// TODO: fix
+export default function NavFooter(props) {
 	return <PureNavFooter {...props} />
 }
