@@ -1,10 +1,21 @@
-import intersection from 'lodash.intersection';
+import intersection from 'lodash.intersection'
 import type { Glossary } from '@/models/glossary'
 import type { KeyLearningArea } from '@/models/key_learning_area'
 import type { Stage } from '@/models/stage'
 import type { StageGroup } from '@/models/stage_group'
-import type { HomepageConfig, KontentCurriculumResult, Mapping, Seo } from '@/types/index'
-import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery'
+import type {
+	HomepageConfig,
+	KontentCurriculumResult,
+	Mapping,
+	Seo,
+} from '@/types/index'
+import {
+	DeliveryClient,
+	IContentItem,
+	createRichTextHtmlResolver,
+	IRichTextHtmlResolverInput,
+	Elements,
+} from '@kentico/kontent-delivery'
 import get from 'lodash.get'
 import { Syllabus } from '../models/syllabus'
 import packageInfo from '../package.json'
@@ -24,7 +35,9 @@ const client = new DeliveryClient({
 	],
 })
 
-async function loadWebsiteConfig(preview = false) : Promise<HomepageConfig> {
+const richtextResolver = createRichTextHtmlResolver()
+
+async function loadWebsiteConfig(preview = false): Promise<HomepageConfig> {
 	const config = await client
 		.item('homepage')
 		.depthParameter(10)
@@ -84,7 +97,8 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 	for (const pageCodename of pagesCodenames) {
 		const currentItem = data.linkedItems[pageCodename]
 		const pageSlug = parentSlug.concat(currentItem.elements.slug.value)
-		const currentItemContentWrapper = data.linkedItems[currentItem.elements.content.value[0]]
+		const currentItemContentWrapper =
+			data.linkedItems[currentItem.elements.content.value[0]]
 		paths.push({
 			params: {
 				slug: pageSlug,
@@ -94,7 +108,10 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 		})
 
 		// Listing pages
-		if (currentItemContentWrapper && currentItemContentWrapper.system.type === 'listing_page') {
+		if (
+			currentItemContentWrapper &&
+			currentItemContentWrapper.system.type === 'listing_page'
+		) {
 			const subItemsData = await client
 				.items()
 				.type(currentItemContentWrapper.elements.content_type.value)
@@ -118,14 +135,19 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 			})
 		}
 
-		const subPaths = await getSubPaths(data, currentItem.elements.subpages.value, pageSlug, preview)
+		const subPaths = await getSubPaths(
+			data,
+			currentItem.elements.subpages.value,
+			pageSlug,
+			preview,
+		)
 		paths.push(...subPaths)
 	}
 
 	return paths
 }
 
-export async function getSitemapMappings(preview = false) : Promise<Mapping[]> {
+export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	const data = await client
 		.item('homepage')
 		.depthParameter(4) // depends on the sitemap level (+1 for content type to download)
@@ -142,25 +164,50 @@ export async function getSitemapMappings(preview = false) : Promise<Mapping[]> {
 			params: {
 				slug: rootSlug,
 				navigationItem: data.item.system, // will be ignored by next in getContentPaths
-				contentItem: data.linkedItems[data.item.elements.content.value[0]].system, // will be ignored by next in getContentPaths
+				contentItem:
+					data.linkedItems[data.item.elements.content.value[0]]
+						.system, // will be ignored by next in getContentPaths
 			},
 		},
 	]
 
-	const subPaths = await getSubPaths(data, data.item.elements.subpages.value, rootSlug, preview)
+	const subPaths = await getSubPaths(
+		data,
+		data.item.elements.subpages.value,
+		rootSlug,
+		preview,
+	)
 
 	return pathsFromKontent.concat(...subPaths)
 }
 
-function getAllItemsByType<T extends IContentItem>({ type, depth = 2, order = null, preview }) {
+export function resolveRichText(
+	element: Elements.RichTextElement,
+	linkedItems: IContentItem[],
+) {
+	const x: IRichTextHtmlResolverInput = {
+		element,
+		linkedItems,
+	}
+	return richtextResolver.resolveRichText(x)
+}
+
+function getAllItemsByType<T extends IContentItem>({
+	type,
+	depth = 2,
+	order = null,
+	preview,
+}) {
 	let temp = client.items<T>().type(type).depthParameter(depth)
 	if (order) {
 		temp = temp.orderParameter(order?.element, order?.sortOrder)
 	}
 
-	return temp.queryConfig({ usePreviewMode: preview }).toPromise().then(fnReturnData)
+	return temp
+		.queryConfig({ usePreviewMode: preview })
+		.toPromise()
+		.then(fnReturnData)
 }
-
 
 export async function getPageStaticPropsForPath(params, preview = false) {
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
@@ -168,9 +215,12 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 
 	const slugValue = params && params.slug ? params.slug : []
 
-	const pathMapping = mappings.find((path) => path.params.slug.join('#') === slugValue.join('#')) // condition works for array of basic values
+	const pathMapping = mappings.find(
+		(path) => path.params.slug.join('#') === slugValue.join('#'),
+	) // condition works for array of basic values
 
-	const navigationItemSystemInfo = pathMapping && pathMapping.params.navigationItem
+	const navigationItemSystemInfo =
+		pathMapping && pathMapping.params.navigationItem
 	const contentItemSystemInfo = pathMapping && pathMapping.params.contentItem
 
 	if (!navigationItemSystemInfo || !contentItemSystemInfo) {
@@ -178,7 +228,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	}
 
 	// TODO could be loaded right in getSitemapMappings
-	const seoData : Seo = await client
+	const seoData: Seo = await client
 		.item(navigationItemSystemInfo.codename)
 		.elementsParameter([
 			'seo__title',
@@ -197,10 +247,20 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			title:
 				get(response, 'item.elements.seo__title.value', null) ||
 				get(response, 'item.elements.label.value', null),
-			description: get(response, 'item.elements.seo__description.value', null),
+			description: get(
+				response,
+				'item.elements.seo__description.value',
+				null,
+			),
 			keywords: get(response, 'item.elements.seo__keywords.value', null),
-			canonicalUrl: get(response, 'item.elements.seo__canonical_url.value', null),
-			noIndex: get(response, 'item.elements.seo__options.value', []).some((item) => item.codename == 'no_index'),
+			canonicalUrl: get(
+				response,
+				'item.elements.seo__canonical_url.value',
+				null,
+			),
+			noIndex: get(response, 'item.elements.seo__options.value', []).some(
+				(item) => item.codename == 'no_index',
+			),
 		}))
 
 	// Loading content data
@@ -244,7 +304,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			.toPromise()
 			.then(fnReturnData)
 
-		_result.data.listingItems[pageResponse.item.system.codename] = linkedItemsResponse
+		_result.data.listingItems[pageResponse.item.system.codename] =
+			linkedItemsResponse
 
 		return _result
 	} else if (isLandingPage) {
@@ -275,7 +336,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				.toPromise()
 				.then(fnReturnData)
 
-			_result.data.listingSections[listingSection.system.codename] = linkedItemsResponse
+			_result.data.listingSections[listingSection.system.codename] =
+				linkedItemsResponse
 			return _result
 		}
 	} else if (isStagePage) {
@@ -283,69 +345,91 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			...result,
 			data: {
 				...result.data,
-				syllabuses: [],
-				keyLearningAreas: [],
-				glossaries: [],
-				stages: [],
-				stageGroups: [],
+				syllabuses: null,
+				keyLearningAreas: null,
+				glossaries: null,
+				stages: null,
+				stageGroups: null,
 			},
 		}
 
-		const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] = await Promise.all([
-			getAllItemsByType<Syllabus>({
-				type: 'syllabus',
-				depth: 4,
-				preview,
-			}),
-			getAllItemsByType<KeyLearningArea>({
-				type: 'key_learning_area',
-				preview,
-				order: {
-					element: 'elements.order',
-					sortOrder: 'asc',
-				},
-			}),
-			getAllItemsByType<Glossary>({
-				type: 'glossary',
-				preview,
-				order: {
-					element: 'elements.title',
-					sortOrder: 'asc',
-				},
-			}),
-			getAllItemsByType<Stage>({
-				type: 'stage',
-				preview,
-				order: {
-					element: 'elements.order',
-					sortOrder: 'asc',
-				},
-			}),
-			getAllItemsByType<StageGroup>({
-				type: 'stage_group',
-				preview,
-				order: {
-					element: 'elements.order',
-					sortOrder: 'asc',
-				},
-			}),
-		])
+		const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] =
+			await Promise.all([
+				getAllItemsByType<Syllabus>({
+					type: 'syllabus',
+					depth: 6,
+					preview,
+				}),
+				getAllItemsByType<KeyLearningArea>({
+					type: 'key_learning_area',
+					preview,
+					order: {
+						element: 'elements.order',
+						sortOrder: 'asc',
+					},
+				}),
+				getAllItemsByType<Glossary>({
+					type: 'glossary',
+					preview,
+					order: {
+						element: 'elements.title',
+						sortOrder: 'asc',
+					},
+				}),
+				getAllItemsByType<Stage>({
+					type: 'stage',
+					preview,
+					order: {
+						element: 'elements.order',
+						sortOrder: 'asc',
+					},
+				}),
+				getAllItemsByType<StageGroup>({
+					type: 'stage_group',
+					preview,
+					order: {
+						element: 'elements.order',
+						sortOrder: 'asc',
+					},
+				}),
+			])
 
-		_result.data.syllabuses = syllabuses.items
-		_result.data.keyLearningAreas = keyLearningAreas.items
-		_result.data.glossaries = glossaries.items
-		_result.data.stages = stages.items
+		_result.data.syllabuses = syllabuses
+		_result.data.keyLearningAreas = keyLearningAreas
+		_result.data.glossaries = glossaries
+		_result.data.stages = stages
+		_result.data.stageGroups = stageGroups
 
-		const allYearsAssignedToSyllabus = _result.data.syllabuses.flatMap(syllabus => syllabus.elements.stagesyears__years.value.flatMap(item => item.name));
+		const allYearsAssignedToSyllabus =
+			_result.data.syllabuses.items.flatMap((syllabus) =>
+				syllabus.elements.stagesyears__years.value.flatMap(
+					(item) => item.name,
+				),
+			)
 
-		_result.data.stages = _result.data.stages.filter(stage =>  {
-			return intersection(stage.elements.years.value.flatMap(item => item.name), allYearsAssignedToSyllabus).length > 0
-		})
+		_result.data.stages.items = _result.data.stages.items.filter(
+			(stage) => {
+				return (
+					intersection(
+						stage.elements.years.value.flatMap((item) => item.name),
+						allYearsAssignedToSyllabus,
+					).length > 0
+				)
+			},
+		)
 
-		_result.data.stageGroups = stageGroups.items
-		_result.data.stageGroups = _result.data.stageGroups.filter(stageGroup => {
-			return intersection(stageGroup.elements.years.value.flatMap(item => item.name), allYearsAssignedToSyllabus).length > 0
-		})
+		_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
+			(stageGroup) => {
+				return (
+					intersection(
+						stageGroup.elements.years.value.flatMap(
+							(item) => item.name,
+						),
+						allYearsAssignedToSyllabus,
+					).length > 0
+				)
+			},
+		)
 
 		return _result
 	}

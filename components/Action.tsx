@@ -12,7 +12,11 @@ interface ActionProps {
 
 function Action(props: ActionProps) {
 	const { action, mappings, className } = props
-	const navigationItem = get(action, 'elements.navigation_item.linkedItems[0]', null)
+	const navigationItem = get(
+		action,
+		'elements.navigation_item.linkedItems[0]',
+		null,
+	)
 	const href =
 		navigationItem.system.type === 'external_url'
 			? get(navigationItem, 'elements.url.value')
@@ -22,27 +26,43 @@ function Action(props: ActionProps) {
 
 	const isShowIconOnly = !!action?.elements?.icon_only?.value.length
 
-	const new_window = action_options.some((item) => item.codename === 'new_window')
-	const no_follow = action_options.some((item) => item.codename === 'no_follow')
+	const new_window = action_options.some(
+		(item) => item.codename === 'new_window',
+	)
+	const no_follow = action_options.some(
+		(item) => item.codename === 'no_follow',
+	)
 	const icon = get(action, 'elements.icon.linkedItems[0]', null)
 
-	const iconPosition = get(icon, 'elements.icon_position.value[0].codename', null)
+	const iconPosition = get(
+		icon,
+		'elements.icon_position.value[0].codename',
+		null,
+	)
 	const options = {
 		target: new_window ? '_blank' : undefined,
 		rel:
 			new_window || no_follow
-				? `${new_window ? 'noopener noreferrer' : ''} ${no_follow ? 'nofollow' : ''}`.trim()
+				? `${new_window ? 'noopener noreferrer' : ''} ${
+						no_follow ? 'nofollow' : ''
+				  }`.trim()
 				: undefined,
 	}
 
 	return !isShowIconOnly ? (
-		<Link naked className={className} href={href} {...config} {...options}>
+		<Link className={className} href={href} {...config} {...options}>
 			{iconPosition && iconPosition === 'left' && <Icon icon={icon} />}
 			<span>{action.elements.label.value}</span>
 			{iconPosition && iconPosition === 'right' && <Icon icon={icon} />}
 		</Link>
 	) : (
-		<Link naked className={className} aria-label={action.elements.label.value} href={href} {...config} {...options}>
+		<Link
+			className={className}
+			aria-label={action.elements.label.value}
+			href={href}
+			{...config}
+			{...options}
+		>
 			<Icon icon={icon} />
 		</Link>
 	)
