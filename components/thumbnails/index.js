@@ -1,7 +1,5 @@
 import Post from './Post'
 
-export { Post }
+export const _ = { Post }
 
-export default {
-	Post,
-}
+export default _
