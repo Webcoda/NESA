@@ -1,4 +1,5 @@
-import { Layout, RichText, UnknownComponent } from '@/components'
+import { Layout, UnknownComponent } from '@/components'
+import RichText from '@/components/RichText'
 import { useGlossary } from '@/legacy-ported/components/base/Glossary'
 import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
 import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
@@ -7,7 +8,6 @@ import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerform
 import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
-import SyllabusContentSection from '@/legacy-ported/components/syllabus/SyllabusContentSection'
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
 import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
@@ -22,7 +22,11 @@ import { Stage } from '@/models/stage'
 import { StageGroup } from '@/models/stage_group'
 import { Syllabus } from '@/models/syllabus'
 import { Mapping } from '@/types'
-import { convertGlossaryToIGlossary, getTagFromYears } from '@/utils'
+import {
+	convertGlossaryToIGlossary,
+	getLinkElementUsedByRichtext,
+	getTagFromYears,
+} from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
 import dynamic from 'next/dynamic'
@@ -49,9 +53,13 @@ const useStyles = makeStyles((theme) => ({
 function PageStage(props) {
 	// const classes = useStyles()
 	const page: PageStageType = get(props, 'data.page.item', null)
-	const syllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
-	const syllabusLinkedItems = get(props, 'data.syllabuses.linkedItems', [])
-	const stages: Stage[] = get(props, 'data.stages.items', null)
+	const allSyllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
+	const allSyllabusesLinkedItems = get(
+		props,
+		'data.syllabuses.linkedItems',
+		[],
+	)
+	const allStages: Stage[] = get(props, 'data.stages.items', null)
 	const allKeyLearningAreas: KeyLearningArea[] = get(
 		props,
 		'data.keyLearningAreas.items',
@@ -93,7 +101,7 @@ function PageStage(props) {
 	// Methods
 	const onStagesHeaderConfirm = (ids: string[]) => {
 		const tabsForCustomPage = currentTabs.map((t) => t.id)
-		const syllabusesForCustomPage = syllabuses.map((s) => s.system.id)
+		const syllabusesForCustomPage = allSyllabuses.map((s) => s.system.id)
 
 		// If more than 1 stages are selected redirect to Custom Syllabus page
 		if (ids.length > 1) {
@@ -130,7 +138,7 @@ function PageStage(props) {
 
 	const mapFnIncludeSyllabusesOnKla = (kla: KeyLearningArea) => ({
 		...kla,
-		syllabuses: syllabuses.filter((syllabus) =>
+		syllabuses: allSyllabuses.filter((syllabus) =>
 			syllabus.elements.key_learning_area.linkedItems.some(
 				(_kla: KeyLearningArea) => _kla.system.id === kla.system.id,
 			),
@@ -220,36 +228,17 @@ function PageStage(props) {
 								learningAreas={
 									allKeyLearningAreasWithSyllabuses
 								}
-								body={(syl: Syllabus) => {
-									return (
-										<>
-											<RichText
-												{...props}
-												linkedItems={Object.keys(
-													syllabusLinkedItems,
-												).reduce((acc, curr) => {
-													if (
-														syl.elements.overview.linkedItemCodenames.includes(
-															curr,
-														)
-													) {
-														return {
-															...acc,
-															[curr]: syllabusLinkedItems[
-																curr
-															],
-														}
-													}
-													return acc
-												}, {})}
-												className="syllabus-content-section cms-content-formatting"
-												richTextElement={
-													syl.elements.overview
-												}
-											/>
-										</>
-									)
-								}}
+								body={(syl: Syllabus) => (
+									<RichText
+										{...props}
+										linkedItems={getLinkElementUsedByRichtext(
+											syl.elements.overview,
+											allSyllabusesLinkedItems,
+										)}
+										className="syllabus-content-section cms-content-formatting"
+										richTextElement={syl.elements.overview}
+									/>
+								)}
 							/>
 							{/* rationale */}
 							<StageTabPanel
@@ -259,8 +248,14 @@ function PageStage(props) {
 									allKeyLearningAreasWithSyllabuses
 								}
 								body={(syl) => (
-									<SyllabusContentSection
-										innerHtml={syl.elements.rationale.value}
+									<RichText
+										{...props}
+										linkedItems={getLinkElementUsedByRichtext(
+											syl.elements.rationale,
+											allSyllabusesLinkedItems,
+										)}
+										className="syllabus-content-section cms-content-formatting"
+										richTextElement={syl.elements.rationale}
 									/>
 								)}
 							/>
@@ -272,8 +267,14 @@ function PageStage(props) {
 									allKeyLearningAreasWithSyllabuses
 								}
 								body={(syl) => (
-									<SyllabusContentSection
-										innerHtml={syl.elements.aim.value}
+									<RichText
+										{...props}
+										linkedItems={getLinkElementUsedByRichtext(
+											syl.elements.aim,
+											allSyllabusesLinkedItems,
+										)}
+										className="syllabus-content-section cms-content-formatting"
+										richTextElement={syl.elements.aim}
 									/>
 								)}
 							/>
@@ -302,7 +303,7 @@ function PageStage(props) {
 										)
 									return (
 										<Outcomes
-											stages={stages}
+											stages={allStages}
 											stageGroups={allStageGroups}
 											outcomes={outcomes}
 											// scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
@@ -319,7 +320,7 @@ function PageStage(props) {
 								}
 								body={(syl: Syllabus) => (
 									<Content
-										stages={stages}
+										stages={allStages}
 										// TODO: add defaultOffsetTop
 										// defaultOffsetTop={SYLLABUS.CONTENT_DEFAULT_OFFSET_TOP.STAGES}
 										defaultOffsetTop={0}

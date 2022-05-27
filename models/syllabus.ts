@@ -11,15 +11,16 @@ export type Syllabus = IContentItem<{
 	key_learning_area: Elements.LinkedItemsElement<IContentItem>
 	overview: Elements.RichTextElement
 	from_date: Elements.DateTimeElement
+	aim: Elements.RichTextElement
 	courseoverview_achievementhsc: Elements.LinkedItemsElement<IContentItem>
 	courseoverview_prerequisits: Elements.LinkedItemsElement<IContentItem>
+	rationale: Elements.RichTextElement
 	assessments: Elements.LinkedItemsElement<IContentItem>
 	courseoverview_learning11: Elements.RichTextElement
 	courseoverview_syllabustype: Elements.MultipleChoiceElement
 	related_life_skills_syllabus: Elements.LinkedItemsElement<IContentItem>
 	courseoverview_learning12: Elements.RichTextElement
 	courseoverview_selftuition: Elements.MultipleChoiceElement
-	aim: Elements.CustomElement
 	courseoverview_200hourrules: Elements.RichTextElement
 	outcomes: Elements.LinkedItemsElement<IContentItem>
 	code: Elements.TextElement
@@ -33,7 +34,6 @@ export type Syllabus = IContentItem<{
 	courseoverview_eligibility: Elements.RichTextElement
 	courseoverview_corequisites: Elements.LinkedItemsElement<IContentItem>
 	courseoverview_100hourrules: Elements.RichTextElement
-	rationale: Elements.CustomElement
 	courseoverview_courcerequirements: Elements.RichTextElement
 	courseoverview_otherinfo: Elements.RichTextElement
 	focus_areas: Elements.LinkedItemsElement<IContentItem>
