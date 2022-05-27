@@ -1,4 +1,3 @@
-import intersection from 'lodash.intersection'
 import type { Glossary } from '@/models/glossary'
 import type { KeyLearningArea } from '@/models/key_learning_area'
 import type { Stage } from '@/models/stage'
@@ -9,14 +8,9 @@ import type {
 	Mapping,
 	Seo,
 } from '@/types/index'
-import {
-	DeliveryClient,
-	IContentItem,
-	createRichTextHtmlResolver,
-	IRichTextHtmlResolverInput,
-	Elements,
-} from '@kentico/kontent-delivery'
+import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery'
 import get from 'lodash.get'
+import intersection from 'lodash.intersection'
 import { Syllabus } from '../models/syllabus'
 import packageInfo from '../package.json'
 
@@ -34,8 +28,6 @@ const client = new DeliveryClient({
 		},
 	],
 })
-
-const richtextResolver = createRichTextHtmlResolver()
 
 async function loadWebsiteConfig(preview = false): Promise<HomepageConfig> {
 	const config = await client
@@ -179,17 +171,6 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	)
 
 	return pathsFromKontent.concat(...subPaths)
-}
-
-export function resolveRichText(
-	element: Elements.RichTextElement,
-	linkedItems: IContentItem[],
-) {
-	const x: IRichTextHtmlResolverInput = {
-		element,
-		linkedItems,
-	}
-	return richtextResolver.resolveRichText(x)
 }
 
 function getAllItemsByType<T extends IContentItem>({
@@ -406,17 +387,6 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 					(item) => item.name,
 				),
 			)
-
-		_result.data.stages.items = _result.data.stages.items.filter(
-			(stage) => {
-				return (
-					intersection(
-						stage.elements.years.value.flatMap((item) => item.name),
-						allYearsAssignedToSyllabus,
-					).length > 0
-				)
-			},
-		)
 
 		_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
 			(stageGroup) => {

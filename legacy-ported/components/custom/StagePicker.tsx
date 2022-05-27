@@ -9,10 +9,11 @@ import { TreeElement } from './treeUtils'
 
 export type StagePickerProps = FixedTreePickerProps & {
 	stageGroups: StageGroup[]
+	disabledStages?: Stage[]
 }
 
 const StagePicker = (props: StagePickerProps): JSX.Element => {
-	const { selected, stageGroups, ...others } = props
+	const { selected, stageGroups, disabledStages = [], ...others } = props
 
 	return (
 		<>
@@ -21,15 +22,24 @@ const StagePicker = (props: StagePickerProps): JSX.Element => {
 					<Grid key={stageGroup.system.id} item xs={12} md={4}>
 						<h6>{stageGroup.elements.title.value}</h6>
 						<TreePicker
-							rootElements={stageGroup.elements.stages.linkedItems.map<TreeElement>((s: Stage) => {
-								return {
-									id: s.system.codename,
-									label: s.elements.title.value,
-								}
-							})}
+							rootElements={stageGroup.elements.stages.linkedItems.map<TreeElement>(
+								(s: Stage) => {
+									return {
+										id: s.system.codename,
+										label: s.elements.title.value,
+										disabled: disabledStages.some(
+											(ds) =>
+												ds.system.codename ===
+												s.system.codename,
+										),
+									}
+								},
+							)}
 							selected={intersection(
 								selected,
-								stageGroup.elements.stages.linkedItems.map((item) => item.system.codename),
+								stageGroup.elements.stages.linkedItems.map(
+									(item) => item.system.codename,
+								),
 							)}
 							{...others}
 						/>

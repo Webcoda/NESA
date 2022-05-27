@@ -1035,7 +1035,7 @@ export const projectModel = {
 		},
 		sharedcontent_richtext: {
 			codename: 'sharedcontent_richtext',
-			name: 'SharedContent_RichText',
+			name: 'Shared Content Rich Text',
 			elements: {
 				content: {
 					codename: 'content',
@@ -1137,6 +1137,10 @@ export const projectModel = {
 					codename: 'from_date',
 					name: 'From Date',
 				},
+				aim: {
+					codename: 'aim',
+					name: 'Aim',
+				},
 				courseoverview_achievementhsc: {
 					codename: 'courseoverview_achievementhsc',
 					name: 'Course Overview - Achievement HSC',
@@ -1144,6 +1148,10 @@ export const projectModel = {
 				courseoverview_prerequisits: {
 					codename: 'courseoverview_prerequisits',
 					name: 'Course Overview - Prerequisites',
+				},
+				rationale: {
+					codename: 'rationale',
+					name: 'Rationale',
 				},
 				assessments: {
 					codename: 'assessments',
@@ -1168,10 +1176,6 @@ export const projectModel = {
 				courseoverview_selftuition: {
 					codename: 'courseoverview_selftuition',
 					name: 'Course Overview - Self Tuition',
-				},
-				aim: {
-					codename: 'aim',
-					name: 'Aim',
 				},
 				courseoverview_200hourrules: {
 					codename: 'courseoverview_200hourrules',
@@ -1224,10 +1228,6 @@ export const projectModel = {
 				courseoverview_100hourrules: {
 					codename: 'courseoverview_100hourrules',
 					name: 'Course Overview - 100 Hour Rules',
-				},
-				rationale: {
-					codename: 'rationale',
-					name: 'Rationale',
 				},
 				courseoverview_courcerequirements: {
 					codename: 'courseoverview_courcerequirements',

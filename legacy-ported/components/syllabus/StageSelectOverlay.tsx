@@ -5,16 +5,27 @@ import StagePicker from '../custom/StagePicker'
 import { IStage } from '../../utilities/backendTypes'
 import { arrayToggleMultiple } from '../../utilities/functions'
 import { StageGroup } from '@/models/stage_group'
+import { Stage } from '@/models/stage'
 
 export interface StageSelectOverlayProps
-	extends Pick<CustomPopoverProps, 'title' | 'popoverStatus' | 'popoverAnchor' | 'onCancel'> {
+	extends Pick<
+		CustomPopoverProps,
+		'title' | 'popoverStatus' | 'popoverAnchor' | 'onCancel'
+	> {
 	selected: IStage['id'][]
 	stageGroups: StageGroup[]
+	disabledStages?: Stage[]
 	onConfirm: (selected: IStage['id'][]) => void
 }
 
 const StageSelectOverlay = (props: StageSelectOverlayProps): JSX.Element => {
-	const { selected, onConfirm, stageGroups, ...popoverProps } = props
+	const {
+		selected,
+		onConfirm,
+		stageGroups,
+		disabledStages = [],
+		...popoverProps
+	} = props
 
 	const [stageIds, setStageIds] = useState(selected)
 	const [stageError, setStageError] = useState(false)
@@ -36,10 +47,17 @@ const StageSelectOverlay = (props: StageSelectOverlayProps): JSX.Element => {
 		<CustomPopover onConfirm={handleStageModalConfirm} {...popoverProps}>
 			<Grid className="syllabus-header-dialog">
 				<Grid container>
-					<StagePicker stageGroups={stageGroups} selected={stageIds} onChange={handleStageSelect} />
+					<StagePicker
+						stageGroups={stageGroups}
+						disabledStages={disabledStages}
+						selected={stageIds}
+						onChange={handleStageSelect}
+					/>
 					{stageError && (
 						<Grid item xs={12}>
-							<span className="syllabus-header-dialog__error">Please select at least 1 stage</span>
+							<span className="syllabus-header-dialog__error">
+								Please select at least 1 stage
+							</span>
 						</Grid>
 					)}
 				</Grid>

@@ -5,6 +5,7 @@ import { Stage } from '@/models/stage'
 import { StageGroup } from '@/models/stage_group'
 import { Syllabus } from '@/models/syllabus'
 import {
+	Elements,
 	IContentItemSystemAttributes,
 	Responses,
 } from '@kentico/kontent-delivery'
@@ -52,7 +53,7 @@ export interface KontentCurriculumResult {
 		syllabuses?: Responses.IListContentItemsResponse<Syllabus>
 		keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
 		glossaries?: Responses.IListContentItemsResponse<Glossary>
-		stages?: Responses.IListContentItemsResponse<Stage>
+		stages?: Responses.IListContentItemsResponse<StageWithAvailability>
 		stageGroups?: Responses.IListContentItemsResponse<StageGroup>
 	}
 }
@@ -64,4 +65,10 @@ export interface KontentCurriculumResult {
  */
 export interface StageWithAvailability extends Stage {
 	available: boolean
+}
+
+interface StageGroupElement {
+	title: Elements.TextElement
+	order: Elements.NumberElement
+	years: Elements.MultipleChoiceElement
 }
