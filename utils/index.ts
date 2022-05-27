@@ -1,3 +1,4 @@
+import { ExternalUrl } from './../models/external_url'
 import type { IGlossary } from '@/legacy-ported/utilities/backendTypes'
 import type { Glossary } from '@/models/glossary'
 import type {
@@ -8,6 +9,8 @@ import type {
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
+import { NavigationItem } from '@/models/navigation_item'
+import { Mapping } from '@/types'
 
 export const convertGlossaryToIGlossary = (
 	glossaries: Glossary[],
@@ -63,6 +66,19 @@ export const getLinkElementUsedByRichtext = (
 		}
 		return acc
 	}, {})
+}
+
+export const getLinkFromNavigationItem = (
+	navigationItem: any,
+	mappings: Mapping[],
+): string => {
+	if (
+		navigationItem.system.type === 'external_url' &&
+		'url' in navigationItem.elements
+	) {
+		return navigationItem.elements.url.value
+	}
+	return getUrlFromMapping(mappings, navigationItem.system.codename)
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }
