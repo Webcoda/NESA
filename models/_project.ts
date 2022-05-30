@@ -537,6 +537,50 @@ export const projectModel = {
 				},
 			},
 		},
+		grid: {
+			codename: 'grid',
+			name: 'Grid',
+			elements: {
+				gap_vertical: {
+					codename: 'gap_vertical',
+					name: 'Gap Vertical',
+				},
+				tiles: {
+					codename: 'tiles',
+					name: 'Column',
+				},
+				gap_horizontal: {
+					codename: 'gap_horizontal',
+					name: 'Gap Horizontal',
+				},
+			},
+		},
+		grid_column: {
+			codename: 'grid_column',
+			name: 'Grid Column',
+			elements: {
+				column_widths__lg: {
+					codename: 'column_widths__lg',
+					name: 'lg',
+				},
+				tile_content: {
+					codename: 'tile_content',
+					name: 'Content',
+				},
+				column_widths__md: {
+					codename: 'column_widths__md',
+					name: 'md',
+				},
+				column_widths__xs: {
+					codename: 'column_widths__xs',
+					name: 'xs',
+				},
+				column_widths__sm: {
+					codename: 'column_widths__sm',
+					name: 'sm',
+				},
+			},
+		},
 		hero_section: {
 			codename: 'hero_section',
 			name: 'Hero Section',
@@ -634,6 +678,34 @@ export const projectModel = {
 				favicon: {
 					codename: 'favicon',
 					name: 'Favicon',
+				},
+			},
+		},
+		homepage_banner: {
+			codename: 'homepage_banner',
+			name: 'Homepage Banner',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				button_label: {
+					codename: 'button_label',
+					name: 'Button Label',
+				},
+			},
+		},
+		homepage_link_card: {
+			codename: 'homepage_link_card',
+			name: 'Homepage Link Card',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				path: {
+					codename: 'path',
+					name: 'Path',
 				},
 			},
 		},
@@ -858,6 +930,32 @@ export const projectModel = {
 				subpages: {
 					codename: 'subpages',
 					name: 'Subpages',
+				},
+			},
+		},
+		newsletter_subscribe_box: {
+			codename: 'newsletter_subscribe_box',
+			name: 'Newsletter Subscribe Box',
+			elements: {
+				createsend_action: {
+					codename: 'createsend_action',
+					name: 'CreateSend Action',
+				},
+				createsend_id: {
+					codename: 'createsend_id',
+					name: 'CreateSend Id',
+				},
+				input_label: {
+					codename: 'input_label',
+					name: 'Input Label',
+				},
+				button_label: {
+					codename: 'button_label',
+					name: 'Button Label',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
 				},
 			},
 		},
