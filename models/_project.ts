@@ -637,6 +637,70 @@ export const projectModel = {
 				},
 			},
 		},
+		homepage_tile_callout: {
+			codename: 'homepage_tile_callout',
+			name: 'Homepage Tile Callout',
+			elements: {
+				divider_color: {
+					codename: 'divider_color',
+					name: 'Divider Color',
+				},
+				font_color: {
+					codename: 'font_color',
+					name: 'Font Color',
+				},
+				tiles: {
+					codename: 'tiles',
+					name: 'Tiles',
+				},
+				arrow_color: {
+					codename: 'arrow_color',
+					name: 'Arrow Color',
+				},
+				background_color: {
+					codename: 'background_color',
+					name: 'Background Color',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+			},
+		},
+		homepage_tile_callout_tile: {
+			codename: 'homepage_tile_callout_tile',
+			name: 'Homepage Tile Callout - Tile',
+			elements: {
+				column_widths__lg: {
+					codename: 'column_widths__lg',
+					name: 'lg',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				column_widths__md: {
+					codename: 'column_widths__md',
+					name: 'md',
+				},
+				prefix: {
+					codename: 'prefix',
+					name: 'Prefix',
+				},
+				column_widths__xs: {
+					codename: 'column_widths__xs',
+					name: 'xs',
+				},
+				path: {
+					codename: 'path',
+					name: 'Path',
+				},
+				column_widths__sm: {
+					codename: 'column_widths__sm',
+					name: 'sm',
+				},
+			},
+		},
 		icon: {
 			codename: 'icon',
 			name: 'Icon',

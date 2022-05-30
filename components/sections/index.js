@@ -1,3 +1,4 @@
+import HomepageTileCallout from '@/components/sections/HomepageTileCallout'
 import HeroSection from './HeroSection'
 import FeaturesSection from './FeaturesSection'
 import ReviewsSection from './ReviewsSection'
@@ -9,6 +10,7 @@ import FaqSection from './FaqSection'
 import ContactSection from './ContactSection'
 
 export const _ = {
+	HomepageTileCallout,
 	HeroSection,
 	FeaturesSection,
 	ReviewsSection,
