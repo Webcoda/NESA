@@ -15,7 +15,6 @@ export default function LinkCard(props: HomepageLinkCardProps) {
 	const path = navigationItem
 		? getLinkFromNavigationItem(navigationItem, mappings)
 		: '#'
-	console.log(navigationItem)
 
 	return (
 		<LinkCardLegacy

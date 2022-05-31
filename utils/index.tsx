@@ -1,16 +1,19 @@
-import { ExternalUrl } from './../models/external_url'
+import sections from '@/components/sections'
+import UnknownComponent from '@/components/UnknownComponent'
 import type { IGlossary } from '@/legacy-ported/utilities/backendTypes'
 import type { Glossary } from '@/models/glossary'
+import { Mapping } from '@/types'
 import type {
 	ElementModels,
 	Elements,
 	IContentItem,
 } from '@kentico/kontent-delivery'
+import get from 'lodash.get'
+import camelCase from 'lodash.camelcase'
+import upperFirst from 'lodash.upperfirst'
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
-import { NavigationItem } from '@/models/navigation_item'
-import { Mapping } from '@/types'
 
 export const convertGlossaryToIGlossary = (
 	glossaries: Glossary[],
@@ -33,7 +36,7 @@ export const convertGlossaryToIGlossary = (
 	}, [])
 }
 
-// Get year text from years
+// Get year text from yearss
 export const getTagFromYears = (
 	years: ElementModels.MultipleChoiceOption[],
 ) => {
@@ -69,7 +72,7 @@ export const getLinkElementUsedByRichtext = (
 }
 
 export const getLinkFromNavigationItem = (
-	navigationItem: any,
+	navigationItem: IContentItem,
 	mappings: Mapping[],
 ): string => {
 	if (
@@ -79,6 +82,68 @@ export const getLinkFromNavigationItem = (
 		return navigationItem.elements.url.value
 	}
 	return getUrlFromMapping(mappings, navigationItem.system.codename)
+}
+
+export const getUrlFromStage = (stageCodename: string, mappings: Mapping[]) => {
+	const mapping = mappings.find((map) => {
+		const { navigationItem } = map.params
+		return navigationItem.codename.includes(
+			stageCodename.replace('stage__', `${navigationItem.type}__`),
+		)
+	})
+	return mapping
+		? getUrlFromMapping(mappings, mapping.params.navigationItem.codename)
+		: ''
+}
+export const getUrlFromStageGroup = (
+	stageGroupCodename: string,
+	mappings: Mapping[],
+) => {
+	const mapping = mappings.find((map) => {
+		const { navigationItem } = map.params
+		return navigationItem.codename.includes(
+			stageGroupCodename.replace(
+				'stage_group__',
+				`${navigationItem.type}__`,
+			),
+		)
+	})
+	console.log('🚀 ~ file: index.ts ~ line 91 ~ mapping ~ mapping', mapping)
+	return getUrlFromMapping(mappings, mapping.params.navigationItem.codename)
+}
+
+export const isNavItemExternalUrl = (navItem: IContentItem) =>
+	navItem.system.type === 'external_url'
+
+export const renderSections = (page, props) => {
+	return get(page, 'elements.sections.linkedItems', []).map(
+		(section, index) => {
+			const contentType = upperFirst(
+				camelCase(get(section, 'system.type', null)),
+			)
+			const Component = sections[contentType]
+
+			if (process.env.NODE_ENV === 'development' && !Component) {
+				console.error(
+					`Unknown section component for section content type: ${contentType}`,
+				)
+				return (
+					<UnknownComponent key={index} {...props}>
+						<pre>{JSON.stringify(section, undefined, 2)}</pre>
+					</UnknownComponent>
+				)
+			}
+
+			return (
+				<Component
+					key={index}
+					{...props}
+					section={section}
+					site={props}
+				/>
+			)
+		},
+	)
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

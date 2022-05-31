@@ -25,6 +25,7 @@ import { Mapping } from '@/types'
 import {
 	convertGlossaryToIGlossary,
 	getLinkElementUsedByRichtext,
+	getUrlFromStage,
 	getTagFromYears,
 } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
@@ -115,16 +116,11 @@ function PageStage(props) {
 			})
 		} else {
 			const newStageId = ids[0]
-			const mappingItem = mappings.find((map) => {
-				const { navigationItem } = map.params
-				return navigationItem.codename.includes(
-					newStageId.replace('stage__', `${navigationItem.type}__`),
-				)
-			})
+			const pathname = getUrlFromStage(newStageId, mappings)
 
-			if (mappingItem) {
+			if (pathname) {
 				history.replace({
-					pathname: mappingItem.params.slug.join('/'),
+					pathname,
 				})
 			} else {
 				console.error('mappingItem not found')
