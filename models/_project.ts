@@ -819,6 +819,42 @@ export const projectModel = {
 				},
 			},
 		},
+		link_card: {
+			codename: 'link_card',
+			name: 'Link Card',
+			elements: {
+				body: {
+					codename: 'body',
+					name: 'Body',
+				},
+				path: {
+					codename: 'path',
+					name: 'Path',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				color: {
+					codename: 'color',
+					name: 'Color',
+				},
+			},
+		},
+		link_cards_list_section: {
+			codename: 'link_cards_list_section',
+			name: 'Link Cards List Section',
+			elements: {
+				cards: {
+					codename: 'cards',
+					name: 'Cards',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+			},
+		},
 		listing_page: {
 			codename: 'listing_page',
 			name: 'Listing page',
@@ -996,6 +1032,24 @@ export const projectModel = {
 				stage: {
 					codename: 'stage',
 					name: 'Stage',
+				},
+			},
+		},
+		page_stage_group: {
+			codename: 'page_stage_group',
+			name: 'Page Stage Group',
+			elements: {
+				stage_group: {
+					codename: 'stage_group',
+					name: 'Stage Group',
+				},
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				sections: {
+					codename: 'sections',
+					name: 'Sections',
 				},
 			},
 		},

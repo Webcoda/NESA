@@ -266,6 +266,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	const isListingPage = pageResponse.item.system.type === 'listing_page'
 	const isLandingPage = pageResponse.item.system.type === 'landing_page'
 	const isStagePage = pageResponse.item.system.type === 'page_stage'
+	const isStageGroupPage =
+		pageResponse.item.system.type === 'page_stage_group'
 
 	if (isListingPage) {
 		const _result = {
@@ -378,6 +380,66 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		_result.data.syllabuses = syllabuses
 		_result.data.keyLearningAreas = keyLearningAreas
 		_result.data.glossaries = glossaries
+		_result.data.stages = stages
+		_result.data.stageGroups = stageGroups
+
+		const allYearsAssignedToSyllabus =
+			_result.data.syllabuses.items.flatMap((syllabus) =>
+				syllabus.elements.stagesyears__years.value.flatMap(
+					(item) => item.name,
+				),
+			)
+
+		_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
+			(stageGroup) => {
+				return (
+					intersection(
+						stageGroup.elements.years.value.flatMap(
+							(item) => item.name,
+						),
+						allYearsAssignedToSyllabus,
+					).length > 0
+				)
+			},
+		)
+
+		return _result
+	} else if (isStageGroupPage) {
+		const _result: KontentCurriculumResult = {
+			...result,
+			data: {
+				...result.data,
+				syllabuses: null,
+				stages: null,
+				stageGroups: null,
+			},
+		}
+
+		const [syllabuses, stages, stageGroups] = await Promise.all([
+			getAllItemsByType<Syllabus>({
+				type: 'syllabus',
+				depth: 6,
+				preview,
+			}),
+			getAllItemsByType<Stage>({
+				type: 'stage',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
+			}),
+			getAllItemsByType<StageGroup>({
+				type: 'stage_group',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
+			}),
+		])
+
+		_result.data.syllabuses = syllabuses
 		_result.data.stages = stages
 		_result.data.stageGroups = stageGroups
 

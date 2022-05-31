@@ -12,6 +12,7 @@ import ContactSection from './ContactSection'
 import HomepageLinkCard from './HomepageLinkCard'
 import Grid from './Grid'
 import NewsletterSubscribeBox from './NewsletterSubscribeBox'
+import LinkCardsListSection from './LinkCardsListSection'
 
 export const _ = {
 	HomepageTileCallout,
@@ -28,6 +29,7 @@ export const _ = {
 	HomepageLinkCard,
 	Grid,
 	NewsletterSubscribeBox,
+	LinkCardsListSection,
 }
 
 export default _
