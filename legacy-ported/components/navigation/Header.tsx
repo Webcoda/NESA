@@ -1,4 +1,8 @@
 import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
+import { Action } from '@/models/action'
+import { NavigationItem } from '@/models/navigation_item'
+import { Mapping } from '@/types'
+import { getUrlFromMapping } from '@/utils'
 import { Grid } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 // import PATHS from '../../constants/pathConstants'
@@ -33,6 +37,8 @@ export interface HeaderProps {
 	 * Classname prop, forwarded to root element
 	 */
 	className?: string
+
+	mappings: Mapping[]
 }
 
 const headers = [
@@ -53,7 +59,7 @@ const data = [
  * @constructor
  */
 const Header = (props: HeaderProps): JSX.Element => {
-	const { breadcrumbs, onDownload, onSearch, className } = props
+	const { breadcrumbs, onDownload, onSearch, className, mappings } = props
 
 	// const history = useHistory()
 
@@ -90,23 +96,28 @@ const Header = (props: HeaderProps): JSX.Element => {
 		// console.log('Implement PDF once finished from Custom view');
 	}
 
-	const createNavItem = (item, parentSlug) => {
-		const slug = parentSlug + '/' + item.elements.navigation_item?.linkedItems?.[0].elements.slug.value || ''
-		const subNav = item.elements?.actions?.linkedItems?.map((_item) => createNavItem(_item, slug))
+	const createNavItem = (item: Action, mappings) => {
+		const url = getUrlFromMapping(
+			mappings,
+			item.elements.navigation_item.value[0],
+		)
+		const subNav = item.elements?.actions?.linkedItems?.map(
+			(_item: Action) => createNavItem(_item, mappings),
+		)
 		return {
 			description: '',
 			id: item.system.id,
 			subNav,
 			text: item.elements.label.value,
-			url: `${slug}`,
+			url,
 		}
 	}
 
-	const navItems = get(
+	const navItems: NavigationItem[] = get(
 		props,
 		'data.config.item.elements.main_menu.linkedItems[0].elements.actions.linkedItems',
 		[],
-	).map((item) => createNavItem(item, ''))
+	).map((item: Action) => createNavItem(item, mappings))
 
 	return (
 		<div className={`header ${className || ''}`}>
@@ -121,7 +132,12 @@ const Header = (props: HeaderProps): JSX.Element => {
 					hideSearchBar={() => handleSearchOpen(false)}
 					onSearchSubmit={onSearch}
 				/>
-				<Grid container item justifyContent="space-between" alignItems="center">
+				<Grid
+					container
+					item
+					justifyContent="space-between"
+					alignItems="center"
+				>
 					<div className="header__breadcrumbs">
 						{breadcrumbs &&
 							breadcrumbs.length > 0 &&

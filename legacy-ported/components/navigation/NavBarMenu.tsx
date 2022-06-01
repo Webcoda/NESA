@@ -1,10 +1,8 @@
-import React from 'react'
-import Link from "next/link";
 // import { UrlLink } from '../../utilities/frontendTypes'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
-// import { NavGroupSection, useRowCount } from '../../utilities/hooks/useNavGroups'
-import { useRouter } from "next/router";
+import Link from 'next/link'
+import React from 'react'
 
 export interface NavBarMenuSectionProps {
 	/**
@@ -45,27 +43,39 @@ const NavBarMenuSection = (props: NavBarMenuSectionProps): JSX.Element => {
 				{links.map((link, index) => (
 					<li
 						key={link.id}
-						className={`grid-col-${Math.floor(index / rowCount) + 1} grid-row-${(index % rowCount) + 1}`}
+						className={`grid-col-${
+							Math.floor(index / rowCount) + 1
+						} grid-row-${(index % rowCount) + 1}`}
 					>
 						{link.isDisabled ? (
 							<div
 								className={`navbar-menu-section__link ${
-									link.isDisabled ? 'navbar-menu-section__link--disabled' : ''
-								} ${link.text === 'View all' ? 'font-bold' : ''}`}
+									link.isDisabled
+										? 'navbar-menu-section__link--disabled'
+										: ''
+								} ${
+									link.text === 'View all' ? 'font-bold' : ''
+								}`}
 							>
 								{link.icon || null}
-								<SanitisedHTMLContainer>{link.text}</SanitisedHTMLContainer>
+								<SanitisedHTMLContainer>
+									{link.text}
+								</SanitisedHTMLContainer>
 							</div>
 						) : (
 							<Link href={link.url}>
 								<a
 									className={`navbar-menu-section__link ${
-										link.text === 'View all' ? 'font-bold' : ''
+										link.text === 'View all'
+											? 'font-bold'
+											: ''
 									}`}
 									onClick={onLinkClick}
 								>
 									{link.icon || null}
-									<SanitisedHTMLContainer>{link.text}</SanitisedHTMLContainer>
+									<SanitisedHTMLContainer>
+										{link.text}
+									</SanitisedHTMLContainer>
 								</a>
 							</Link>
 						)}
@@ -94,7 +104,7 @@ const NavBarMenu = (props: NavBarMenuProps) => {
 		<div className="navbar-menu">
 			{sections.map((sec) => (
 				<NavBarMenuSection
-					key={`NavBarMenuSection${sec.id}`}
+					key={sec.id}
 					title={sec.text}
 					links={sec.subNav}
 					onLinkClick={onLinkClick}
