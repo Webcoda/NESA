@@ -1,10 +1,10 @@
 import { Layout } from '@/components'
-import { PageStageGroup as PageStageGroupModel } from '@/models/page_stage_group'
+import { PageKeyLearningArea as PageKeyLearningAreaModel } from '@/models/page_key_learning_area'
 import { renderSections } from '@/utils'
 import get from 'lodash.get'
 
-export default function PageStageGroup(props) {
-	const page: PageStageGroupModel = get(props, 'data.page.item', null)
+export default function PageKeyLearningArea(props) {
+	const page: PageKeyLearningAreaModel = get(props, 'data.page.item', null)
 
 	return (
 		<Layout

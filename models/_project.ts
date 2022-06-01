@@ -1025,6 +1025,34 @@ export const projectModel = {
 				},
 			},
 		},
+		page_key_learning_area: {
+			codename: 'page_key_learning_area',
+			name: 'Page Key Learning Area',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				key_learning_area: {
+					codename: 'key_learning_area',
+					name: 'Key Learning Area',
+				},
+				sections: {
+					codename: 'sections',
+					name: 'Sections',
+				},
+			},
+		},
+		page_kla_syllabus: {
+			codename: 'page_kla_syllabus',
+			name: 'Page KLA Syllabus',
+			elements: {
+				syllabus: {
+					codename: 'syllabus',
+					name: 'Syllabus',
+				},
+			},
+		},
 		page_stage: {
 			codename: 'page_stage',
 			name: 'Page Stage',

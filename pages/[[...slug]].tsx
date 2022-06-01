@@ -9,6 +9,11 @@ import Error from 'next/error'
 
 function Page(props) {
 	const router = useRouter()
+
+	if (props.errorCode) {
+		return <Error statusCode={props.errorCode} />
+	}
+
 	// If the page is not yet generated, this will be displayed
 	// initially until getStaticProps() finishes running
 	if (router.isFallback) {
@@ -21,7 +26,9 @@ function Page(props) {
 	const PageLayout = pageLayouts[contentType]
 
 	if (process.env.NODE_ENV === 'development' && !PageLayout) {
-		console.error(`Unknown Layout component for page content type: ${contentType}`)
+		console.error(
+			`Unknown Layout component for page content type: ${contentType}`,
+		)
 		return (
 			<UnknownComponent {...props} useLayout={true}>
 				<pre>{JSON.stringify(props, undefined, 2)}</pre>
@@ -48,13 +55,10 @@ export async function getStaticPaths(ctx) {
 export async function getStaticProps({ params, preview = false }) {
 	const props = await getPageStaticPropsForPath(params, preview)
 
-	if (props === undefined) {
-		return <Error statusCode={404} />
-	}
-
 	return {
 		props: {
 			...props,
+			errorCode: !props ? 404 : null,
 			params,
 			preview,
 		},
