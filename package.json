@@ -2,16 +2,22 @@
 	"name": "@kentico/kontent-starter-corporate-next-js",
 	"version": "0.0.2",
 	"scripts": {
-		"dev": "next",
+		"dev": "cross-env NODE_OPTIONS='--inspect' next dev",
 		"build": "next build",
 		"static-export": "cross-env STATIC_EXPORT=true yarn build && next export",
 		"start": "next start",
 		"lint": "eslint --ext .js,.jsx .",
 		"lint-fix": "eslint --fix --ext .js,.jsx .",
 		"gm": "cd ./models && npx kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd",
-		"generate-model": "cd ./models && npx kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd"
+		"generate-model": "cd ./models && npx kontent-generate --projectId=64dd3be6-186e-02f9-712d-56e04c283cbd",
+		"prepare": "husky install"
 	},
 	"dependencies": {
+		"@emotion/css": "^11.9.0",
+		"@emotion/react": "^11.9.0",
+		"@emotion/server": "^11.4.0",
+		"@emotion/styled": "^11.8.1",
+		"@iconify/react": "^3.2.1",
 		"@kentico/kontent-delivery": "^11.2.1",
 		"@kentico/kontent-smart-link": "^2.3.1",
 		"@material-ui/core": "4.12.2",
@@ -19,6 +25,7 @@
 		"@material-ui/icons": "4.11.2",
 		"@material-ui/lab": "4.0.0-alpha.60",
 		"@material-ui/pickers": "3.3.10",
+		"classname": "^0.0.0",
 		"classnames": "^2.3.1",
 		"clsx": "^1.1.1",
 		"detect-browser": "^5.3.0",
@@ -26,6 +33,7 @@
 		"html-react-parser": "^1.2.7",
 		"lodash.camelcase": "^4.3.0",
 		"lodash.get": "^4.4.2",
+		"lodash.groupby": "^4.6.0",
 		"lodash.intersection": "^4.4.0",
 		"lodash.upperfirst": "^4.3.1",
 		"moment": "^2.29.3",
@@ -38,6 +46,7 @@
 		"react-dom": "^17.0.2",
 		"react-helmet": "^6.1.0",
 		"react-id-generator": "^3.0.2",
+		"react-mathjax": "^1.0.1",
 		"rfs": "9.0.4",
 		"sanitize-html": "^2.7.0",
 		"simple-html-tokenizer": "^0.5.11",
@@ -50,6 +59,7 @@
 		"@svgr/webpack": "^6.2.1",
 		"@types/node": "^17.0.33",
 		"@types/react": "^17.0.2",
+		"@types/react-mathjax": "^1.0.1",
 		"@typescript-eslint/eslint-plugin": "4.28.4",
 		"@typescript-eslint/parser": "4.28.4",
 		"autoprefixer": "^10.4.7",
@@ -59,7 +69,10 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-react": "^7.22.0",
+		"husky": "^8.0.1",
+		"lint-staged": "^12.4.2",
 		"postcss": "^8.4.13",
+		"prettier": "^2.6.2",
 		"react-json-view": "^1.21.3",
 		"sass": "1.35.2",
 		"sass-loader": "12.1.0",
@@ -69,5 +82,9 @@
 	"license": "MIT",
 	"volta": {
 		"node": "16.15.0"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": "eslint --cache --fix",
+		"*.{js,ts,tsx,md}": "prettier --write"
 	}
 }

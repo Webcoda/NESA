@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import StageSelectOverlay from './StageSelectOverlay'
+import { StageGroup } from '@/models/stage_group'
 // import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
-// import StageSelectOverlay from './StageSelectOverlay'
 
 export interface SyllabusStagesHeaderProps {
 	/**
@@ -21,14 +22,21 @@ export interface SyllabusStagesHeaderProps {
 	 * Whether it is main header
 	 */
 	isMainHeader?: boolean
+
+	/**
+	 * All Stage Categories
+	 */
+	stageGroups: StageGroup[]
+
 	/**
 	 * Fire when stages header popover confirm button clicked
 	 */
 	onStagesHeaderConfirm: (ids: string[]) => void
+
 }
 
 const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => {
-	const { title, selectedStages, area, isMainHeader, onStagesHeaderConfirm } = props
+	const { title, selectedStages, area, isMainHeader, stageGroups, onStagesHeaderConfirm } = props
 
 	const stageHeaderButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -69,14 +77,15 @@ const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => 
 				</button>
 				{/* TODO: Enable after MVP */}
 				{/* <p className="syllabus-header__subtitle">Current Syllabus</p> */}
-				{/* <StageSelectOverlay
+				<StageSelectOverlay
 					title={title}
+					stageGroups={stageGroups}
 					popoverStatus={displayStageModal}
 					popoverAnchor={popoverAnchor}
 					onConfirm={handleStageModalConfirm}
 					onCancel={() => setDisplayStageModal(false)}
 					selected={selectedStages}
-				/> */}
+				/>
 			</div>
 		</>
 	)

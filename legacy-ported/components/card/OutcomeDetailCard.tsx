@@ -41,7 +41,6 @@ export interface OutcomeDetailCardProps {
 
 export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 	const { title, groups, accessPoints, showAccessPoints, showTags, showExamples, defaultBackgroundColor } = props
-    console.log("🚀 ~ file: OutcomeDetailCard.tsx ~ line 45 ~ OutcomeDetailCard ~ groups", groups)
 
 	return (
 		<Paper

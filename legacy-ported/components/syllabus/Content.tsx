@@ -101,7 +101,6 @@ export interface ContentOrganizerProps {
 
 const Content = (props: ContentOrganizerProps): JSX.Element => {
 	const { defaultOffsetTop, stageId, supportElementId, content, initialState, files, stages } = props
-	console.log('🚀 ~ file: Content.tsx ~ line 102 ~ props', props)
 
 	const mainBodyRef = useRef<HTMLDivElement>(null)
 

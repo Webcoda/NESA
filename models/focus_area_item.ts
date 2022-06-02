@@ -8,4 +8,5 @@ export type FocusAreaItem = IContentItem<{
   title: Elements.TextElement;
   nesa_tags__literacy_interacting: Elements.TaxonomyElement;
   nesa_tags__literacy_listening: Elements.TaxonomyElement;
+  tags: Elements.LinkedItemsElement<IContentItem>;
 }>;

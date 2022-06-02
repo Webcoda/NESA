@@ -7,6 +7,8 @@ export type FocusArea = IContentItem<{
   outcomes: Elements.LinkedItemsElement<IContentItem>;
   access_points: Elements.LinkedItemsElement<IContentItem>;
   title: Elements.TextElement;
+  syllabustype__type: Elements.MultipleChoiceElement;
   teaching_advice: Elements.LinkedItemsElement<IContentItem>;
+  stages: Elements.LinkedItemsElement<IContentItem>;
   focus_area_groups: Elements.LinkedItemsElement<IContentItem>;
 }>;
