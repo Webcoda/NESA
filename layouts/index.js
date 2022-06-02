@@ -6,6 +6,7 @@ import page_stage from './page_stage'
 import page_stage_group from './page_stage_group'
 import page_key_learning_area from './page_key_learning_area'
 import page_kla_syllabus from './page_kla_syllabus'
+import page_general_content from './page_general_content'
 
 export const _ = {
 	landing_page,
@@ -16,6 +17,7 @@ export const _ = {
 	page_stage_group,
 	page_key_learning_area,
 	page_kla_syllabus,
+	page_general_content,
 }
 
 export default _

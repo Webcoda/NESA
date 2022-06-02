@@ -1,36 +1,27 @@
+import '@/legacy-ported/sass/app.scss'
 import KontentSmartLink from '@kentico/kontent-smart-link'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import get from 'lodash.get'
 import Head from 'next/head'
 import React from 'react'
-import '@/legacy-ported/sass/app.scss'
 // import "../styles/main.css";
 
 function MyApp({ Component, pageProps }) {
 	const configObject = get(pageProps, 'data.config', null)
 
-	// const font = get(
-	// 	configObject,
-	// 	"item.elements.font.value[0].codename",
-	// 	null
-	// );
-	/* const fontName =
-		font === "nunito_sans"
-			? "Nunito Sans"
-			: font === "fira_sans"
-			? "Fira Sans"
-			: "Arial"; */
-
 	const fontName = 'Montserrat'
 
-	let title = get(configObject, 'item.elements.title.value', '')
+	let title = get(pageProps, 'seo.title', null)
 	if (title) {
 		title += ' | '
 	}
-	title += get(pageProps, 'seo.title', null)
+	title += get(configObject, 'item.elements.title.value', '')
 
-	const palette = get(configObject, 'item.elements.palette.value[0].codename', null)
+	const palette = get(
+		configObject,
+		'item.elements.palette.value[0].codename',
+		null,
+	)
 	const colors = {
 		primary: '#F05A22',
 		secondary: '#B72929',
@@ -106,20 +97,44 @@ function MyApp({ Component, pageProps }) {
 			<Head>
 				<title>{title}</title>
 				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0"
+				/>
 				<meta name="google" content="notranslate" />
 				{get(configObject, 'item.elements.favicon.value[0]', null) && (
-					<link rel="icon" href={get(configObject, 'item.elements.favicon.value[0].url', null)} />
+					<link
+						rel="icon"
+						href={get(
+							configObject,
+							'item.elements.favicon.value[0].url',
+							null,
+						)}
+					/>
 				)}
-				<meta name="description" content={get(pageProps, 'seo.description', null)} />
+				<meta
+					name="description"
+					content={get(pageProps, 'seo.description', null)}
+				/>
 				{get(pageProps, 'seo.keywords', null) && (
-					<meta name="keywords" content={get(pageProps, 'seo.keywords', null)} />
+					<meta
+						name="keywords"
+						content={get(pageProps, 'seo.keywords', null)}
+					/>
 				)}
 				{get(pageProps, 'seo.canonicalUrl', null) ?? (
-					<link rel="canonical" href={get(pageProps, 'seo.canonicalUrl', null)} />
+					<link
+						rel="canonical"
+						href={get(pageProps, 'seo.canonicalUrl', null)}
+					/>
 				)}
-				{get(pageProps, 'seo.noIndex', null) && <meta name="robots" content="noindex,follow" />}
-				<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+				{get(pageProps, 'seo.noIndex', null) && (
+					<meta name="robots" content="noindex,follow" />
+				)}
+				<link
+					href="https://fonts.googleapis.com/icon?family=Material+Icons"
+					rel="stylesheet"
+				/>
 			</Head>
 			<ThemeProvider theme={theme}>
 				<Component {...pageProps} />

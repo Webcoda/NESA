@@ -2,7 +2,7 @@ import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
 import { Action } from '@/models/action'
 import { NavigationItem } from '@/models/navigation_item'
 import { Mapping } from '@/types'
-import { getUrlFromMapping } from '@/utils'
+import { getBreadcrumb, getUrlFromMapping } from '@/utils'
 import { Grid } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 // import PATHS from '../../constants/pathConstants'
@@ -60,6 +60,10 @@ const data = [
  */
 const Header = (props: HeaderProps): JSX.Element => {
 	const { breadcrumbs, onDownload, onSearch, className, mappings } = props
+	const slug = get(props, 'params.slug', [])
+	const _breadcrumbs = (
+		breadcrumbs?.length ? breadcrumbs : getBreadcrumb(slug, mappings)
+	)?.filter((bc) => !!bc.url)
 
 	// const history = useHistory()
 
@@ -139,13 +143,19 @@ const Header = (props: HeaderProps): JSX.Element => {
 					alignItems="center"
 				>
 					<div className="header__breadcrumbs">
-						{breadcrumbs &&
-							breadcrumbs.length > 0 &&
-							breadcrumbs.map((bc) => (
-								<Link href="#" key={bc.url}>
-									<a className="header__breadcrumb-link"></a>
-								</Link>
-							))}
+						{_breadcrumbs &&
+							_breadcrumbs.filter((bc) => !!bc.url).length > 1 &&
+							_breadcrumbs
+								.filter((bc) => !!bc.url)
+								.map((bc) => (
+									<Link href={bc.url} key={bc.url}>
+										<a className="header__breadcrumb-link">
+											<span className="header__breadcrumb-link-inner">
+												{bc.title}
+											</span>
+										</a>
+									</Link>
+								))}
 					</div>
 					<div className="header__options">
 						{/* TODO: Enable after MVP */}
