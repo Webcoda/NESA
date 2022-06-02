@@ -158,7 +158,7 @@ export const getBreadcrumb = (
 ): UrlLink[] => {
 	const slugsWithHome = ['', ...slug.slice(0, slug.length - 1)]
 
-	const x = slugsWithHome.map((slugUrl: string) => {
+	return slugsWithHome.map((slugUrl: string) => {
 		const _mapping = mappings.find((mapping) => {
 			const mappingSlugLength = mapping.params.slug.length
 			if (!mappingSlugLength && !slugUrl) {
@@ -170,7 +170,7 @@ export const getBreadcrumb = (
 			)
 		})
 
-		if (!_mapping) return {}
+		if (!_mapping) return
 
 		return {
 			title: _mapping.params.navigationItem.name,
@@ -180,10 +180,6 @@ export const getBreadcrumb = (
 			),
 		}
 	})
-
-	console.log('x', x)
-
-	return x
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }
