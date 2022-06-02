@@ -1,6 +1,8 @@
 import sections from '@/components/sections'
 import UnknownComponent from '@/components/UnknownComponent'
+import { EMPTY_KONTENT_RICHTEXT } from '@/constants'
 import type { IGlossary } from '@/legacy-ported/utilities/backendTypes'
+import { UrlLink } from '@/legacy-ported/utilities/frontendTypes'
 import type { Glossary } from '@/models/glossary'
 import { Mapping } from '@/types'
 import type {
@@ -8,13 +10,12 @@ import type {
 	Elements,
 	IContentItem,
 } from '@kentico/kontent-delivery'
-import get from 'lodash.get'
 import camelCase from 'lodash.camelcase'
+import get from 'lodash.get'
 import upperFirst from 'lodash.upperfirst'
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
-import { EMPTY_KONTENT_RICHTEXT } from '@/constants'
 
 export const convertGlossaryToIGlossary = (
 	glossaries: Glossary[],
@@ -149,6 +150,40 @@ export const renderSections = (page, props) => {
 
 export const isRichtextEmpty = (richtextVal: string) => {
 	return !richtextVal || richtextVal === EMPTY_KONTENT_RICHTEXT
+}
+
+export const getBreadcrumb = (
+	slug: string[],
+	mappings: Mapping[],
+): UrlLink[] => {
+	const slugsWithHome = ['', ...slug.slice(0, slug.length - 1)]
+
+	const x = slugsWithHome.map((slugUrl: string) => {
+		const _mapping = mappings.find((mapping) => {
+			const mappingSlugLength = mapping.params.slug.length
+			if (!mappingSlugLength && !slugUrl) {
+				return true
+			}
+			return (
+				mappingSlugLength &&
+				mapping.params.slug[mappingSlugLength - 1] === slugUrl
+			)
+		})
+
+		if (!_mapping) return {}
+
+		return {
+			title: _mapping.params.navigationItem.name,
+			url: getUrlFromMapping(
+				mappings,
+				_mapping.params.navigationItem.codename,
+			),
+		}
+	})
+
+	console.log('x', x)
+
+	return x
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

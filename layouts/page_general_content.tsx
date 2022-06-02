@@ -6,10 +6,6 @@ import get from 'lodash.get'
 
 export default function PageGeneralContent(props) {
 	const page: PageGeneralContentModel = get(props, 'data.page.item', null)
-	console.log(
-		'🚀 ~ file: page_general_content.tsx ~ line 9 ~ PageGeneralContent ~ summary',
-		page.elements.summary.value,
-	)
 
 	return (
 		<Layout

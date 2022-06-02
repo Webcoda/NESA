@@ -1,6 +1,7 @@
 import { Glossary } from '@/models/glossary'
 import { Homepage } from '@/models/homepage'
 import { KeyLearningArea } from '@/models/key_learning_area'
+import { NavigationItem } from '@/models/navigation_item'
 import { Stage } from '@/models/stage'
 import { StageGroup } from '@/models/stage_group'
 import { Syllabus } from '@/models/syllabus'
@@ -42,20 +43,18 @@ export interface KontentCurriculumResultData {
 	config: {
 		item: HomepageConfig
 	}
+	page: Responses.IViewContentItemResponse<NavigationItem | Homepage>
+	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
+	keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
+	glossaries?: Responses.IListContentItemsResponse<Glossary>
+	stages?: Responses.IListContentItemsResponse<StageWithAvailability>
+	stageGroups?: Responses.IListContentItemsResponse<StageGroup>
 }
 
 export interface KontentCurriculumResult {
 	seo: Seo
 	mappings: Mapping[]
-	data: {
-		config: HomepageConfig
-		page: any
-		syllabuses?: Responses.IListContentItemsResponse<Syllabus>
-		keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
-		glossaries?: Responses.IListContentItemsResponse<Glossary>
-		stages?: Responses.IListContentItemsResponse<StageWithAvailability>
-		stageGroups?: Responses.IListContentItemsResponse<StageGroup>
-	}
+	data: KontentCurriculumResultData
 }
 
 /**

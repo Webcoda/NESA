@@ -25,18 +25,13 @@ import { Mapping } from '@/types'
 import {
 	convertGlossaryToIGlossary,
 	getLinkElementUsedByRichtext,
-	getUrlFromStage,
 	getTagFromYears,
+	getUrlFromStage,
 } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-
-const ReactJson = dynamic(() => import('react-json-view'), {
-	ssr: false,
-}) as any
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -180,7 +175,6 @@ function PageStage(props) {
 			{...props}
 		>
 			<div className="syllabus-overview-page">
-				<ReactJson src={props} collapsed />
 				<div className="syllabus-overview-page__container">
 					{/* TODO: fix area */}
 					<StagesHeader
