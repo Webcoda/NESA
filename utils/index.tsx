@@ -14,6 +14,7 @@ import upperFirst from 'lodash.upperfirst'
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
+import { EMPTY_KONTENT_RICHTEXT } from '@/constants'
 
 export const convertGlossaryToIGlossary = (
 	glossaries: Glossary[],
@@ -144,6 +145,10 @@ export const renderSections = (page, props) => {
 			)
 		},
 	)
+}
+
+export const isRichtextEmpty = (richtextVal: string) => {
+	return !richtextVal || richtextVal === EMPTY_KONTENT_RICHTEXT
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

@@ -519,6 +519,20 @@ export const projectModel = {
 				},
 			},
 		},
+		general_content_section: {
+			codename: 'general_content_section',
+			name: 'General Content Section',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				content: {
+					codename: 'content',
+					name: 'Content',
+				},
+			},
+		},
 		glossary: {
 			codename: 'glossary',
 			name: 'Glossary',
@@ -1022,6 +1036,24 @@ export const projectModel = {
 				stages: {
 					codename: 'stages',
 					name: 'Stages',
+				},
+			},
+		},
+		page_general_content: {
+			codename: 'page_general_content',
+			name: 'Page General Content',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				summary: {
+					codename: 'summary',
+					name: 'Summary',
+				},
+				sections: {
+					codename: 'sections',
+					name: 'Sections',
 				},
 			},
 		},
