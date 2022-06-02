@@ -40,9 +40,7 @@ export interface HomepageConfig
 	> {}
 
 export interface KontentCurriculumResultData {
-	config: {
-		item: HomepageConfig
-	}
+	config: Responses.IViewContentItemResponse<Homepage>
 	page: Responses.IViewContentItemResponse<NavigationItem | Homepage>
 	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
 	keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
