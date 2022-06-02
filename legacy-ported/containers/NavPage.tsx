@@ -1,5 +1,9 @@
 import { Action } from '@/models/action'
-import { Mapping, KontentCurriculumResultData } from '@/types'
+import {
+	Mapping,
+	KontentCurriculumResultData,
+	KontentCurriculumResult,
+} from '@/types'
 import { Button } from '@material-ui/core'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 // import { useHistory } from 'react-router-dom'
@@ -12,12 +16,19 @@ import NavFooter from '../components/navigation/NavFooter'
 import SiteFooter from '../components/navigation/SiteFooter'
 // import { frontendPages } from '../utilities/hooks/useNavGroups'
 // import CustomModal from '../components/base/CustomModal'
+import dynamic from 'next/dynamic'
+import type { Homepage as HomepageModel } from '@/models/homepage'
 
-export interface NavPageProps extends Omit<HeaderProps, 'onSearch'> {
+export interface NavPageProps
+	extends KontentCurriculumResult,
+		Omit<HeaderProps, 'onSearch'> {
 	children?: ReactNode
 	mappings: Mapping[]
-	data: KontentCurriculumResultData
 }
+
+const ReactJson = dynamic(() => import('react-json-view'), {
+	ssr: false,
+}) as any
 
 /**
  * Basic page container with navigation functionality. Includes a header with primary links,
@@ -34,7 +45,9 @@ const NavPage = (props: NavPageProps) => {
 	useEffect(() => {
 		// handle the case where we don't detect the browser
 		if (browser && browser.name === 'ie') {
-			const browserPopupConfirmed = localStorage.getItem('browserPopupConfirmed')
+			const browserPopupConfirmed = localStorage.getItem(
+				'browserPopupConfirmed',
+			)
 			if (!browserPopupConfirmed) {
 				setIsIE(true)
 			}
@@ -43,11 +56,6 @@ const NavPage = (props: NavPageProps) => {
 
 	// const destinations = frontendPages()
 	// const currentPath = useHistory().location.pathname
-
-	const page = {
-		pageTitle: '',
-		pageDesc: '',
-	}
 
 	// get page title and desc based on the current path
 	// destinations.forEach((e) => {
@@ -101,14 +109,6 @@ const NavPage = (props: NavPageProps) => {
 
 	return (
 		<div className="nav-page">
-			<Helmet>
-				{page && page.pageTitle && page.pageTitle === 'NSW Curriculum' ? (
-					<title>{page.pageTitle} | NSW Education Standards Authority</title>
-				) : (
-					<title>{page.pageTitle} | NSW Curriculum | NSW Education Standards Authority</title>
-				)}
-				{page && page.pageDesc && <meta name="description" content={page.pageDesc} />}
-			</Helmet>
 			{!hidden && (
 				<Button
 					onClick={handleScrollToTop}
@@ -120,13 +120,26 @@ const NavPage = (props: NavPageProps) => {
 				</Button>
 			)}
 			{/* <MobileHeader className="nav-page__mobile-header" onSearch={handleSearchSubmit} /> */}
-			<Header className="nav-page__main-header" onSearch={handleSearchSubmit} {...headerProps} />
-			<main className={`nav-page__content ${className || ''} nsw-container`}>{children}</main>
+			<Header
+				className="nav-page__main-header"
+				onSearch={handleSearchSubmit}
+				{...headerProps}
+			/>
+			<main
+				className={`nav-page__content ${className || ''} nsw-container`}
+			>
+				<ReactJson collapsed src={props} />
+				{children}
+			</main>
 			<NavFooter {...props} />
 			<SiteFooter
 				mappings={props.mappings}
-				acknowledge={props.data.config.item.elements.acknowledgement.value}
-				menu={props.data.config.item.elements.footer_bottom_menu.linkedItems.map(item => item as Action)}
+				acknowledge={
+					props.data.config.item.elements.acknowledgement.value
+				}
+				menu={props.data.config.item.elements.footer_bottom_menu.linkedItems.map(
+					(item) => item as Action,
+				)}
 			/>
 			{/* {isIE && (
 				<CustomModal
