@@ -1,3 +1,4 @@
+import { Homepage } from '@/models/homepage'
 import type { Glossary } from '@/models/glossary'
 import type { KeyLearningArea } from '@/models/key_learning_area'
 import type { Stage } from '@/models/stage'
@@ -5,6 +6,7 @@ import type { StageGroup } from '@/models/stage_group'
 import type {
 	HomepageConfig,
 	KontentCurriculumResult,
+	KontentCurriculumResultData,
 	Mapping,
 	Seo,
 } from '@/types/index'
@@ -13,6 +15,11 @@ import get from 'lodash.get'
 import intersection from 'lodash.intersection'
 import { Syllabus } from '../models/syllabus'
 import packageInfo from '../package.json'
+import {
+	Elements,
+	IContentItemSystemAttributes,
+	Responses,
+} from '@kentico/kontent-delivery'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -29,7 +36,9 @@ const client = new DeliveryClient({
 	],
 })
 
-async function loadWebsiteConfig(preview = false): Promise<HomepageConfig> {
+async function loadWebsiteConfig(
+	preview = false,
+): Promise<Responses.IViewContentItemResponse<Homepage>> {
 	const config = await client
 		.item('homepage')
 		.depthParameter(10)
@@ -329,7 +338,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		const _result: KontentCurriculumResult = {
 			...result,
 			data: {
-				...result.data,
+				config: result.data.config,
+				page: result.data.page,
 				syllabuses: null,
 				keyLearningAreas: null,
 				glossaries: null,
