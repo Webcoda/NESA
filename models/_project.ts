@@ -1057,6 +1057,20 @@ export const projectModel = {
 				},
 			},
 		},
+		page_glossary: {
+			codename: 'page_glossary',
+			name: 'Page Glossary',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				intro: {
+					codename: 'intro',
+					name: 'Intro',
+				},
+			},
+		},
 		page_key_learning_area: {
 			codename: 'page_key_learning_area',
 			name: 'Page Key Learning Area',
