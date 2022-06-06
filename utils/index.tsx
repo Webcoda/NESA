@@ -110,7 +110,6 @@ export const getUrlFromStageGroup = (
 			),
 		)
 	})
-	console.log('🚀 ~ file: index.ts ~ line 91 ~ mapping ~ mapping', mapping)
 	return getUrlFromMapping(mappings, mapping.params.navigationItem.codename)
 }
 

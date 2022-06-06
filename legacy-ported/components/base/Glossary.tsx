@@ -8,10 +8,17 @@ import { KeyLearningArea } from '@/models/key_learning_area'
 import { Syllabus } from '@/models/syllabus'
 
 const matchesSearch = (text: string, record: GlossaryType) => {
-	const keyLearningTitles: string[] = record.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
-		return syllabus.elements.key_learning_area.linkedItems.map(item => item as KeyLearningArea).map(item => item.elements.title.value)
-	})
-	return [record.elements.title.value, record.elements.description.value, keyLearningTitles]
+	const keyLearningTitles: string[] =
+		record.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
+			return syllabus.elements.key_learning_area.linkedItems
+				.map((item) => item as KeyLearningArea)
+				.map((item) => item.elements.title.value)
+		})
+	return [
+		record.elements.title.value,
+		record.elements.description.value,
+		keyLearningTitles,
+	]
 		.join()
 		.toLowerCase()
 		.includes(text.toLowerCase())
@@ -29,6 +36,11 @@ export interface GlossaryProps {
 	klaFilter?: string
 
 	/**
+	 * Filter terms to only include a specific syllabus
+	 */
+	syllabusFilter?: string
+
+	/**
 	 * Terms defined in the glossary
 	 */
 	sections: IGlossary[]
@@ -39,21 +51,44 @@ const applySearchAndFilter = (
 	selectedFilter?: string,
 	searchTerm?: string,
 	klaFilter?: string,
+	syllabusFilter?: string,
 ): IGlossary[] => {
-	if(!filterSections) return []
-	return filterSections?.filter(({ section }) => !selectedFilter || section === selectedFilter)
+	if (!filterSections) return []
+	return filterSections
+		.filter(({ section }) => !selectedFilter || section === selectedFilter)
 		?.map(({ section, records }) => {
-			return ({
+			return {
 				section,
 				records: records
 					.filter((r) => {
-						const keyLearningValues : string[] = r.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
-							return syllabus.elements.key_learning_area.value
-						})
-						return !klaFilter || keyLearningValues.includes(klaFilter) || !keyLearningValues.length
+						const keyLearningValues: string[] =
+							r.elements.syllabuses.linkedItems.flatMap(
+								(syllabus: Syllabus) => {
+									return syllabus.elements.key_learning_area
+										.value
+								},
+							)
+						return (
+							!klaFilter ||
+							keyLearningValues.includes(klaFilter) ||
+							!keyLearningValues.length
+						)
+					})
+					.filter((r) => {
+						const syllabuses: string[] =
+							r.elements.syllabuses.linkedItems.flatMap(
+								(syllabus: Syllabus) => {
+									return syllabus.system.codename
+								},
+							)
+						return (
+							!syllabusFilter ||
+							syllabuses.includes(syllabusFilter) ||
+							!syllabuses.length
+						)
 					})
 					.filter((r) => !searchTerm || matchesSearch(searchTerm, r)),
-			})
+			}
 		})
 		?.filter(({ records }) => records.length)
 }
@@ -67,8 +102,10 @@ const applySearchAndFilter = (
  *  A filter that can be applied to individual body terms.
  * ]
  */
-export const useGlossary = (props: GlossaryProps): [GlossaryHeaderProps, (terms: IGlossary[]) => IGlossary[]] => {
-	const { startSearchTerm, klaFilter, sections } = props
+export const useGlossary = (
+	props: GlossaryProps,
+): [GlossaryHeaderProps, (terms: IGlossary[]) => IGlossary[]] => {
+	const { startSearchTerm, klaFilter, sections, syllabusFilter } = props
 
 	const [searchTerm, setSearchTerm] = useState(startSearchTerm)
 	const [selectedFilter, setSelectedFilter] = useState<AlphabetChar>()
@@ -80,7 +117,13 @@ export const useGlossary = (props: GlossaryProps): [GlossaryHeaderProps, (terms:
 	)
 
 	const disabledButtons = useMemo(
-		() => alphabet.filter((char) => !availableSections.some((section) => section.section === char)),
+		() =>
+			alphabet.filter(
+				(char) =>
+					!availableSections.some(
+						(section) => section.section === char,
+					),
+			),
 		[availableSections],
 	)
 
@@ -112,7 +155,14 @@ export const useGlossary = (props: GlossaryProps): [GlossaryHeaderProps, (terms:
 			startSearchTerm: searchTerm,
 			onSearch: handleSearch,
 		},
-		(filterSections) => applySearchAndFilter(filterSections, selectedFilter, searchTerm, klaFilter),
+		(filterSections) =>
+			applySearchAndFilter(
+				filterSections,
+				selectedFilter,
+				searchTerm,
+				klaFilter,
+				syllabusFilter,
+			),
 	]
 }
 
