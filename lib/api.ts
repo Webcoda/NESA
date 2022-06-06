@@ -279,6 +279,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	const isLandingPage = pageResponse.item.system.type === 'landing_page'
 	const isStagePage = pageResponse.item.system.type === 'page_stage'
 	const isSyllabusPage = pageResponse.item.system.type === 'page_kla_syllabus'
+	const isGlossaryPage = pageResponse.item.system.type === 'page_glossary'
 
 	if (isListingPage) {
 		const _result = {
@@ -334,7 +335,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				linkedItemsResponse
 			return _result
 		}
-	} else if (isStagePage || isSyllabusPage) {
+	} else if (isStagePage || isSyllabusPage || isGlossaryPage) {
 		const _result: KontentCurriculumResult = {
 			...result,
 			data: {
