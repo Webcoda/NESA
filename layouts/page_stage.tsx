@@ -47,6 +47,11 @@ const useStyles = makeStyles((theme) => ({
  * */
 
 function PageStage(props) {
+	const router = useRouter()
+
+	// query string
+	const { query } = router
+
 	// const classes = useStyles()
 	const page: PageStageType = get(props, 'data.page.item', null)
 	const allSyllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
@@ -73,7 +78,6 @@ function PageStage(props) {
 		'elements.stage.linkedItems.0.elements.title.value',
 		null,
 	)
-
 	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
 	const terms = convertGlossaryToIGlossary(allGlossaries)
 
@@ -81,8 +85,8 @@ function PageStage(props) {
 
 	const theme = useTheme()
 	// const imageSizes = `${theme.breakpoints.values.md}px`
-	const [selectedStages, setSelectedStages] = useState<Stage[]>(
-		page.elements.stage.linkedItems.map((item: Stage) => item),
+	const selectedStages = page.elements.stage.linkedItems.map(
+		(item: Stage) => item,
 	)
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
@@ -92,8 +96,6 @@ function PageStage(props) {
 		sections: terms,
 	})
 
-	const history = useRouter()
-
 	// Methods
 	const onStagesHeaderConfirm = (ids: string[]) => {
 		const tabsForCustomPage = currentTabs.map((t) => t.id)
@@ -101,7 +103,7 @@ function PageStage(props) {
 
 		// If more than 1 stages are selected redirect to Custom Syllabus page
 		if (ids.length > 1) {
-			history.push({
+			router.push({
 				pathname: Sections.CUSTOM_SYLLABUS.url,
 				search: customSyllabusQueryString({
 					stageIds: ids as string[],
@@ -114,7 +116,7 @@ function PageStage(props) {
 			const pathname = getUrlFromStage(newStageId, mappings)
 
 			if (pathname) {
-				history.replace({
+				router.replace({
 					pathname,
 				})
 			} else {
