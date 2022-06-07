@@ -1,23 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { FocusArea } from '@/models/focus_area'
+import { FocusAreaGroup } from '@/models/focus_area_group'
+import { Outcome } from '@/models/outcome'
+import { Stage } from '@/models/stage'
+import { TeachingAdvice } from '@/models/teaching_advice'
 import { Grid, Popover } from '@material-ui/core'
+import React, { useEffect, useRef, useState } from 'react'
 // import { HashLink } from 'react-router-hash-link'
-import { isChrome, isIOS, isMobile, isSafari, isTablet } from 'react-device-detect'
-import OutcomeCard from '../card/OutcomeCard'
-import OutcomeDetailCard from '../card/OutcomeDetailCard'
+import {
+	isChrome,
+	isIOS,
+	isMobile,
+	isSafari,
+	isTablet,
+} from 'react-device-detect'
 import SYLLABUS from '../../constants/syllabusConstants'
+// import TagPicker from '../custom/TagPicker'
+import { IResource } from '../../utilities/backendTypes'
 // import DownloadList from './DownloadList'
 // import CustomModal from '../base/CustomModal'
 // import CustomPopover from '../base/CustomPopover'
 import { arrayToggleMultiple } from '../../utilities/functions'
 // import { Stages } from '../../store/mock/stages'
 import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
-// import TagPicker from '../custom/TagPicker'
-import { IContents, IResource } from '../../utilities/backendTypes'
-import { Stage } from '@/models/stage'
-import { FocusArea } from '@/models/focus_area'
-import { Outcome } from '@/models/outcome'
-import { FocusAreaGroup } from '@/models/focus_area_group'
-import { TeachingAdvice } from '@/models/teaching_advice'
+import OutcomeCard from '../card/OutcomeCard'
+import OutcomeDetailCard from '../card/OutcomeDetailCard'
 import TeachingSupportCard from '../card/TeachingSupportCard'
 
 export const tagList = [
@@ -100,18 +106,33 @@ export interface ContentOrganizerProps {
 }
 
 const Content = (props: ContentOrganizerProps): JSX.Element => {
-	const { defaultOffsetTop, stageId, supportElementId, content, initialState, files, stages } = props
+	const {
+		defaultOffsetTop,
+		stageId,
+		supportElementId,
+		content,
+		initialState,
+		files,
+		stages,
+	} = props
 
 	const mainBodyRef = useRef<HTMLDivElement>(null)
 
-	const [currentContentOrganiser, setCurrentContentOrganiser] = useState<FocusArea>()
+	const [currentContentOrganiser, setCurrentContentOrganiser] =
+		useState<FocusArea>()
 	const [initialContentSelect, setInitialContentSelect] = useState(false)
 	const activeContentBody = useRef<HTMLDivElement>(null)
 
-	const [showAccessPoints, setShowAccessPoints] = useState(initialState?.accessPoints ?? false)
-	const [showTeachingSupport, setShowTeachingSupport] = useState(initialState?.teachingSupport ?? false)
+	const [showAccessPoints, setShowAccessPoints] = useState(
+		initialState?.accessPoints ?? false,
+	)
+	const [showTeachingSupport, setShowTeachingSupport] = useState(
+		initialState?.teachingSupport ?? false,
+	)
 	const [initialTeachingScroll, setInitialTeachingScroll] = useState(false)
-	const [showExamples, setShowExamples] = useState(initialState?.examples ?? false)
+	const [showExamples, setShowExamples] = useState(
+		initialState?.examples ?? false,
+	)
 	const [fixBanner, setFixBanner] = useState(false)
 	const [lastScroll, setLastScroll] = useState(0)
 	const [isMenuHidden, setIsMenuHidden] = useState(false)
@@ -136,7 +157,10 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	// card detail
 	const [offsetTop, setOffsetTop] = useState(0)
 
-	const isEarlyStage1 = stageId === stages.find((stage: Stage) => stage.elements.order.value === 1)?.system.id
+	const isEarlyStage1 =
+		stageId ===
+		stages.find((stage: Stage) => stage.elements.order.value === 1)?.system
+			.id
 
 	const bodyRef = useRef<HTMLDivElement>(null)
 
@@ -154,7 +178,11 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		if (content?.length && !organiser) {
 			if (!initialContentSelect && initialState?.contentOrganiser) {
 				// If this is the initial load, check initialState for content organiser
-				organiser = content.find((c) => c.elements.title.value === initialState.contentOrganiser)
+				organiser = content.find((c) => {
+					return (
+						c.elements.title.value === initialState.contentOrganiser
+					)
+				})
 			} else {
 				// Set selected to first available content
 				;[organiser] = content
@@ -181,7 +209,10 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		}
 	}
 
-	const handleFilterButton = (event: React.MouseEvent<HTMLButtonElement>, filter: string) => {
+	const handleFilterButton = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		filter: string,
+	) => {
 		if (filter === SYLLABUS.FILTER.ACCESS_POINTS) {
 			setShowAccessPoints(!showAccessPoints)
 		} else if (filter === SYLLABUS.FILTER.TEACHING_SUPPORT) {
@@ -199,7 +230,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	}
 
 	const scrollToSupportElement = () => {
-		let supportId = `${stageId}-${supportElementId}-support-${currentContentOrganiser!.system.id}`
+		let supportId = `${stageId}-${supportElementId}-support-${
+			currentContentOrganiser!.system.id
+		}`
 
 		// DC-353 Prefix the id for mobile so the id's are unique
 		if (window.innerWidth < 959) {
@@ -225,14 +258,24 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 
 	useEffect(() => {
 		// Scroll to support element on initial load
-		if (initialState?.teachingSupport && currentContentOrganiser && !initialTeachingScroll) {
+		if (
+			initialState?.teachingSupport &&
+			currentContentOrganiser &&
+			!initialTeachingScroll
+		) {
 			setInitialTeachingScroll(true)
 			scrollToSupportElement()
 		}
-	}, [initialState?.teachingSupport, currentContentOrganiser, initialTeachingScroll])
+	}, [
+		initialState?.teachingSupport,
+		currentContentOrganiser,
+		initialTeachingScroll,
+	])
 
 	const handleOnClick = (
-		event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>,
+		event:
+			| React.MouseEvent<HTMLDivElement, MouseEvent>
+			| React.KeyboardEvent<HTMLDivElement>,
 		organiser: FocusArea,
 	) => {
 		const cardOffsetTop = event.currentTarget.offsetTop - defaultOffsetTop
@@ -246,7 +289,8 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		if (
 			activeContentBody.current &&
 			currentContentOrganiser &&
-			content!.indexOf(organiser) > content!.indexOf(currentContentOrganiser)
+			content!.indexOf(organiser) >
+				content!.indexOf(currentContentOrganiser)
 		) {
 			// The height of the previous content
 			const height = activeContentBody.current?.clientHeight
@@ -290,7 +334,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	const handleTerm = (termElement: Element) => {
 		const innerHTMLTerm = termElement.innerHTML
 
-		const currentTermDescriptions = termList.filter((term) => term.name === innerHTMLTerm)
+		const currentTermDescriptions = termList.filter(
+			(term) => term.name === innerHTMLTerm,
+		)
 
 		if (currentTermDescriptions.length > 0) {
 			const currentTerm = currentTermDescriptions[0]
@@ -322,7 +368,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 
 			// we only want to display the fixed banner while scrolling through the content section.
 			const contentBox = mainBodyRef.current?.getBoundingClientRect()
-			setFixBanner(!!contentBox && contentBox.top <= 0 && contentBox.bottom >= 0)
+			setFixBanner(
+				!!contentBox && contentBox.top <= 0 && contentBox.bottom >= 0,
+			)
 		}
 
 		// Detect scroll up/down
@@ -374,8 +422,12 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		 */
 		return () => {
 			pairs.map(([e, h]) => e.removeEventListener('click', h))
-			termsMouseOverPairs.map(([e, h]) => e.removeEventListener('mouseover', h))
-			termsMouseLeavePairs.map(([e, h]) => e.removeEventListener('mouseleave', h))
+			termsMouseOverPairs.map(([e, h]) =>
+				e.removeEventListener('mouseover', h),
+			)
+			termsMouseLeavePairs.map(([e, h]) =>
+				e.removeEventListener('mouseleave', h),
+			)
 		}
 	}, [showAccessPoints, showTeachingSupport, tagIds, showExamples])
 
@@ -396,7 +448,10 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	return (
 		<div className="content-organizer-container" ref={mainBodyRef}>
 			{fixBanner && currentContentOrganiser && (
-				<div className="fix-banner" style={{ top: isMenuHidden ? 0 : '136px' }}>
+				<div
+					className="fix-banner"
+					style={{ top: isMenuHidden ? 0 : '136px' }}
+				>
 					{/* TODO: hash link */}
 					{/* <HashLink
 						smooth
@@ -416,7 +471,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								key={`outcome-card-${organiser.system.id}-${index}`}
 								className="content-organizer__outcome-card-wrapper"
 							>
-								<span id={`outcome-card-${organiser.system.id}`} />
+								<span
+									id={`outcome-card-${organiser.system.id}`}
+								/>
 								{/* TODO: Content.tsx - fix OutcomeCard */}
 								<OutcomeCard
 									title={organiser.elements.title.value}
@@ -424,9 +481,12 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 										(o: Outcome) => o.elements.code.value,
 									)}
 									outcomes={organiser.elements.outcomes.linkedItems.map(
-										(o: Outcome) => o.elements.description.value,
+										(o: Outcome) =>
+											o.elements.description.value,
 									)}
-									selected={currentContentOrganiser === organiser}
+									selected={
+										currentContentOrganiser === organiser
+									}
 									displayOutcome={false}
 									isSelectable
 									onClick={(e) => handleOnClick(e, organiser)}
@@ -441,15 +501,23 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 										>
 											{/* TODO: OutcomeDetailCard - access points fix */}
 											<OutcomeDetailCard
-												title={organiser.elements.title.value}
+												title={
+													organiser.elements.title
+														.value
+												}
 												groups={
-													organiser.elements.focus_area_groups
+													organiser.elements
+														.focus_area_groups
 														.linkedItems as FocusAreaGroup[]
 												}
 												accessPoints={
-													organiser.elements.access_points.linkedItems as FocusAreaGroup[]
+													organiser.elements
+														.access_points
+														.linkedItems as FocusAreaGroup[]
 												}
-												showAccessPoints={showAccessPoints}
+												showAccessPoints={
+													showAccessPoints
+												}
 												showTags={tagIds}
 												showExamples={showExamples}
 											/>
@@ -457,12 +525,25 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 												<Grid
 													id={`m_${stageId}-${supportElementId}-support-${organiser.system.id}`}
 												>
-													{!!organiser.elements.teaching_advice.value?.length &&
+													{!!organiser.elements
+														.teaching_advice.value
+														?.length &&
 														organiser.elements.teaching_advice.linkedItems.map(
-															(teachingAdvice: TeachingAdvice) => (
+															(
+																teachingAdvice: TeachingAdvice,
+															) => (
 																<TeachingSupportCard
-																	key={teachingAdvice.system.id}
-																	content={teachingAdvice.elements.content.value}
+																	key={
+																		teachingAdvice
+																			.system
+																			.id
+																	}
+																	content={
+																		teachingAdvice
+																			.elements
+																			.content
+																			.value
+																	}
 																/>
 															),
 														)}
@@ -499,9 +580,16 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								<button
 									type="button"
 									className={`button button--white-text nsw-button content-organizer__filter-button ${
-										showAccessPoints ? 'button--selected' : 'nsw-button--secondary'
+										showAccessPoints
+											? 'button--selected'
+											: 'nsw-button--secondary'
 									} `}
-									onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.ACCESS_POINTS)}
+									onClick={(e) =>
+										handleFilterButton(
+											e,
+											SYLLABUS.FILTER.ACCESS_POINTS,
+										)
+									}
 									tabIndex={0}
 								>
 									{SYLLABUS.FILTER.ACCESS_POINTS}
@@ -510,9 +598,16 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 							<button
 								type="button"
 								className={`button button--white-text nsw-button content-organizer__filter-button ${
-									showTeachingSupport ? 'button--selected' : 'nsw-button--secondary'
+									showTeachingSupport
+										? 'button--selected'
+										: 'nsw-button--secondary'
 								} `}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.TEACHING_SUPPORT)}
+								onClick={(e) =>
+									handleFilterButton(
+										e,
+										SYLLABUS.FILTER.TEACHING_SUPPORT,
+									)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.TEACHING_SUPPORT}
@@ -521,9 +616,13 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								type="button"
 								ref={tagsButtonRef}
 								className={`button button--white-text nsw-button content-organizer__filter-button ${
-									tagIds ? 'button--selected' : 'nsw-button--secondary'
+									tagIds
+										? 'button--selected'
+										: 'nsw-button--secondary'
 								} `}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.TAGS)}
+								onClick={(e) =>
+									handleFilterButton(e, SYLLABUS.FILTER.TAGS)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.TAGS}
@@ -531,9 +630,16 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 							<button
 								type="button"
 								className={`button button--white-text nsw-button content-organizer__filter-button ${
-									showExamples ? 'button--selected' : 'nsw-button--secondary'
+									showExamples
+										? 'button--selected'
+										: 'nsw-button--secondary'
 								} `}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.EXAMPLES)}
+								onClick={(e) =>
+									handleFilterButton(
+										e,
+										SYLLABUS.FILTER.EXAMPLES,
+									)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.EXAMPLES}
@@ -544,13 +650,18 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 							currentContentOrganiser && (
 								/* TODO: OutcomeDetailCard fix */
 								<OutcomeDetailCard
-									title={currentContentOrganiser.elements.title.value}
+									title={
+										currentContentOrganiser.elements.title
+											.value
+									}
 									groups={
-										currentContentOrganiser.elements.focus_area_groups
+										currentContentOrganiser.elements
+											.focus_area_groups
 											.linkedItems as FocusAreaGroup[]
 									}
 									accessPoints={
-										currentContentOrganiser.elements.access_points
+										currentContentOrganiser.elements
+											.access_points
 											.linkedItems as FocusAreaGroup[]
 									}
 									showAccessPoints={showAccessPoints}
@@ -561,16 +672,26 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 							// null
 						}
 						{showTeachingSupport && currentContentOrganiser && (
-							<Grid id={`${stageId}-${supportElementId}-support-${currentContentOrganiser.system.id}`}>
+							<Grid
+								id={`${stageId}-${supportElementId}-support-${currentContentOrganiser.system.id}`}
+							>
 								{
 									// TODO: add TeachingSupportCard
-									!!currentContentOrganiser.elements.teaching_advice.value?.length &&
+									!!currentContentOrganiser.elements
+										.teaching_advice.value?.length &&
 										// TODO: addTeachingSupportCard
 										currentContentOrganiser.elements.teaching_advice.linkedItems.map(
-											(teachingAdvice: TeachingAdvice) => (
+											(
+												teachingAdvice: TeachingAdvice,
+											) => (
 												<TeachingSupportCard
-													key={teachingAdvice.system.id}
-													content={teachingAdvice.elements.content.value}
+													key={
+														teachingAdvice.system.id
+													}
+													content={
+														teachingAdvice.elements
+															.content.value
+													}
 												/>
 											),
 										)
@@ -585,36 +706,75 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 				<Grid className="content-organizer__filter-buttons-mobile fixed-footer">
 					<Grid container>
 						{isEarlyStage1 && (
-							<Grid item xs={6} sm={6} className="content-organizer__btn-container">
+							<Grid
+								item
+								xs={6}
+								sm={6}
+								className="content-organizer__btn-container"
+							>
 								<button
 									type="button"
 									className={`button button--white-text nsw-button button--full-width button__filter-mobile
-                  ${showAccessPoints ? 'button--selected' : 'nsw-button--secondary'}`}
-									onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.ACCESS_POINTS)}
+                  ${
+						showAccessPoints
+							? 'button--selected'
+							: 'nsw-button--secondary'
+					}`}
+									onClick={(e) =>
+										handleFilterButton(
+											e,
+											SYLLABUS.FILTER.ACCESS_POINTS,
+										)
+									}
 									tabIndex={0}
 								>
 									{SYLLABUS.FILTER.ACCESS_POINTS}
 								</button>
 							</Grid>
 						)}
-						<Grid item xs={6} sm={6} className="content-organizer__btn-container">
+						<Grid
+							item
+							xs={6}
+							sm={6}
+							className="content-organizer__btn-container"
+						>
 							<button
 								type="button"
 								className={`button button--white-text nsw-button button--full-width button__filter-mobile
                 ${showExamples ? 'button--selected' : 'nsw-button--secondary'}`}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.EXAMPLES)}
+								onClick={(e) =>
+									handleFilterButton(
+										e,
+										SYLLABUS.FILTER.EXAMPLES,
+									)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.EXAMPLES}
 							</button>
 						</Grid>
 
-						<Grid item xs={6} sm={6} md={3} className="content-organizer__btn-container">
+						<Grid
+							item
+							xs={6}
+							sm={6}
+							md={3}
+							className="content-organizer__btn-container"
+						>
 							<button
 								type="button"
 								className={`button button--white-text nsw-button button--full-width button__filter-mobile
-                ${showTeachingSupport ? 'button--selected' : 'nsw-button--secondary'}`}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.TEACHING_SUPPORT)}
+                ${
+					showTeachingSupport
+						? 'button--selected'
+						: 'nsw-button--secondary'
+				}`}
+								onClick={(e) =>
+									handleFilterButton(
+										e,
+										SYLLABUS.FILTER.TEACHING_SUPPORT,
+									)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.TEACHING_SUPPORT}
@@ -632,7 +792,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								ref={tagsButtonRef}
 								className={`button button--white-text nsw-button button--full-width button__filter-mobile
               ${tagIds ? 'button--selected' : 'nsw-button--secondary'}`}
-								onClick={(e) => handleFilterButton(e, SYLLABUS.FILTER.TAGS)}
+								onClick={(e) =>
+									handleFilterButton(e, SYLLABUS.FILTER.TAGS)
+								}
 								tabIndex={0}
 							>
 								{SYLLABUS.FILTER.TAGS}
@@ -685,7 +847,8 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 			>
 				<Grid className="term-info">
 					<p className="term-info__detail">
-						<span className="term-title">Term:</span> {termDescription}
+						<span className="term-title">Term:</span>{' '}
+						{termDescription}
 					</p>
 				</Grid>
 			</Popover>

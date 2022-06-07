@@ -8,6 +8,7 @@ import page_key_learning_area from './page_key_learning_area'
 import page_kla_syllabus from './page_kla_syllabus'
 import page_general_content from './page_general_content'
 import page_glossary from './page_glossary'
+import page_teaching_advice from './page_teaching_advice'
 
 export const _ = {
 	landing_page,
@@ -20,6 +21,7 @@ export const _ = {
 	page_kla_syllabus,
 	page_general_content,
 	page_glossary,
+	page_teaching_advice,
 }
 
 export default _
