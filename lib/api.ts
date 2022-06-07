@@ -280,6 +280,8 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	const isStagePage = pageResponse.item.system.type === 'page_stage'
 	const isSyllabusPage = pageResponse.item.system.type === 'page_kla_syllabus'
 	const isGlossaryPage = pageResponse.item.system.type === 'page_glossary'
+	const isTeachingAdvicePage =
+		pageResponse.item.system.type === 'page_teaching_advice'
 
 	if (isListingPage) {
 		const _result = {
@@ -415,6 +417,47 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 				)
 			},
 		)
+
+		return _result
+	} else if (isTeachingAdvicePage) {
+		const _result: KontentCurriculumResult = {
+			...result,
+			data: {
+				config: result.data.config,
+				page: result.data.page,
+				syllabuses: null,
+				keyLearningAreas: null,
+				stages: null,
+			},
+		}
+
+		const [syllabuses, keyLearningAreas, stages] = await Promise.all([
+			getAllItemsByType<Syllabus>({
+				type: 'syllabus',
+				depth: 6,
+				preview,
+			}),
+			getAllItemsByType<KeyLearningArea>({
+				type: 'key_learning_area',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
+			}),
+			getAllItemsByType<Stage>({
+				type: 'stage',
+				preview,
+				order: {
+					element: 'elements.order',
+					sortOrder: 'asc',
+				},
+			}),
+		])
+
+		_result.data.syllabuses = syllabuses
+		_result.data.keyLearningAreas = keyLearningAreas
+		_result.data.stages = stages
 
 		return _result
 	}

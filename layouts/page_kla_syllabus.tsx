@@ -10,7 +10,7 @@ import TabBar from '@/legacy-ported/components/tabs/TabBar'
 import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { PageKlaSyllabus as PageKlaSyllabusModel } from '@/models/page_kla_syllabus'
 import { Syllabus } from '@/models/syllabus'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core'
 import setTabNavigation from '@/legacy-ported/utilities/hooks/useTabNavigation'
 import LearningAreaHeader from '@/legacy-ported/components/syllabus/LearningAreaHeader'
@@ -25,6 +25,8 @@ import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
 import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
 import { useGlossary } from '@/legacy-ported/components/base/Glossary'
 import { Glossary } from '@/models/glossary'
+import { useRouter } from 'next/router'
+import { parse, ParsedQs } from 'qs'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function PageKlaSyllabus(props) {
+	const router = useRouter()
 	const classes = useStyles()
 	const page: PageKlaSyllabusModel = get(props, 'data.page.item', null)
 	const allStages: Stage[] = get(props, 'data.stages.items', null)
@@ -58,12 +61,12 @@ export default function PageKlaSyllabus(props) {
 		[],
 	)
 
-	const query = {} as any
-	const initialTab = query.tab as string | undefined
-	const initialStageCodename = query.stage as string | undefined
+	const initialTab = router.query.tab as string | undefined
+	const initialStageCodename = router.query.stage as string | undefined
+	const [options, setOptions] = useState<ParsedQs>()
 
 	// States
-	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
+	const [tabValue, setTabValue] = useState(syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
 	const [stage, setStage] = useState<Stage>(
 		initialStageCodename
@@ -76,6 +79,20 @@ export default function PageKlaSyllabus(props) {
 	const [glossaryHeaderProps, glossaryFilter] = useGlossary({
 		sections: terms,
 	})
+
+	// Effect
+	useEffect(() => {
+		// useRouter is a react hook, it catches up to the current query on ReactDOM.hydrate.
+		// so we need to use useEffect and "watch" initialTab change
+		// https://github.com/vercel/next.js/discussions/11484#discussioncomment-2362
+		if (initialTab) {
+			setTabValue(initialTab)
+		}
+		const query = parse(window.location.search, {
+			ignoreQueryPrefix: true,
+		})
+		setOptions(query.options as ParsedQs | undefined)
+	}, [initialTab])
 
 	// Methods
 	const handleTabChange = (newTabValue: string) => {
@@ -230,6 +247,14 @@ export default function PageKlaSyllabus(props) {
 											.linkedItems as FocusArea[]
 									}
 									// files={syl.files?.filter((c) => c.stageIds.includes(stageId)) ?? []}
+									initialState={{
+										teachingSupport:
+											options?.teachingSupport === 'true',
+										contentOrganiser:
+											options?.contentOrganiser as
+												| string
+												| undefined,
+									}}
 								/>
 							</SyllabusTabPanel>
 
