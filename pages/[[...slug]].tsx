@@ -55,15 +55,6 @@ export async function getStaticPaths(ctx) {
 export async function getStaticProps({ params, preview = false }) {
 	const props = await getPageStaticPropsForPath(params, preview)
 
-	if (!props) {
-		return {
-			redirect: {
-				destination: '/',
-				permanent: true,
-			},
-		}
-	}
-
 	return {
 		props: {
 			...props,
