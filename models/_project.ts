@@ -1127,6 +1127,16 @@ export const projectModel = {
 				},
 			},
 		},
+		page_teaching_advice: {
+			codename: 'page_teaching_advice',
+			name: 'Page Teaching Advice',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+			},
+		},
 		post: {
 			codename: 'post',
 			name: 'Post',
@@ -1549,17 +1559,6 @@ export const projectModel = {
 		},
 	},
 	taxonomies: {
-		bands: {
-			codename: 'bands',
-			name: 'Bands',
-			terms: {
-				n1: {
-					codename: 'n1',
-					name: '1',
-					terms: {},
-				},
-			},
-		},
 		interacting: {
 			codename: 'interacting',
 			name: 'Literacy Interacting',

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { Glossary } from '@/models/glossary'
 import { Homepage } from '@/models/homepage'
 import { KeyLearningArea } from '@/models/key_learning_area'
@@ -64,8 +65,10 @@ export interface StageWithAvailability extends Stage {
 	available: boolean
 }
 
-interface StageGroupElement {
-	title: Elements.TextElement
-	order: Elements.NumberElement
-	years: Elements.MultipleChoiceElement
+export interface CommonPageProps extends KontentCurriculumResult {
+	className?: string
+	errorCode?: number
+	params: any
+	preview: boolean
+	children?: ReactNode
 }
