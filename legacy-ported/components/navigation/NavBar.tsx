@@ -1,3 +1,4 @@
+import { Mapping } from '@/types'
 import { Paper, Popover } from '@material-ui/core'
 // import PATHS from '../../constants/pathConstants'
 import Link from 'next/link'
@@ -49,6 +50,8 @@ export interface PureNavBarProps {
 	 * Classname prop, forwarded to root element
 	 */
 	className?: string
+
+	mappings: Mapping[]
 }
 
 /**
@@ -66,6 +69,7 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 		onSearchOpen,
 		hideSearchBar,
 		onSearchSubmit,
+		mappings,
 		className,
 	} = props
 	const [hoverLink, setHoverLink] = useState(false)
@@ -228,6 +232,7 @@ export const PureNavBar = (props: PureNavBarProps): JSX.Element => {
 				}}
 			>
 				<NavBarMenu
+					mappings={mappings}
 					sections={menuContent}
 					onLinkClick={handleLinkClick}
 				/>

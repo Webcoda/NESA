@@ -123,6 +123,7 @@ const Header = (props: HeaderProps): JSX.Element => {
 			{/* <BetaSiteBanner /> */}
 			<div className="header__body nsw-container">
 				<NavBar
+					mappings={mappings}
 					title={props.data.config.item.elements.title.value}
 					subtitle={props.data.config.item.elements.descriptor.value}
 					navItems={navItems}
