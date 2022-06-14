@@ -1,7 +1,11 @@
 // import { UrlLink } from '../../utilities/frontendTypes'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
+import { Mapping } from '@/types'
+import { getUrlFromMapping } from '@/utils'
+import classNames from 'classnames'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export interface NavBarMenuSectionProps {
@@ -16,6 +20,8 @@ export interface NavBarMenuSectionProps {
 	// links: UrlLink[]
 	links: any
 
+	mappings: Mapping[]
+
 	/**
 	 * Call back when link click
 	 */
@@ -23,7 +29,8 @@ export interface NavBarMenuSectionProps {
 }
 
 const NavBarMenuSection = (props: NavBarMenuSectionProps): JSX.Element => {
-	const { title, links, onLinkClick } = props
+	const { title, links, mappings, onLinkClick } = props
+	const router = useRouter()
 	// const rowCount = useRowCount(links.length)
 	// const colCount = Math.floor((links.length - 1) / rowCount) + 1
 	// const useShortBody = rowCount === 4
@@ -65,11 +72,17 @@ const NavBarMenuSection = (props: NavBarMenuSectionProps): JSX.Element => {
 						) : (
 							<Link href={link.url}>
 								<a
-									className={`navbar-menu-section__link ${
-										link.text === 'View all'
-											? 'font-bold'
-											: ''
-									}`}
+									className={classNames(
+										'navbar-menu-section__link',
+										{
+											'font-bold':
+												link.text === 'View all',
+											active:
+												router.asPath.match(
+													new RegExp(link.url, 'ig'),
+												)?.length > 0,
+										},
+									)}
 									onClick={onLinkClick}
 								>
 									{link.icon || null}
@@ -92,6 +105,8 @@ export interface NavBarMenuProps {
 	 */
 	sections: NavGroup[]
 
+	mappings: Mapping[]
+
 	/**
 	 * Call back when link click
 	 */
@@ -99,7 +114,7 @@ export interface NavBarMenuProps {
 }
 
 const NavBarMenu = (props: NavBarMenuProps) => {
-	const { sections, onLinkClick } = props
+	const { sections, mappings, onLinkClick } = props
 	return (
 		<div className="navbar-menu">
 			{sections.map((sec) => (
@@ -108,6 +123,7 @@ const NavBarMenu = (props: NavBarMenuProps) => {
 					title={sec.text}
 					links={sec.subNav}
 					onLinkClick={onLinkClick}
+					mappings={mappings}
 				/>
 			))}
 		</div>

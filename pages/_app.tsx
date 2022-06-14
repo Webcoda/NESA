@@ -1,4 +1,5 @@
 import '@/legacy-ported/sass/app.scss'
+import { CommonPageProps } from '@/types'
 import KontentSmartLink from '@kentico/kontent-smart-link'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import get from 'lodash.get'
@@ -12,10 +13,18 @@ function MyApp({ Component, pageProps }) {
 	const fontName = 'Montserrat'
 
 	let title = get(pageProps, 'seo.title', null)
+	let siteDescriptor = get(
+		configObject,
+		'item.elements.descriptor.value',
+		null,
+	)
 	if (title) {
 		title += ' | '
 	}
 	title += get(configObject, 'item.elements.title.value', '')
+	if (siteDescriptor) {
+		title = title + ' | ' + siteDescriptor
+	}
 
 	const palette = get(
 		configObject,

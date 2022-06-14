@@ -26,7 +26,7 @@ import {
 	convertGlossaryToIGlossary,
 	getLinkElementUsedByRichtext,
 	getTagFromYears,
-	getUrlFromStage,
+	getUrlFromMapping,
 } from '@/utils'
 import { makeStyles, useTheme } from '@material-ui/core'
 import get from 'lodash.get'
@@ -97,23 +97,28 @@ function PageStage(props) {
 	})
 
 	// Methods
-	const onStagesHeaderConfirm = (ids: string[]) => {
+	const onStagesHeaderConfirm = (stageCodenames: string[]) => {
 		const tabsForCustomPage = currentTabs.map((t) => t.id)
-		const syllabusesForCustomPage = allSyllabuses.map((s) => s.system.id)
+		const syllabusesForCustomPage = allSyllabuses.map(
+			(s) => s.system.codename,
+		)
 
 		// If more than 1 stages are selected redirect to Custom Syllabus page
-		if (ids.length > 1) {
+		if (stageCodenames.length > 1) {
 			router.push({
 				pathname: Sections.CUSTOM_SYLLABUS.url,
 				search: customSyllabusQueryString({
-					stageIds: ids as string[],
+					stageIds: stageCodenames as string[],
 					tabIds: tabsForCustomPage,
 					syllabusIds: syllabusesForCustomPage,
 				}),
 			})
 		} else {
-			const newStageId = ids[0]
-			const pathname = getUrlFromStage(newStageId, mappings)
+			const stageCodename = stageCodenames[0]
+			const pathname = getUrlFromMapping(
+				mappings,
+				`navigation_item__${stageCodename}`,
+			)
 
 			if (pathname) {
 				router.replace({

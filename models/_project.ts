@@ -693,6 +693,10 @@ export const projectModel = {
 					codename: 'favicon',
 					name: 'Favicon',
 				},
+				descriptor: {
+					codename: 'descriptor',
+					name: 'Descriptor',
+				},
 			},
 		},
 		homepage_banner: {

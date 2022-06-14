@@ -11,11 +11,14 @@ import type {
 	IContentItem,
 } from '@kentico/kontent-delivery'
 import camelCase from 'lodash.camelcase'
+import intersection from 'lodash.intersection'
 import get from 'lodash.get'
 import upperFirst from 'lodash.upperfirst'
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
+
+export const isIntersect = (...arrays) => intersection(...arrays).length > 0
 
 export const convertGlossaryToIGlossary = (
 	glossaries: Glossary[],
@@ -84,33 +87,6 @@ export const getLinkFromNavigationItem = (
 		return navigationItem.elements.url.value
 	}
 	return getUrlFromMapping(mappings, navigationItem.system.codename)
-}
-
-export const getUrlFromStage = (stageCodename: string, mappings: Mapping[]) => {
-	const mapping = mappings.find((map) => {
-		const { navigationItem } = map.params
-		return navigationItem.codename.includes(
-			stageCodename.replace('stage__', `${navigationItem.type}__`),
-		)
-	})
-	return mapping
-		? getUrlFromMapping(mappings, mapping.params.navigationItem.codename)
-		: ''
-}
-export const getUrlFromStageGroup = (
-	stageGroupCodename: string,
-	mappings: Mapping[],
-) => {
-	const mapping = mappings.find((map) => {
-		const { navigationItem } = map.params
-		return navigationItem.codename.includes(
-			stageGroupCodename.replace(
-				'stage_group__',
-				`${navigationItem.type}__`,
-			),
-		)
-	})
-	return getUrlFromMapping(mappings, mapping.params.navigationItem.codename)
 }
 
 export const isNavItemExternalUrl = (navItem: IContentItem) =>

@@ -1,32 +1,37 @@
 import { Layout, RichText } from '@/components'
+import { useGlossary } from '@/legacy-ported/components/base/Glossary'
+import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
+import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
+import Content from '@/legacy-ported/components/syllabus/Content'
+import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerformance'
+import LearningAreaHeader from '@/legacy-ported/components/syllabus/LearningAreaHeader'
+import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
+import TabBar from '@/legacy-ported/components/tabs/TabBar'
+import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
+import { syllabusTabs } from '@/legacy-ported/constants/index'
+import { Sections } from '@/legacy-ported/constants/pathConstants'
+import { customSyllabusQueryString } from '@/legacy-ported/utilities/functions'
+import setTabNavigation from '@/legacy-ported/utilities/hooks/useTabNavigation'
+import { Assessment } from '@/models/assessment'
+import { FocusArea } from '@/models/focus_area'
+import { Glossary } from '@/models/glossary'
+import { PageKlaSyllabus as PageKlaSyllabusModel } from '@/models/page_kla_syllabus'
+import { Stage } from '@/models/stage'
+import { StageGroup } from '@/models/stage_group'
+import { Syllabus } from '@/models/syllabus'
+import { CommonPageProps } from '@/types'
 import {
 	convertGlossaryToIGlossary,
 	getLinkElementUsedByRichtext,
 	getTagFromYears,
+	getUrlFromMapping,
+	isIntersect,
 } from '@/utils'
-import get from 'lodash.get'
-import { syllabusTabs } from '@/legacy-ported/constants/index'
-import TabBar from '@/legacy-ported/components/tabs/TabBar'
-import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
-import { PageKlaSyllabus as PageKlaSyllabusModel } from '@/models/page_kla_syllabus'
-import { Syllabus } from '@/models/syllabus'
-import { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core'
-import setTabNavigation from '@/legacy-ported/utilities/hooks/useTabNavigation'
-import LearningAreaHeader from '@/legacy-ported/components/syllabus/LearningAreaHeader'
-import { Stage } from '@/models/stage'
-import { StageGroup } from '@/models/stage_group'
-import { FocusArea } from '@/models/focus_area'
-import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
-import Content from '@/legacy-ported/components/syllabus/Content'
-import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerformance'
-import { Assessment } from '@/models/assessment'
-import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
-import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
-import { useGlossary } from '@/legacy-ported/components/base/Glossary'
-import { Glossary } from '@/models/glossary'
+import get from 'lodash.get'
 import { useRouter } from 'next/router'
 import { parse, ParsedQs } from 'qs'
+import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -36,11 +41,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-export default function PageKlaSyllabus(props) {
+export default function PageKlaSyllabus(props: CommonPageProps) {
 	const router = useRouter()
 	const classes = useStyles()
+	const { mappings } = props
 	const page: PageKlaSyllabusModel = get(props, 'data.page.item', null)
 	const allStages: Stage[] = get(props, 'data.stages.items', null)
+	const allSyllabuses: Syllabus[] = get(props, 'data.syllabuses.items', null)
 	const allSyllabusesLinkedItems = get(
 		props,
 		'data.syllabuses.linkedItems',
@@ -68,10 +75,10 @@ export default function PageKlaSyllabus(props) {
 	// States
 	const [tabValue, setTabValue] = useState(syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
-	const [stage, setStage] = useState<Stage>(
+	const [selectedStage, setStage] = useState<Stage>(
 		initialStageCodename
 			? allStages.find(
-					(stage) => stage.system.codename === initialStageCodename,
+					(_s) => _s.system.codename === initialStageCodename,
 			  )
 			: allStages[0],
 	)
@@ -113,6 +120,74 @@ export default function PageKlaSyllabus(props) {
 		}
 	}
 
+	const handleLearningAreaHeaderConfirm = (klaCodenames: string[]) => {
+		const syllabuses = allSyllabuses.filter((syl) => {
+			console.log(
+				syl.elements.key_learning_area.value[0],
+				isIntersect(klaCodenames, syl.elements.key_learning_area.value),
+				syl.elements.stagesyears__stages.linkedItems.some(
+					(s: Stage) =>
+						s.system.codename === selectedStage.system.codename,
+				),
+			)
+			return (
+				isIntersect(
+					klaCodenames,
+					syl.elements.key_learning_area.value,
+				) &&
+				syl.elements.stagesyears__stages.linkedItems.some(
+					(s: Stage) =>
+						s.system.codename === selectedStage.system.codename,
+				)
+			)
+		})
+
+		/*
+		update the subject title when confirming,
+		we just want to update in case there's only one syllabus selected
+		*/
+		// If more than 1 Learning Area is selected redirect to Custom Syllabus page
+		if (klaCodenames.length > 1) {
+			router.push({
+				pathname: Sections.CUSTOM_SYLLABUS.url,
+				search: customSyllabusQueryString({
+					stageIds: [selectedStage.system.codename as string],
+					tabIds: currentTabs.map((t) => t.id),
+					syllabusIds: syllabuses.map((s) => s.system.codename),
+				}),
+			})
+		} else if (syllabuses && syllabuses.length === 1) {
+			// exactly 1 syllabus, redirect to it's page
+			router.push({
+				pathname: getUrlFromMapping(
+					mappings,
+					`navigation_item__${syllabuses[0].system.codename}`,
+				),
+			})
+		} else {
+			// Not sure what we do here
+			// setLearningArea(ids[0] as string);
+		}
+	}
+
+	const onStagesHeaderConfirm = (stageCodenames: string[]) => {
+		// If more than 1 Stage is selected redirect to Custom Syllabus page
+		if (stageCodenames.length > 1) {
+			router.push({
+				pathname: Sections.CUSTOM_SYLLABUS.url,
+				search: customSyllabusQueryString({
+					stageIds: stageCodenames as string[],
+					tabIds: currentTabs.map((t) => t.id),
+					syllabusIds: [syllabus.system.codename],
+				}),
+			})
+		} else {
+			setStage(
+				allStages.find((s) => s.system.codename === stageCodenames[0]),
+			)
+		}
+	}
+
 	return (
 		<Layout
 			className={`syllabus-overview syllabus-overview--{subject}`}
@@ -125,7 +200,9 @@ export default function PageKlaSyllabus(props) {
 							syllabus.elements.stagesyears__years.value,
 						)}
 						subjectTitle={syllabus.elements.title.value}
-						stageName={stage.elements.title.value || 'Unknown'}
+						stageName={
+							selectedStage.elements.title.value || 'Unknown'
+						}
 						onVersionHistoryClick={() => {
 							// setDisplayVersionHistoryLogModal(true)
 						}}
@@ -135,17 +212,13 @@ export default function PageKlaSyllabus(props) {
 						selectedAreas={[
 							syllabus.elements.key_learning_area.value[0],
 						]}
-						selectedStages={[stage.system.codename]}
+						selectedStages={[selectedStage.system.codename]}
 						stageGroups={allStageGroups}
 						area={syllabus.elements.key_learning_area.value[0]}
 						onLearningAreaHeaderConfirm={
-							null
-							// handleLearningAreaHeaderConfirm
+							handleLearningAreaHeaderConfirm
 						}
-						onStagesHeaderConfirm={
-							null
-							// onStagesHeaderConfirm
-						}
+						onStagesHeaderConfirm={onStagesHeaderConfirm}
 					/>
 					{/* tabs */}
 					<div className="syllabus-header__tabs">
@@ -240,7 +313,7 @@ export default function PageKlaSyllabus(props) {
 									// TODO: add defaultOffsetTop
 									// defaultOffsetTop={SYLLABUS.CONTENT_DEFAULT_OFFSET_TOP.STAGES}
 									defaultOffsetTop={0}
-									stageId={stage.system.id}
+									stageId={selectedStage.system.id}
 									supportElementId={syllabus.system.id}
 									content={
 										syllabus.elements.focus_areas
