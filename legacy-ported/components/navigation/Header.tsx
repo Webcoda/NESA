@@ -1,7 +1,7 @@
 import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
 import { Action } from '@/models/action'
 import { NavigationItem } from '@/models/navigation_item'
-import { Mapping } from '@/types'
+import { CommonPageProps, Mapping } from '@/types'
 import { getBreadcrumb, getUrlFromMapping } from '@/utils'
 import { Grid } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
@@ -14,7 +14,7 @@ import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import NavBar from './NavBar'
 
-export interface HeaderProps {
+export interface HeaderProps extends CommonPageProps {
 	/**
 	 * A list of urls to display as the breadcrumb links
 	 */
@@ -32,13 +32,6 @@ export interface HeaderProps {
 	 * @param text the text being searched
 	 */
 	onSearch?: (text: string) => void
-
-	/**
-	 * Classname prop, forwarded to root element
-	 */
-	className?: string
-
-	mappings: Mapping[]
 }
 
 const headers = [
@@ -101,10 +94,11 @@ const Header = (props: HeaderProps): JSX.Element => {
 	}
 
 	const createNavItem = (item: Action, mappings) => {
-		const url = getUrlFromMapping(
-			mappings,
-			item.elements.navigation_item.value[0],
-		)
+		const url =
+			getUrlFromMapping(
+				mappings,
+				item.elements.navigation_item.value[0],
+			) || '/'
 		const subNav = item.elements?.actions?.linkedItems?.map(
 			(_item: Action) => createNavItem(_item, mappings),
 		)
@@ -129,6 +123,9 @@ const Header = (props: HeaderProps): JSX.Element => {
 			{/* <BetaSiteBanner /> */}
 			<div className="header__body nsw-container">
 				<NavBar
+					mappings={mappings}
+					title={props.data.config.item.elements.title.value}
+					subtitle={props.data.config.item.elements.descriptor.value}
 					navItems={navItems}
 					className="header__navbar"
 					search={search}

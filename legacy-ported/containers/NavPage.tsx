@@ -1,23 +1,17 @@
 import { Action } from '@/models/action'
-import {
-	Mapping,
-	KontentCurriculumResultData,
-	KontentCurriculumResult,
-} from '@/types'
+import { KontentCurriculumResult, Mapping } from '@/types'
 import { Button } from '@material-ui/core'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 // import { useHistory } from 'react-router-dom'
 import { detect } from 'detect-browser'
+// import { frontendPages } from '../utilities/hooks/useNavGroups'
+// import CustomModal from '../components/base/CustomModal'
+import dynamic from 'next/dynamic'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet'
 // import MobileHeader from '../components/navigation/MobileHeader'
 import Header, { HeaderProps } from '../components/navigation/Header'
 import NavFooter from '../components/navigation/NavFooter'
 import SiteFooter from '../components/navigation/SiteFooter'
-// import { frontendPages } from '../utilities/hooks/useNavGroups'
-// import CustomModal from '../components/base/CustomModal'
-import dynamic from 'next/dynamic'
-import type { Homepage as HomepageModel } from '@/models/homepage'
 
 export interface NavPageProps
 	extends KontentCurriculumResult,

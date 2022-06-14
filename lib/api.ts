@@ -1,25 +1,18 @@
-import { Homepage } from '@/models/homepage'
 import type { Glossary } from '@/models/glossary'
+import { Homepage } from '@/models/homepage'
 import type { KeyLearningArea } from '@/models/key_learning_area'
 import type { Stage } from '@/models/stage'
 import type { StageGroup } from '@/models/stage_group'
-import type {
-	HomepageConfig,
-	KontentCurriculumResult,
-	KontentCurriculumResultData,
-	Mapping,
-	Seo,
-} from '@/types/index'
-import { DeliveryClient, IContentItem } from '@kentico/kontent-delivery'
+import type { KontentCurriculumResult, Mapping, Seo } from '@/types/index'
+import {
+	DeliveryClient,
+	IContentItem,
+	Responses,
+} from '@kentico/kontent-delivery'
 import get from 'lodash.get'
 import intersection from 'lodash.intersection'
 import { Syllabus } from '../models/syllabus'
 import packageInfo from '../package.json'
-import {
-	Elements,
-	IContentItemSystemAttributes,
-	Responses,
-} from '@kentico/kontent-delivery'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -46,6 +39,7 @@ async function loadWebsiteConfig(
 		// https://docs.kontent.ai/reference/delivery-api#tag/Projection
 		.elementsParameter([
 			'title',
+			'descriptor',
 			'base_font',
 			'favicon',
 			'palette',
