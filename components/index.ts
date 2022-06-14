@@ -1,21 +1,19 @@
-import Layout from './Layout'
-import UnknownComponent from './UnknownComponent'
-import Header from './Header'
-import Footer from './Footer'
-import Link from './Link'
 import Action from './Action'
 import CtaButtons from './CtaButtons'
+import Footer from './Footer'
 import FormField from './FormField'
-import Image from './Image'
-import PreviewBar from './PreviewBar'
-import SideDrawer from './SideDrawer'
-import RichText from './RichText'
 import Icon from './Icon'
+import Image from './Image'
+import Layout from './Layout'
+import Link from './Link'
+import PreviewBar from './PreviewBar'
+import RichText from './RichText'
+import SideDrawer from './SideDrawer'
+import UnknownComponent from './UnknownComponent'
 
 export {
 	UnknownComponent,
 	Layout,
-	Header,
 	Footer,
 	Link,
 	Action,
@@ -31,7 +29,6 @@ export {
 export default {
 	UnknownComponent,
 	Layout,
-	Header,
 	Footer,
 	Link,
 	Action,
