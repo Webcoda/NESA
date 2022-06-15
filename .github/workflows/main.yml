@@ -12,12 +12,11 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        env:
-            KONTENT_PROJECT_ID: 30151ff3-f65b-003e-5e7a-4fa6460c47b4
+        environment: production
 
         strategy:
             matrix:
-                node-version: [14.x]
+                node-version: [16.x]
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
