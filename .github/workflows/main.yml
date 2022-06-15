@@ -12,7 +12,11 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        environment: production
+        env:
+            KONTENT_PROJECT_ID: ${{secrets.KONTENT_PROJECT_ID}}
+			NEXT_PUBLIC_KONTENT_PROJECT_ID: ${{secrets.NEXT_PUBLIC_KONTENT_PROJECT_ID}}
+			KONTENT_PREVIEW_API_KEY: ${{secrets.KONTENT_PREVIEW_API_KEY}}
+			PREVIEW_SECRET: ${{secrets.PREVIEW_SECRET}}
 
         strategy:
             matrix:
