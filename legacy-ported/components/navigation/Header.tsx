@@ -7,12 +7,13 @@ import { Grid } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 // import PATHS from '../../constants/pathConstants'
 // import { UrlLink } from '../../utilities/frontendTypes'
-// import BetaSiteBanner from '../base/BetaSiteBanner'
+import BetaSiteBanner from '../base/BetaSiteBanner'
 import get from 'lodash.get'
 // import { Link, useHistory } from 'react-router-dom'
 import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import NavBar from './NavBar'
+import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
 
 export interface HeaderProps extends CommonPageProps {
 	/**
@@ -45,6 +46,22 @@ const data = [
 	{ firstname: 'Raed', lastname: 'Labes', email: 'rl@smthing.co.com' },
 	{ firstname: 'Yezzi', lastname: 'Min l3b', email: 'ymin@cocococo.com' },
 ]
+
+export const createNavItem = (item: Action, mappings): NavGroup => {
+	const url =
+		getUrlFromMapping(mappings, item.elements.navigation_item.value[0]) ||
+		'/'
+	const subNav = item.elements?.actions?.linkedItems?.map((_item: Action) =>
+		createNavItem(_item, mappings),
+	)
+	return {
+		description: '',
+		id: item.system.id,
+		subNav,
+		text: item.elements.label.value,
+		url,
+	}
+}
 
 /**
  * Site main header
@@ -93,24 +110,6 @@ const Header = (props: HeaderProps): JSX.Element => {
 		// console.log('Implement PDF once finished from Custom view');
 	}
 
-	const createNavItem = (item: Action, mappings) => {
-		const url =
-			getUrlFromMapping(
-				mappings,
-				item.elements.navigation_item.value[0],
-			) || '/'
-		const subNav = item.elements?.actions?.linkedItems?.map(
-			(_item: Action) => createNavItem(_item, mappings),
-		)
-		return {
-			description: '',
-			id: item.system.id,
-			subNav,
-			text: item.elements.label.value,
-			url,
-		}
-	}
-
 	const navItems: NavigationItem[] = get(
 		props,
 		'data.config.item.elements.main_menu.linkedItems[0].elements.actions.linkedItems',
@@ -120,7 +119,7 @@ const Header = (props: HeaderProps): JSX.Element => {
 	return (
 		<div className={`header ${className || ''}`}>
 			<Masthead text="A NSW Government website" />
-			{/* <BetaSiteBanner /> */}
+			<BetaSiteBanner />
 			<div className="header__body nsw-container">
 				<NavBar
 					mappings={mappings}

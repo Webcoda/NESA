@@ -8,7 +8,7 @@ import { detect } from 'detect-browser'
 // import CustomModal from '../components/base/CustomModal'
 import dynamic from 'next/dynamic'
 import React, { ReactNode, useEffect, useState } from 'react'
-// import MobileHeader from '../components/navigation/MobileHeader'
+import MobileHeader from '../components/navigation/MobileHeader'
 import Header, { HeaderProps } from '../components/navigation/Header'
 import NavFooter from '../components/navigation/NavFooter'
 import SiteFooter from '../components/navigation/SiteFooter'
@@ -113,7 +113,11 @@ const NavPage = (props: NavPageProps) => {
 					<ArrowDropUpIcon />
 				</Button>
 			)}
-			{/* <MobileHeader className="nav-page__mobile-header" onSearch={handleSearchSubmit} /> */}
+			<MobileHeader
+				className="nav-page__mobile-header"
+				onSearch={handleSearchSubmit}
+				{...headerProps}
+			/>
 			<Header
 				className="nav-page__main-header"
 				onSearch={handleSearchSubmit}
