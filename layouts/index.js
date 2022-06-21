@@ -9,6 +9,7 @@ import page_kla_syllabus from './page_kla_syllabus'
 import page_general_content from './page_general_content'
 import page_glossary from './page_glossary'
 import page_teaching_advice from './page_teaching_advice'
+import wp_homepage from './wp_homepage'
 
 export const _ = {
 	landing_page,
@@ -22,6 +23,7 @@ export const _ = {
 	page_general_content,
 	page_glossary,
 	page_teaching_advice,
+	wp_homepage,
 }
 
 export default _

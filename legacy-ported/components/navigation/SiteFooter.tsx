@@ -1,13 +1,16 @@
-import Action from '@/components/Action'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
-import { Action as ActionModel } from '@/models/action'
 import { Mapping } from '@/types'
 import React from 'react'
+import Anchor from '@/components/Anchor'
+import { Weblinkext } from '@/models/weblinkext'
+import { Weblinkint } from '@/models/weblinkint'
+import { UiMenu } from '@/models/ui_menu'
 
 export interface SiteFooterProps {
 	acknowledge: string
 	mappings: Mapping[]
-	menu: ActionModel[]
+	menu: any
+	copyrightLink: Weblinkext | Weblinkint | UiMenu
 }
 
 const SiteFooter = (props: SiteFooterProps): JSX.Element => (
@@ -17,27 +20,27 @@ const SiteFooter = (props: SiteFooterProps): JSX.Element => (
 				{props.acknowledge}
 			</SanitisedHTMLContainer>
 			<div className="site-footer__link-list">
-				{props.menu.map((action) => {
+				{props.menu.map((link) => {
 					return (
-						<Action
-							key={action.system.id}
+						<Anchor
+							key={link.system.id}
 							className="site-footer__link"
-							action={action}
+							link={link}
 							mappings={props.mappings}
 						/>
 					)
 				})}
 			</div>
-			<small className="site-footer__copyright">
-				<a
-					href="https://educationstandards.nsw.edu.au/wps/portal/nesa/mini-footer/copyright"
-					aria-label="Copyright"
-					target="_blank"
-					rel="noreferrer"
-				>
-					Copyright &copy; {(new Date()).getFullYear()}
-				</a>
-			</small>
+			{props.copyrightLink && (
+				<small className="site-footer__copyright">
+					<Anchor
+						link={props.copyrightLink}
+						mappings={props.mappings}
+					>
+						Copyright &copy; {new Date().getFullYear()}
+					</Anchor>
+				</small>
+			)}
 		</div>
 	</footer>
 )

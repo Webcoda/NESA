@@ -1,14 +1,24 @@
 // import useNavGroups, { NavGroup, NavGroupSection, useRowCount } from '../../utilities/hooks/useNavGroups'
 import ActionComponent from '@/components/Action'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
-import { FOOTER_TOP_SECTION_SOCIAL_MENU, FOOTER_TOP_SECTION_TITLE } from '@/constants/codenames'
-import { NavGroup, NavGroupSection, useRowCount } from "@/legacy-ported/utilities/hooks/useNavGroups"
-import { Action } from '@/models/action'
-import { ContentSection } from '@/models/content_section'
-import { Menu } from '@/models/menu'
+import {
+	FOOTER_TOP_SECTION_SOCIAL_MENU,
+	FOOTER_TOP_SECTION_TITLE,
+} from '@/constants/codenames'
+import { NavPageProps } from '@/legacy-ported/containers/NavPage'
+import {
+	NavGroup,
+	NavGroupSection,
+	useRowCount as getRowCount,
+} from '@/legacy-ported/utilities/hooks/useNavGroups'
 import { Mapping } from '@/types'
 import { IContentItem } from '@kentico/kontent-delivery'
 import React, { Fragment } from 'react'
+import RichText from '@/components/RichText'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import { CollectionWeblink } from '@/models/collection_weblink'
+import { UiMenu } from '@/models/ui_menu'
+import Anchor from '@/components/Anchor'
 
 interface SectionProps {
 	/**
@@ -24,9 +34,9 @@ const FooterGroup = (props: SectionProps) => {
 	return (
 		<div className="nav-footer-group">
 			{sections.map((section) => {
-				const rowCount = useRowCount(section.links.length)
+				const rowCount = getRowCount(section.links.length)
 
-				const columns = section.links.reduce<Action[][]>((acc, val) => {
+				const columns = section.links.reduce<UiMenu[][]>((acc, val) => {
 					let column = acc[acc.length - 1]
 					if (!column) {
 						column = []
@@ -41,21 +51,41 @@ const FooterGroup = (props: SectionProps) => {
 				}, [])
 
 				return (
-					<div className="nav-footer-group__section" key={section.label}>
-						<p className="nav-footer-group__section-header">{section.label}</p>
+					<div
+						className="nav-footer-group__section"
+						key={section.label}
+					>
+						<p className="nav-footer-group__section-header">
+							{section.label}
+						</p>
 						<div className="nav-footer-group__section-body">
 							{columns.map((c) => (
-								<ul className="nav-footer-group__section-column" key={c[0].system.id}>
-									{c.map((action) => (
-										<li className="nav-footer-group__section-link" key={action.system.id}>
-											<ActionComponent
+								<ul
+									className="nav-footer-group__section-column"
+									key={c[0].system.id}
+								>
+									{c.map((action) => {
+										console.log(
+											'🚀 ~ file: NavFooter.tsx ~ line 67 ~ {c.map ~ action',
+											action,
+										)
+										return (
+											<li
+												className="nav-footer-group__section-link"
 												key={action.system.id}
-												className={action.elements.icon.value.length ? 'no-icon' : ''}
-												action={action}
-												mappings={mappings}
-											/>
-										</li>
-									))}
+											>
+												<Anchor
+													key={action.system.id}
+													link={action}
+													mappings={mappings}
+												/>
+												{/* <ActionComponent
+													action={action}
+													mappings={mappings}
+												/> */}
+											</li>
+										)
+									})}
 								</ul>
 							))}
 						</div>
@@ -73,61 +103,36 @@ export interface NavFooterProps {
 	groups: NavGroup[]
 }
 
-/**
- * Navigation footer with links to all of the pages grouped by section
- * @param props
- * @constructor
- */
-export const PureNavFooter = (props): JSX.Element => {
-	const topSections: IContentItem[] = props.data.config.item.elements.footer_top_top_sections?.linkedItems
-	const menus : Menu[] = props.data.config.item.elements.footer_top_menu_sections?.linkedItems
+export const PureNavFooter = (props: NavPageProps): JSX.Element => {
+	const topSections = props.data.config.item.elements.footer_top_content
+	const menus = flattenCollectionWebLinks(
+		props.data.config.item.elements.footer_menu_links
+			.linkedItems as CollectionWeblink[],
+	)
+	console.log('🚀 ~ file: NavFooter.tsx ~ line 103 ~ menus', menus)
 
 	return (
 		<footer className="nav-footer nsw-container">
 			<div className="nav-footer__nesa">
-				{topSections.map((topSectionItem) => {
-					const { type, codename } = topSectionItem.system
-					if (codename === FOOTER_TOP_SECTION_TITLE) {
-						const sectionTitle = topSectionItem as ContentSection
-
-						return (
-							<Fragment key={topSectionItem.system.id}>
-								{!!sectionTitle?.elements.content.value && (
-									<SanitisedHTMLContainer className="nav-footer__nesa-header">
-										{sectionTitle?.elements.content.value}
-									</SanitisedHTMLContainer>
-								)}
-							</Fragment>
-						)
-					} else if (type === 'menu') {
-						const menu = topSectionItem as Menu
-						const isSocialMenu = menu.system.codename === FOOTER_TOP_SECTION_SOCIAL_MENU
-						return (
-							<div className={isSocialMenu ? 'nav-footer__icons' : ''} key={menu.system.id}>
-								{menu.elements.actions.linkedItems.map((action: Action) => {
-									return (
-										<ActionComponent
-											key={action.system.id}
-											className={isSocialMenu ? 'no-icon' : ''}
-											action={action}
-											mappings={props.mappings}
-										/>
-									)
-								})}
-							</div>
-						)
-					}
-				})}
+				<RichText
+					{...props}
+					className="nav-footer__nesa"
+					richTextElement={topSections}
+				/>
 			</div>
 			{/* TODO: fix */}
 			<div className="nav-footer__sections">
 				{menus
-					?.filter((g) => !!g.elements.actions.value.length)
-					?.map((g) => {
-						const sections: NavGroupSection[] = [{
-							label: g.elements.label.value,
-							links: g.elements.actions.linkedItems.map(item => item as Action)
-						}]
+					// ?.filter((g) => !!g.elements.actions.value.length)
+					?.map((g: UiMenu) => {
+						const sections: NavGroupSection[] = [
+							{
+								label: g.elements.title.value,
+								links: g.elements.subitems.linkedItems.map(
+									(item) => item as UiMenu,
+								),
+							},
+						]
 
 						return (
 							<FooterGroup
@@ -136,8 +141,7 @@ export const PureNavFooter = (props): JSX.Element => {
 								mappings={props.mappings}
 							/>
 						)
-					})
-				}
+					})}
 			</div>
 		</footer>
 	)

@@ -1,21 +1,18 @@
 import { ReactNode } from 'react'
 import { Glossary } from '@/models/glossary'
-import { Homepage } from '@/models/homepage'
-import { KeyLearningArea } from '@/models/key_learning_area'
-import { NavigationItem } from '@/models/navigation_item'
-import { Stage } from '@/models/stage'
-import { StageGroup } from '@/models/stage_group'
 import { Syllabus } from '@/models/syllabus'
 import {
 	Elements,
 	IContentItemSystemAttributes,
 	Responses,
 } from '@kentico/kontent-delivery'
+import { WpHomepage } from '@/models/wp_homepage'
 
 export interface MappingParams {
 	slug: string[]
 	navigationItem?: IContentItemSystemAttributes
 	contentItem?: IContentItemSystemAttributes
+	webPageItem?: any
 }
 
 export interface Mapping {
@@ -32,7 +29,7 @@ export interface Seo {
 
 export interface HomepageConfig
 	extends Omit<
-		Homepage,
+		WpHomepage,
 		| 'seo__description'
 		| 'seo__options'
 		| 'seo__canonical_url'
@@ -41,13 +38,21 @@ export interface HomepageConfig
 	> {}
 
 export interface KontentCurriculumResultData {
-	config: Responses.IViewContentItemResponse<Homepage>
-	page: Responses.IViewContentItemResponse<NavigationItem | Homepage>
+	config: Responses.IViewContentItemResponse<WpHomepage>
+	page: Responses.IViewContentItemResponse<WpHomepage>
 	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
-	keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
+	// TODO: fix
+	// keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
+	keyLearningAreas?: any
 	glossaries?: Responses.IListContentItemsResponse<Glossary>
-	stages?: Responses.IListContentItemsResponse<StageWithAvailability>
-	stageGroups?: Responses.IListContentItemsResponse<StageGroup>
+
+	// TODO: fix
+	stages?: any
+	// stages?: Responses.IListContentItemsResponse<StageWithAvailability>
+
+	// TODO: fix
+	stageGroups?: any
+	// stageGroups?: Responses.IListContentItemsResponse<StageGroup>
 }
 
 export interface KontentCurriculumResult {
@@ -61,9 +66,9 @@ export interface KontentCurriculumResult {
  *
  * `available` here means it has assigned to at least one syllabus
  */
-export interface StageWithAvailability extends Stage {
-	available: boolean
-}
+// export interface StageWithAvailability extends Stage {
+// 	available: boolean
+// }
 
 export interface CommonPageProps extends KontentCurriculumResult {
 	className?: string

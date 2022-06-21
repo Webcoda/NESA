@@ -9,917 +9,451 @@ export const projectModel = {
 		},
 	},
 	contentTypes: {
-		action: {
-			codename: 'action',
-			name: 'Action',
+		accesscontentgroup: {
+			codename: 'accesscontentgroup',
+			name: '📑 Syllabus Access Content Group',
 			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
 				},
-				label: {
-					codename: 'label',
-					name: 'Label',
+				title: {
+					codename: 'title',
+					name: '📜 Title',
 				},
-				icon: {
-					codename: 'icon',
-					name: 'Icon',
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
 				},
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
 				},
-				icon_only: {
-					codename: 'icon_only',
-					name: 'Icon Only',
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
 				},
-				navigation_item: {
-					codename: 'navigation_item',
-					name: 'Navigation Item',
+				access_content_items: {
+					codename: 'access_content_items',
+					name: '📄 Access Content Items',
+				},
+			},
+		},
+		accesscontentitem: {
+			codename: 'accesscontentitem',
+			name: '📄 Syllabus Access Content Item',
+			elements: {
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				learningprogression_tags__literacy: {
+					codename: 'learningprogression_tags__literacy',
+					name: '🔖 National Literacy Learning Progression',
+				},
+				learningprogression_tags__numeracy: {
+					codename: 'learningprogression_tags__numeracy',
+					name: '🔖 National Numeracy Learning Progression',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				examples: {
+					codename: 'examples',
+					name: '📜 Examples',
+				},
+				including_statements: {
+					codename: 'including_statements',
+					name: '📜 Including Statements',
 				},
 			},
 		},
 		assessment: {
 			codename: 'assessment',
-			name: 'Syllabus Assessment',
+			name: '📃 Syllabus Assessment',
 			elements: {
-				pbd_3: {
-					codename: 'pbd_3',
-					name: 'PBD - 3',
-				},
-				sba_12: {
-					codename: 'sba_12',
-					name: 'SBA - 12',
-				},
-				life_skills: {
-					codename: 'life_skills',
-					name: 'Life Skills',
-				},
-				majorwork_supportingtext: {
-					codename: 'majorwork_supportingtext',
-					name: 'Major Work - Supporting Text',
-				},
-				majorwork_advice: {
-					codename: 'majorwork_advice',
-					name: 'Major Work - Advice',
-				},
-				sba_supportingtext: {
-					codename: 'sba_supportingtext',
-					name: 'SBA - Supporting Text',
-				},
-				related_ace_rules: {
-					codename: 'related_ace_rules',
-					name: 'Related ACE Rules',
-				},
-				pbd_5: {
-					codename: 'pbd_5',
-					name: 'PBD - 5',
-				},
-				examspecs_hscspecification: {
-					codename: 'examspecs_hscspecification',
-					name: 'Exam Specs - HSC Specification',
-				},
-				pbd_1: {
-					codename: 'pbd_1',
-					name: 'PBD - 1',
-				},
-				sba_11: {
-					codename: 'sba_11',
-					name: 'SBA - 11',
-				},
 				introduction: {
 					codename: 'introduction',
-					name: 'Introduction',
-				},
-				examspecs_samplematerial: {
-					codename: 'examspecs_samplematerial',
-					name: 'Exam Specs - Sample Material',
+					name: '📜 Introduction',
 				},
 				common_grade_scale: {
 					codename: 'common_grade_scale',
-					name: 'Common Grade Scale',
-				},
-				other_information: {
-					codename: 'other_information',
-					name: 'Other Information',
-				},
-				examspecs_supportingtext: {
-					codename: 'examspecs_supportingtext',
-					name: 'Exam Specs - Supporting Text',
-				},
-				pbd_supporting_text: {
-					codename: 'pbd_supporting_text',
-					name: 'PBD - Supporting Text',
+					name: '📜 Common Grade Scale',
 				},
 				course_performance_descriptions: {
 					codename: 'course_performance_descriptions',
-					name: 'Course Performance Descriptions',
+					name: '📜 Course Performance Descriptions',
+				},
+				life_skills: {
+					codename: 'life_skills',
+					name: '📜 Life Skills',
+				},
+				other_information: {
+					codename: 'other_information',
+					name: '📜 Other Information',
+				},
+				related_ace_rules: {
+					codename: 'related_ace_rules',
+					name: '📜 Related ACE Rules',
+				},
+				pbd_supportingtext: {
+					codename: 'pbd_supportingtext',
+					name: '📜 Supporting Text',
 				},
 				pbd_6: {
 					codename: 'pbd_6',
-					name: 'PBD - 6',
+					name: '📜 Performance Band Descriptors (PBD) 6',
 				},
-				stagesyears__years: {
-					codename: 'stagesyears__years',
-					name: 'Years',
-				},
-				pbd_2: {
-					codename: 'pbd_2',
-					name: 'PBD - 2',
+				pbd_5: {
+					codename: 'pbd_5',
+					name: '📜 Performance Band Descriptors (PBD) 5',
 				},
 				pbd_4: {
 					codename: 'pbd_4',
-					name: 'PBD - 4',
+					name: '📜 Performance Band Descriptors (PBD) 4',
 				},
-				stagesyears__stages: {
-					codename: 'stagesyears__stages',
-					name: 'Stages',
+				pbd_3: {
+					codename: 'pbd_3',
+					name: '📜 Performance Band Descriptors (PBD) 3',
+				},
+				pbd_2: {
+					codename: 'pbd_2',
+					name: '📜 Performance Band Descriptors (PBD) 2',
+				},
+				performance_band_descriptors__pbd__1: {
+					codename: 'performance_band_descriptors__pbd__1',
+					name: '📜 Performance Band Descriptors (PBD) 1',
+				},
+				examspec_supportingtext: {
+					codename: 'examspec_supportingtext',
+					name: '📜 Supporting Text',
+				},
+				examspec_hscspecification: {
+					codename: 'examspec_hscspecification',
+					name: '📜 HSC Specification',
+				},
+				examspec_samplematerial: {
+					codename: 'examspec_samplematerial',
+					name: '📜 Sample Material',
+				},
+				majorwork_supportingtext: {
+					codename: 'majorwork_supportingtext',
+					name: '📜 Supporting Text',
+				},
+				majorwork_advice: {
+					codename: 'majorwork_advice',
+					name: '📜 Advice',
+				},
+				sba_supportingtext: {
+					codename: 'sba_supportingtext',
+					name: '📜 Supporting Text',
+				},
+				sba_11: {
+					codename: 'sba_11',
+					name: '📜 SBA - 11',
+				},
+				sba_12: {
+					codename: 'sba_12',
+					name: '📜 SBA - 12',
+				},
+				assessment_requirements_supportingtext: {
+					codename: 'assessment_requirements_supportingtext',
+					name: '📜 Supporting text: Assessment requirements',
+				},
+				assessment_requirements: {
+					codename: 'assessment_requirements',
+					name: '📜 Assessment requirements',
+				},
+				hsc_supportingtext: {
+					codename: 'hsc_supportingtext',
+					name: '📜 Supporting text',
+				},
+				hsc_examinations: {
+					codename: 'hsc_examinations',
+					name: '📜 HSC examinations',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
 				},
 			},
 		},
-		author: {
-			codename: 'author',
-			name: 'Author',
+		collection_syllabus: {
+			codename: 'collection_syllabus',
+			name: '📂 Collection Syllabuses',
 			elements: {
-				photo: {
-					codename: 'photo',
-					name: 'Photo',
-				},
-				bio: {
-					codename: 'bio',
-					name: 'Bio',
-				},
-				first_name: {
-					codename: 'first_name',
-					name: 'First Name',
-				},
-				last_name: {
-					codename: 'last_name',
-					name: 'Last Name',
+				items: {
+					codename: 'items',
+					name: 'Items',
 				},
 			},
 		},
-		base_form_field: {
-			codename: 'base_form_field',
-			name: 'Base Form Field',
+		collection_weblink: {
+			codename: 'collection_weblink',
+			name: '📂 Collection Web Links',
 			elements: {
-				default_value: {
-					codename: 'default_value',
-					name: 'Default Value',
-				},
-				configuration: {
-					codename: 'configuration',
-					name: 'Configuration',
-				},
-				name: {
-					codename: 'name',
-					name: 'Name',
-				},
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				type: {
-					codename: 'type',
-					name: 'Type',
+				items: {
+					codename: 'items',
+					name: 'Items',
 				},
 			},
 		},
-		code_block: {
-			codename: 'code_block',
-			name: 'Code block',
+		contentblock: {
+			codename: 'contentblock',
+			name: '📜 Content Block',
 			elements: {
-				code: {
-					codename: 'code',
-					name: 'Code',
-				},
-			},
-		},
-		contact_section: {
-			codename: 'contact_section',
-			name: 'Contact Section',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				form: {
-					codename: 'form',
-					name: 'Form',
+				moreinfourl: {
+					codename: 'moreinfourl',
+					name: '🔗 More Info Link Url',
 				},
 				content: {
 					codename: 'content',
-					name: 'Content',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-			},
-		},
-		content_section: {
-			codename: 'content_section',
-			name: 'Content Section',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
+					name: '📜 Content',
 				},
 				title: {
 					codename: 'title',
-					name: 'Title',
+					name: '📜 Title',
 				},
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
+				_more_info_link_title: {
+					codename: '_more_info_link_title',
+					name: '📜 More Info Link Title',
 				},
 				image: {
 					codename: 'image',
-					name: 'Image',
+					name: '📦 Image',
+				},
+				_sub_title: {
+					codename: '_sub_title',
+					name: '📜 Sub Title',
+				},
+			},
+		},
+		contentgroup: {
+			codename: 'contentgroup',
+			name: '📑 Syllabus Content Group',
+			elements: {
+				content_items: {
+					codename: 'content_items',
+					name: '📄 Content Items',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '🏷️ Syllabus',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+			},
+		},
+		contentitem: {
+			codename: 'contentitem',
+			name: '📄 Syllabus Content Item',
+			elements: {
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				examples: {
+					codename: 'examples',
+					name: '📜 Examples',
+				},
+				learningprogression_tags__literacy: {
+					codename: 'learningprogression_tags__literacy',
+					name: '🔖 National Literacy Learning Progression',
+				},
+				learningprogression_tags__numeracy: {
+					codename: 'learningprogression_tags__numeracy',
+					name: '🔖 National Numeracy Learning Progression',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '🏷️ Syllabus',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				including_statements: {
+					codename: 'including_statements',
+					name: '📜 Including Statements',
+				},
+			},
+		},
+		contentrichtext: {
+			codename: 'contentrichtext',
+			name: '📜 Content Rich Text',
+			elements: {
+				content: {
+					codename: 'content',
+					name: 'Content',
 				},
 			},
 		},
 		course: {
 			codename: 'course',
-			name: 'Course',
+			name: '📒 Course',
 			elements: {
 				code: {
 					codename: 'code',
-					name: 'Code',
+					name: '📜 Code',
 				},
 				title: {
 					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		cta_section: {
-			codename: 'cta_section',
-			name: 'CTA Section',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				action: {
-					codename: 'action',
-					name: 'Action',
-				},
-			},
-		},
-		external_image: {
-			codename: 'external_image',
-			name: 'External Image',
-			elements: {
-				alt: {
-					codename: 'alt',
-					name: 'Alt',
-				},
-				url: {
-					codename: 'url',
-					name: 'Url',
-				},
-			},
-		},
-		external_url: {
-			codename: 'external_url',
-			name: 'External URL',
-			elements: {
-				url: {
-					codename: 'url',
-					name: 'URL',
-				},
-			},
-		},
-		faq_item: {
-			codename: 'faq_item',
-			name: 'FAQ Item',
-			elements: {
-				answer: {
-					codename: 'answer',
-					name: 'Answer',
-				},
-				question: {
-					codename: 'question',
-					name: 'Question',
-				},
-			},
-		},
-		faq_section: {
-			codename: 'faq_section',
-			name: 'FAQ Section',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				faq_items: {
-					codename: 'faq_items',
-					name: 'FAQ Items',
-				},
-			},
-		},
-		feature: {
-			codename: 'feature',
-			name: 'Feature',
-			elements: {
-				image: {
-					codename: 'image',
-					name: 'Image',
-				},
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		features_section: {
-			codename: 'features_section',
-			name: 'Features Section',
-			elements: {
-				features: {
-					codename: 'features',
-					name: 'Features',
-				},
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		focus_area: {
-			codename: 'focus_area',
-			name: 'Focus Area',
-			elements: {
-				outcomes: {
-					codename: 'outcomes',
-					name: 'Outcomes',
-				},
-				access_points: {
-					codename: 'access_points',
-					name: 'Access Points',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				syllabustype__type: {
-					codename: 'syllabustype__type',
-					name: 'Type',
-				},
-				teaching_advice: {
-					codename: 'teaching_advice',
-					name: 'Teaching Advice',
-				},
-				stages: {
-					codename: 'stages',
-					name: 'Stages',
-				},
-				focus_area_groups: {
-					codename: 'focus_area_groups',
-					name: 'Focus Area Groups',
-				},
-			},
-		},
-		focus_area_group: {
-			codename: 'focus_area_group',
-			name: 'Focus Area Group',
-			elements: {
-				focus_area_items: {
-					codename: 'focus_area_items',
-					name: 'Focus Area Items',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		focus_area_item: {
-			codename: 'focus_area_item',
-			name: 'Focus Area Item',
-			elements: {
-				examples: {
-					codename: 'examples',
-					name: 'Examples',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				nesa_tags__literacy_interacting: {
-					codename: 'nesa_tags__literacy_interacting',
-					name: 'Literacy Interacting',
-				},
-				nesa_tags__literacy_listening: {
-					codename: 'nesa_tags__literacy_listening',
-					name: 'Literacy Listening',
-				},
-				tags: {
-					codename: 'tags',
-					name: 'Tags',
-				},
-			},
-		},
-		focus_area_tag: {
-			codename: 'focus_area_tag',
-			name: 'Focus Area Tag',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
+					name: '📜 Title',
 				},
 				description: {
 					codename: 'description',
-					name: 'Description',
+					name: '📜 Description',
 				},
 			},
 		},
-		focus_area_tag_category: {
-			codename: 'focus_area_tag_category',
-			name: 'Focus Area Tag Category',
+		focusarea: {
+			codename: 'focusarea',
+			name: '📃 Syllabus Focus Area',
 			elements: {
+				syllabus_type__items: {
+					codename: 'syllabus_type__items',
+					name: '🏷️ Syllabus Type',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				outcomes: {
+					codename: 'outcomes',
+					name: '📃 Outcomes',
+				},
+				continuumgroups: {
+					codename: 'continuumgroups',
+					name: '📈 Focus Area Continuum Group',
+				},
+				resources: {
+					codename: 'resources',
+					name: '📦 Resources',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				accesspointgroups: {
+					codename: 'accesspointgroups',
+					name: '📑 Access Points Content Groups',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '📒 Syllabus',
+				},
 				title: {
 					codename: 'title',
-					name: 'Title',
+					name: '📜 Title',
 				},
-				sub_category: {
-					codename: 'sub_category',
-					name: 'Sub Category',
+				teachingadvice: {
+					codename: 'teachingadvice',
+					name: '📑 Teaching Advice',
 				},
-				tags: {
-					codename: 'tags',
-					name: 'Tags',
+				contentgroups: {
+					codename: 'contentgroups',
+					name: '📑 Content Groups',
 				},
 			},
 		},
-		form: {
-			codename: 'form',
-			name: 'Form',
+		focusareacontinuum: {
+			codename: 'focusareacontinuum',
+			name: '📈 Syllabus Focus Area Continuum',
 			elements: {
-				content: {
-					codename: 'content',
-					name: 'Content',
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
 				},
-				form_id: {
-					codename: 'form_id',
-					name: 'Form ID',
+				syllabus: {
+					codename: 'syllabus',
+					name: '📒 Syllabus',
 				},
-				form_action: {
-					codename: 'form_action',
-					name: 'Form Action',
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
 				},
-				fields: {
-					codename: 'fields',
-					name: 'Fields',
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
 				},
 				title: {
 					codename: 'title',
-					name: 'Title',
-				},
-				submit_label: {
-					codename: 'submit_label',
-					name: 'Submit Label',
-				},
-			},
-		},
-		general_content_section: {
-			codename: 'general_content_section',
-			name: 'General Content Section',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
+					name: '📜 Title',
 				},
 			},
 		},
 		glossary: {
 			codename: 'glossary',
-			name: 'Glossary',
+			name: '📜 Glossary',
 			elements: {
-				syllabuses: {
-					codename: 'syllabuses',
-					name: 'Related Syllabuses',
-				},
 				title: {
 					codename: 'title',
-					name: 'Title',
+					name: '📜 Title',
 				},
 				description: {
 					codename: 'description',
-					name: 'Description',
+					name: '📜 Description',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '🏷️ Related Syllabuses',
 				},
 			},
 		},
-		grid: {
-			codename: 'grid',
-			name: 'Grid',
-			elements: {
-				gap_vertical: {
-					codename: 'gap_vertical',
-					name: 'Gap Vertical',
-				},
-				tiles: {
-					codename: 'tiles',
-					name: 'Column',
-				},
-				gap_horizontal: {
-					codename: 'gap_horizontal',
-					name: 'Gap Horizontal',
-				},
-			},
-		},
-		grid_column: {
-			codename: 'grid_column',
-			name: 'Grid Column',
-			elements: {
-				column_widths__lg: {
-					codename: 'column_widths__lg',
-					name: 'lg',
-				},
-				tile_content: {
-					codename: 'tile_content',
-					name: 'Content',
-				},
-				column_widths__md: {
-					codename: 'column_widths__md',
-					name: 'md',
-				},
-				column_widths__xs: {
-					codename: 'column_widths__xs',
-					name: 'xs',
-				},
-				column_widths__sm: {
-					codename: 'column_widths__sm',
-					name: 'sm',
-				},
-			},
-		},
-		hero_section: {
-			codename: 'hero_section',
-			name: 'Hero Section',
-			elements: {
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-				image: {
-					codename: 'image',
-					name: 'Image',
-				},
-			},
-		},
-		homepage: {
-			codename: 'homepage',
-			name: 'Homepage',
-			elements: {
-				header_logo: {
-					codename: 'header_logo',
-					name: 'Header Logo',
-				},
-				subpages: {
-					codename: 'subpages',
-					name: 'Subpages',
-				},
-				seo__description: {
-					codename: 'seo__description',
-					name: 'Description',
-				},
-				seo__options: {
-					codename: 'seo__options',
-					name: 'Options',
-				},
-				acknowledgement: {
-					codename: 'acknowledgement',
-					name: 'Acknowledgement',
-				},
-				palette: {
-					codename: 'palette',
-					name: 'Palette',
-				},
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				seo__canonical_url: {
-					codename: 'seo__canonical_url',
-					name: 'Canonical URL',
-				},
-				footer_top_top_sections: {
-					codename: 'footer_top_top_sections',
-					name: 'Footer Top - Top Sections',
-				},
-				site_prefix: {
-					codename: 'site_prefix',
-					name: 'Site Prefix',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-				main_menu: {
-					codename: 'main_menu',
-					name: 'Main Menu',
-				},
-				footer_bottom_menu: {
-					codename: 'footer_bottom_menu',
-					name: 'Footer Bottom Menu',
-				},
-				seo__keywords: {
-					codename: 'seo__keywords',
-					name: 'Keywords',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				seo__title: {
-					codename: 'seo__title',
-					name: 'Title',
-				},
-				footer_top_menu_sections: {
-					codename: 'footer_top_menu_sections',
-					name: 'Footer Top - Menu Sections',
-				},
-				favicon: {
-					codename: 'favicon',
-					name: 'Favicon',
-				},
-				descriptor: {
-					codename: 'descriptor',
-					name: 'Descriptor',
-				},
-			},
-		},
-		homepage_banner: {
-			codename: 'homepage_banner',
-			name: 'Homepage Banner',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				button_label: {
-					codename: 'button_label',
-					name: 'Button Label',
-				},
-			},
-		},
-		homepage_link_card: {
-			codename: 'homepage_link_card',
-			name: 'Homepage Link Card',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				path: {
-					codename: 'path',
-					name: 'Path',
-				},
-			},
-		},
-		homepage_tile_callout: {
-			codename: 'homepage_tile_callout',
-			name: 'Homepage Tile Callout',
-			elements: {
-				divider_color: {
-					codename: 'divider_color',
-					name: 'Divider Color',
-				},
-				font_color: {
-					codename: 'font_color',
-					name: 'Font Color',
-				},
-				tiles: {
-					codename: 'tiles',
-					name: 'Tiles',
-				},
-				arrow_color: {
-					codename: 'arrow_color',
-					name: 'Arrow Color',
-				},
-				background_color: {
-					codename: 'background_color',
-					name: 'Background Color',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		homepage_tile_callout_tile: {
-			codename: 'homepage_tile_callout_tile',
-			name: 'Homepage Tile Callout - Tile',
-			elements: {
-				column_widths__lg: {
-					codename: 'column_widths__lg',
-					name: 'lg',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				column_widths__md: {
-					codename: 'column_widths__md',
-					name: 'md',
-				},
-				prefix: {
-					codename: 'prefix',
-					name: 'Prefix',
-				},
-				column_widths__xs: {
-					codename: 'column_widths__xs',
-					name: 'xs',
-				},
-				path: {
-					codename: 'path',
-					name: 'Path',
-				},
-				column_widths__sm: {
-					codename: 'column_widths__sm',
-					name: 'sm',
-				},
-			},
-		},
-		icon: {
-			codename: 'icon',
-			name: 'Icon',
-			elements: {
-				icon_position: {
-					codename: 'icon_position',
-					name: 'Icon Position',
-				},
-				icon: {
-					codename: 'icon',
-					name: 'Icon',
-				},
-			},
-		},
-		key_learning_area: {
-			codename: 'key_learning_area',
-			name: 'Key Learning Area',
-			elements: {
-				order: {
-					codename: 'order',
-					name: 'Sort Order',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				available: {
-					codename: 'available',
-					name: 'Available',
-				},
-			},
-		},
-		landing_page: {
-			codename: 'landing_page',
-			name: 'Landing page',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				sections: {
-					codename: 'sections',
-					name: 'Sections',
-				},
-			},
-		},
-		link_card: {
-			codename: 'link_card',
-			name: 'Link Card',
-			elements: {
-				body: {
-					codename: 'body',
-					name: 'Body',
-				},
-				path: {
-					codename: 'path',
-					name: 'Path',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				color: {
-					codename: 'color',
-					name: 'Color',
-				},
-			},
-		},
-		link_cards_list_section: {
-			codename: 'link_cards_list_section',
-			name: 'Link Cards List Section',
-			elements: {
-				cards: {
-					codename: 'cards',
-					name: 'Cards',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		listing_page: {
-			codename: 'listing_page',
-			name: 'Listing page',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				content_type: {
-					codename: 'content_type',
-					name: 'Content type',
-				},
-			},
-		},
-		listing_section: {
-			codename: 'listing_section',
-			name: 'Listing Section',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				content_type: {
-					codename: 'content_type',
-					name: 'Content type',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				number_of_items: {
-					codename: 'number_of_items',
-					name: 'Number of items',
-				},
-				order_by: {
-					codename: 'order_by',
-					name: 'Order by',
-				},
-			},
-		},
-		math_formula: {
-			codename: 'math_formula',
-			name: 'Math Formula',
+		mathformula: {
+			codename: 'mathformula',
+			name: '🔹 Math Formula',
 			elements: {
 				is_block: {
 					codename: 'is_block',
@@ -931,693 +465,1173 @@ export const projectModel = {
 				},
 			},
 		},
-		menu: {
-			codename: 'menu',
-			name: 'Menu',
-			elements: {
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
-				},
-			},
-		},
-		navigation_item: {
-			codename: 'navigation_item',
-			name: 'Navigation Item',
-			elements: {
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-				seo__description: {
-					codename: 'seo__description',
-					name: 'Description',
-				},
-				seo__options: {
-					codename: 'seo__options',
-					name: 'Options',
-				},
-				seo__canonical_url: {
-					codename: 'seo__canonical_url',
-					name: 'Canonical URL',
-				},
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				seo__keywords: {
-					codename: 'seo__keywords',
-					name: 'Keywords',
-				},
-				seo__title: {
-					codename: 'seo__title',
-					name: 'Title',
-				},
-				slug: {
-					codename: 'slug',
-					name: 'Slug',
-				},
-				subpages: {
-					codename: 'subpages',
-					name: 'Subpages',
-				},
-			},
-		},
-		newsletter_subscribe_box: {
-			codename: 'newsletter_subscribe_box',
-			name: 'Newsletter Subscribe Box',
-			elements: {
-				createsend_action: {
-					codename: 'createsend_action',
-					name: 'CreateSend Action',
-				},
-				createsend_id: {
-					codename: 'createsend_id',
-					name: 'CreateSend Id',
-				},
-				input_label: {
-					codename: 'input_label',
-					name: 'Input Label',
-				},
-				button_label: {
-					codename: 'button_label',
-					name: 'Button Label',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
 		outcome: {
 			codename: 'outcome',
-			name: 'Outcome',
+			name: '📃 Syllabus Outcome',
 			elements: {
-				description: {
-					codename: 'description',
-					name: 'Description',
-				},
 				code: {
 					codename: 'code',
-					name: 'Code',
+					name: '📜 Code',
 				},
-				relatedlifeskillsoutcomes: {
-					codename: 'relatedlifeskillsoutcomes',
-					name: 'Related Life Skills Outcomes',
-				},
-				syllabustype__type: {
-					codename: 'syllabustype__type',
-					name: 'Type',
+				description: {
+					codename: 'description',
+					name: '📜 Description',
 				},
 				isoverarching: {
 					codename: 'isoverarching',
-					name: 'Is Overarching',
-				},
-				stages: {
-					codename: 'stages',
-					name: 'Stages',
-				},
-			},
-		},
-		page_general_content: {
-			codename: 'page_general_content',
-			name: 'Page General Content',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				summary: {
-					codename: 'summary',
-					name: 'Summary',
-				},
-				sections: {
-					codename: 'sections',
-					name: 'Sections',
-				},
-			},
-		},
-		page_glossary: {
-			codename: 'page_glossary',
-			name: 'Page Glossary',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				intro: {
-					codename: 'intro',
-					name: 'Intro',
-				},
-			},
-		},
-		page_key_learning_area: {
-			codename: 'page_key_learning_area',
-			name: 'Page Key Learning Area',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				key_learning_area: {
-					codename: 'key_learning_area',
-					name: 'Key Learning Area',
-				},
-				sections: {
-					codename: 'sections',
-					name: 'Sections',
-				},
-			},
-		},
-		page_kla_syllabus: {
-			codename: 'page_kla_syllabus',
-			name: 'Page KLA Syllabus',
-			elements: {
-				syllabus: {
-					codename: 'syllabus',
-					name: 'Syllabus',
-				},
-			},
-		},
-		page_stage: {
-			codename: 'page_stage',
-			name: 'Page Stage',
-			elements: {
-				stage: {
-					codename: 'stage',
-					name: 'Stage',
-				},
-			},
-		},
-		page_stage_group: {
-			codename: 'page_stage_group',
-			name: 'Page Stage Group',
-			elements: {
-				stage_group: {
-					codename: 'stage_group',
-					name: 'Stage Group',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				sections: {
-					codename: 'sections',
-					name: 'Sections',
-				},
-			},
-		},
-		page_teaching_advice: {
-			codename: 'page_teaching_advice',
-			name: 'Page Teaching Advice',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		post: {
-			codename: 'post',
-			name: 'Post',
-			elements: {
-				publishing_date: {
-					codename: 'publishing_date',
-					name: 'Publishing Date',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				seo__description: {
-					codename: 'seo__description',
-					name: 'Description',
-				},
-				seo__options: {
-					codename: 'seo__options',
-					name: 'Options',
-				},
-				seo__canonical_url: {
-					codename: 'seo__canonical_url',
-					name: 'Canonical URL',
-				},
-				author: {
-					codename: 'author',
-					name: 'Author',
-				},
-				excerpt: {
-					codename: 'excerpt',
-					name: 'Excerpt',
-				},
-				seo__keywords: {
-					codename: 'seo__keywords',
-					name: 'Keywords',
-				},
-				seo__title: {
-					codename: 'seo__title',
-					name: 'Title',
-				},
-				image: {
-					codename: 'image',
-					name: 'Image',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-				slug: {
-					codename: 'slug',
-					name: 'Slug',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		pricing_plan: {
-			codename: 'pricing_plan',
-			name: 'Pricing Plan',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				actions: {
-					codename: 'actions',
-					name: 'Actions',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				price: {
-					codename: 'price',
-					name: 'Price',
-				},
-				details: {
-					codename: 'details',
-					name: 'Details',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		pricing_section: {
-			codename: 'pricing_section',
-			name: 'Pricing Section',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				pricing_plans: {
-					codename: 'pricing_plans',
-					name: 'Pricing Plans',
-				},
-				metadata: {
-					codename: 'metadata',
-					name: 'Metadata',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-			},
-		},
-		quote: {
-			codename: 'quote',
-			name: 'Quote',
-			elements: {
-				quote_text: {
-					codename: 'quote_text',
-					name: 'Quote text',
-				},
-			},
-		},
-		review: {
-			codename: 'review',
-			name: 'Review',
-			elements: {
-				author: {
-					codename: 'author',
-					name: 'Author',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-			},
-		},
-		reviews_section: {
-			codename: 'reviews_section',
-			name: 'Reviews Section',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				reviews: {
-					codename: 'reviews',
-					name: 'Reviews',
-				},
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-			},
-		},
-		select_form_field: {
-			codename: 'select_form_field',
-			name: 'Select Form Field',
-			elements: {
-				options: {
-					codename: 'options',
-					name: 'Options',
-				},
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				configuration: {
-					codename: 'configuration',
-					name: 'Configuration',
-				},
-				name: {
-					codename: 'name',
-					name: 'Name',
-				},
-				default_value: {
-					codename: 'default_value',
-					name: 'Default Value',
-				},
-			},
-		},
-		select_form_field_option: {
-			codename: 'select_form_field_option',
-			name: 'Select Form Field Option',
-			elements: {
-				label: {
-					codename: 'label',
-					name: 'Label',
-				},
-				value: {
-					codename: 'value',
-					name: 'Value',
-				},
-			},
-		},
-		sharedcontent_richtext: {
-			codename: 'sharedcontent_richtext',
-			name: 'Shared Content Rich Text',
-			elements: {
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-			},
-		},
-		simple_page: {
-			codename: 'simple_page',
-			name: 'Simple page',
-			elements: {
-				subtitle: {
-					codename: 'subtitle',
-					name: 'Subtitle',
-				},
-				image: {
-					codename: 'image',
-					name: 'Image',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				content: {
-					codename: 'content',
-					name: 'Content',
-				},
-			},
-		},
-		stage: {
-			codename: 'stage',
-			name: 'Stage',
-			elements: {
-				order: {
-					codename: 'order',
-					name: 'Sort Order',
-				},
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				years: {
-					codename: 'years',
-					name: 'Years',
-				},
-			},
-		},
-		stage_group: {
-			codename: 'stage_group',
-			name: 'Stage Group',
-			elements: {
-				title: {
-					codename: 'title',
-					name: 'Title',
-				},
-				order: {
-					codename: 'order',
-					name: 'Order',
-				},
-				years: {
-					codename: 'years',
-					name: 'Years',
-				},
-				stages: {
-					codename: 'stages',
-					name: 'Stages',
+					name: '📜 Is Overarching',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
+				},
+				syllabus_type__items: {
+					codename: 'syllabus_type__items',
+					name: '🏷️ Syllabus Type',
+				},
+				relatedlifeskillsoutcomes: {
+					codename: 'relatedlifeskillsoutcomes',
+					name: '📃 Related Life Skills Outcomes',
 				},
 			},
 		},
 		syllabus: {
 			codename: 'syllabus',
-			name: 'Syllabus',
+			name: '📒 Syllabus',
 			elements: {
-				courseoverview_organisationofcontent: {
-					codename: 'courseoverview_organisationofcontent',
-					name: 'Course Overview - Organisation Of Content',
+				organisationofcontent: {
+					codename: 'organisationofcontent',
+					name: '📜 Organisation Of Content',
 				},
-				courseoverview_coursenumbers: {
-					codename: 'courseoverview_coursenumbers',
-					name: 'Course Overview - Course Numbers',
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
 				},
-				available: {
-					codename: 'available',
-					name: 'Available',
+				coursenumbers: {
+					codename: 'coursenumbers',
+					name: '📒 Course Numbers',
 				},
-				courseoverview_learning1_10: {
-					codename: 'courseoverview_learning1_10',
-					name: 'Course Overview - Learning 1-10',
+				doredirect: {
+					codename: 'doredirect',
+					name: '🔗 Redirect to education standards',
 				},
-				key_learning_area: {
-					codename: 'key_learning_area',
-					name: 'Key Learning Area',
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
 				},
-				overview: {
-					codename: 'overview',
-					name: 'Course Overview - Introduction',
+				syllabus_type__items: {
+					codename: 'syllabus_type__items',
+					name: '🏷️ Syllabus Type',
+				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				enrolment_type__items: {
+					codename: 'enrolment_type__items',
+					name: '🏷️ Enrolment Type',
+				},
+				learning1_10: {
+					codename: 'learning1_10',
+					name: '📜 Learning Year 1-10',
+				},
+				introduction: {
+					codename: 'introduction',
+					name: '📜 Short course introduction',
 				},
 				from_date: {
 					codename: 'from_date',
-					name: 'From Date',
+					name: '📅 From Date',
 				},
 				aim: {
 					codename: 'aim',
-					name: 'Aim',
+					name: '📜 Aim',
 				},
-				courseoverview_achievementhsc: {
-					codename: 'courseoverview_achievementhsc',
-					name: 'Course Overview - Achievement HSC',
+				achievementhsc: {
+					codename: 'achievementhsc',
+					name: '📜 Achievement HSC',
 				},
-				courseoverview_prerequisits: {
-					codename: 'courseoverview_prerequisits',
-					name: 'Course Overview - Prerequisites',
+				prerequisits: {
+					codename: 'prerequisits',
+					name: '📒 Prerequisites',
 				},
 				rationale: {
 					codename: 'rationale',
-					name: 'Rationale',
+					name: '📜 Rationale',
 				},
 				assessments: {
 					codename: 'assessments',
-					name: 'Assessments',
+					name: '📃 Assessments',
 				},
-				courseoverview_learning11: {
-					codename: 'courseoverview_learning11',
-					name: 'Course Overview - Learning 11',
-				},
-				courseoverview_syllabustype: {
-					codename: 'courseoverview_syllabustype',
-					name: 'Course Overview - Syllabus Type',
+				learning11: {
+					codename: 'learning11',
+					name: '📜 Learning Year 11',
 				},
 				related_life_skills_syllabus: {
 					codename: 'related_life_skills_syllabus',
-					name: 'Related Life Skills Syllabus',
+					name: '📒 Related Life Skills Syllabus',
 				},
-				courseoverview_learning12: {
-					codename: 'courseoverview_learning12',
-					name: 'Course Overview - Learning 12',
+				learning12: {
+					codename: 'learning12',
+					name: '📜 Learning Year 12',
 				},
-				courseoverview_selftuition: {
-					codename: 'courseoverview_selftuition',
-					name: 'Course Overview - Self Tuition',
+				selftuition: {
+					codename: 'selftuition',
+					name: '📜 Self Tuition',
 				},
-				courseoverview_200hourrules: {
-					codename: 'courseoverview_200hourrules',
-					name: 'Course Overview - 200 Hour Rules',
+				overview_200hourrules: {
+					codename: 'overview_200hourrules',
+					name: '📜 200 Hour Rules',
 				},
 				outcomes: {
 					codename: 'outcomes',
-					name: 'Outcomes',
+					name: '📃 Outcomes',
 				},
 				code: {
 					codename: 'code',
-					name: 'Code',
+					name: '📜 Code',
 				},
-				courseoverview_endorsementtype: {
-					codename: 'courseoverview_endorsementtype',
-					name: 'Course Overview - Endorsement Type',
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
 				},
-				courseoverview_exclusions: {
-					codename: 'courseoverview_exclusions',
-					name: 'Course Overview - Exclusions',
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
 				},
-				courseoverview_achievementstage4_5: {
-					codename: 'courseoverview_achievementstage4_5',
-					name: 'Course Overview - Achievement Stage 4-5',
+				exclusions: {
+					codename: 'exclusions',
+					name: '📒 Exclusions',
 				},
-				courseoverview_enrolmenttype: {
-					codename: 'courseoverview_enrolmenttype',
-					name: 'Course Overview - Enrolment Type',
+				achievementstage4_5: {
+					codename: 'achievementstage4_5',
+					name: '📜 Achievement Stage 4-5',
 				},
 				to_date: {
 					codename: 'to_date',
-					name: 'To Date',
+					name: '📅 To Date',
 				},
 				title: {
 					codename: 'title',
-					name: 'Title',
+					name: '📜 Title',
 				},
-				stagesyears__years: {
-					codename: 'stagesyears__years',
-					name: 'Years',
+				redirecturl: {
+					codename: 'redirecturl',
+					name: '🔗 Redirect Url',
 				},
-				courseoverview_eligibility: {
-					codename: 'courseoverview_eligibility',
-					name: 'Course Overview - Eligibility',
+				_focus_area_continum_groups: {
+					codename: '_focus_area_continum_groups',
+					name: '📈 Focus Area Continum Groups',
 				},
-				courseoverview_corequisites: {
-					codename: 'courseoverview_corequisites',
-					name: 'Course Overview - Corequisites',
+				key_learning_area__items: {
+					codename: 'key_learning_area__items',
+					name: 'Key Learning Area',
 				},
-				courseoverview_100hourrules: {
-					codename: 'courseoverview_100hourrules',
-					name: 'Course Overview - 100 Hour Rules',
+				eligibility: {
+					codename: 'eligibility',
+					name: '📜 Eligibility',
 				},
-				courseoverview_courcerequirements: {
-					codename: 'courseoverview_courcerequirements',
-					name: 'Course Overview - Cource Requirements',
+				corequisites: {
+					codename: 'corequisites',
+					name: '📒 Corequisites',
 				},
-				courseoverview_otherinfo: {
-					codename: 'courseoverview_otherinfo',
-					name: 'Course Overview - Other Info',
+				overview100hourrules: {
+					codename: 'overview100hourrules',
+					name: '📜 100 Hour Rules',
+				},
+				requirements: {
+					codename: 'requirements',
+					name: '📜 Requirements',
+				},
+				otherinfo: {
+					codename: 'otherinfo',
+					name: '📜 Other Info',
 				},
 				focus_areas: {
 					codename: 'focus_areas',
-					name: 'Focus Areas',
-				},
-				stagesyears__stages: {
-					codename: 'stagesyears__stages',
-					name: 'Stages',
+					name: '📃 Focus Areas',
 				},
 			},
 		},
-		teaching_advice: {
-			codename: 'teaching_advice',
-			name: 'Teaching Advice',
+		teachingadvice: {
+			codename: 'teachingadvice',
+			name: '📑 Syllabus Teaching Advice',
 			elements: {
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '📒 Syllabus',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				resources: {
+					codename: 'resources',
+					name: '📦 Resources',
+				},
 				content: {
 					codename: 'content',
-					name: 'Content',
+					name: '📑 Content',
+				},
+			},
+		},
+		ui_accordion: {
+			codename: 'ui_accordion',
+			name: '💠 Web UI Accordion',
+			elements: {
+				items: {
+					codename: 'items',
+					name: '📜 List',
+				},
+				showexpandcollapse: {
+					codename: 'showexpandcollapse',
+					name: '⚙️ Show Expand / Collapse',
+				},
+			},
+		},
+		ui_blockquote: {
+			codename: 'ui_blockquote',
+			name: '💠 Web UI Blockquote',
+			elements: {
+				quote: {
+					codename: 'quote',
+					name: '📜 Quote',
+				},
+				cite: {
+					codename: 'cite',
+					name: '📜 Cite',
+				},
+			},
+		},
+		ui_callout: {
+			codename: 'ui_callout',
+			name: '💠 Web UI Callout',
+			elements: {
+				item: {
+					codename: 'item',
+					name: '📜 Item',
+				},
+			},
+		},
+		ui_card: {
+			codename: 'ui_card',
+			name: '💠 Web UI Cards',
+			elements: {
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				display: {
+					codename: 'display',
+					name: '⚙️ Display',
+				},
+				items: {
+					codename: 'items',
+					name: '📜 Items',
+				},
+				theme: {
+					codename: 'theme',
+					name: '🎨 Theme',
+				},
+			},
+		},
+		ui_collection: {
+			codename: 'ui_collection',
+			name: '💠 Web UI Collection',
+			elements: {
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				items: {
+					codename: 'items',
+					name: '📂 Items',
+				},
+			},
+		},
+		ui_globalalert: {
+			codename: 'ui_globalalert',
+			name: '💠 Web UI Global Alert',
+			elements: {
+				item: {
+					codename: 'item',
+					name: '📜 Item',
+				},
+				type: {
+					codename: 'type',
+					name: '⚙️ Type',
+				},
+			},
+		},
+		ui_herobanner: {
+			codename: 'ui_herobanner',
+			name: '💠 Web UI Hero banner',
+			elements: {
+				theme: {
+					codename: 'theme',
+					name: '🎨 Theme',
+				},
+				display: {
+					codename: 'display',
+					name: '⚙️ Display',
+				},
+				items: {
+					codename: 'items',
+					name: '📜 Items',
+				},
+			},
+		},
+		ui_inpagealert: {
+			codename: 'ui_inpagealert',
+			name: '💠 Web UI In-page alert',
+			elements: {
+				type: {
+					codename: 'type',
+					name: '⚙️ Type',
+				},
+				item: {
+					codename: 'item',
+					name: '📜 Item',
+				},
+				display: {
+					codename: 'display',
+					name: '⚙️ Display',
+				},
+			},
+		},
+		ui_listitems: {
+			codename: 'ui_listitems',
+			name: '💠 Web UI List items',
+			elements: {
+				display: {
+					codename: 'display',
+					name: '⚙️ Display',
+				},
+				items: {
+					codename: 'items',
+					name: '📜 Items',
+				},
+			},
+		},
+		ui_media: {
+			codename: 'ui_media',
+			name: '💠 Web UI Media',
+			elements: {
+				type: {
+					codename: 'type',
+					name: '⚙️ Media type',
+				},
+				theme: {
+					codename: 'theme',
+					name: '🎨 Theme',
+				},
+				width: {
+					codename: 'width',
+					name: '⚙️ Width',
+				},
+				video: {
+					codename: 'video',
+					name: '🔗 Item video',
+				},
+				image: {
+					codename: 'image',
+					name: '📦 Item image',
+				},
+				align: {
+					codename: 'align',
+					name: '⚙️ Align',
+				},
+			},
+		},
+		ui_menu: {
+			codename: 'ui_menu',
+			name: '💠 Web UI Menu',
+			elements: {
+				subtitle: {
+					codename: 'subtitle',
+					name: '📜 Sub Title',
+				},
+				subitems: {
+					codename: 'subitems',
+					name: '📂 Subitems',
+				},
+				item: {
+					codename: 'item',
+					name: '🔗 Item',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+			},
+		},
+		ui_tabs: {
+			codename: 'ui_tabs',
+			name: '💠 Web UI Tabs',
+			elements: {
+				items: {
+					codename: 'items',
+					name: '📜 Items',
+				},
+			},
+		},
+		web_page: {
+			codename: 'web_page',
+			name: '🌐 Web Page',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				show_in_page_navigation: {
+					codename: 'show_in_page_navigation',
+					name: '🖇️ Show in-page navigation',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				redirect_url: {
+					codename: 'redirect_url',
+					name: '🔗 Redirect Url',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+			},
+		},
+		web_release_syllabus: {
+			codename: 'web_release_syllabus',
+			name: '🚩 Syllabus website release',
+			elements: {
+				_release_date: {
+					codename: '_release_date',
+					name: '📅 Release date',
+				},
+				_title: {
+					codename: '_title',
+					name: '📜 Title',
+				},
+				_release_notes: {
+					codename: '_release_notes',
+					name: '📜 Release notes',
+				},
+				_version: {
+					codename: '_version',
+					name: '📜 Version',
+				},
+			},
+		},
+		weblinkext: {
+			codename: 'weblinkext',
+			name: '🔗 Web Link External',
+			elements: {
+				_sub_title: {
+					codename: '_sub_title',
+					name: '📜 Sub Title',
+				},
+				link_url: {
+					codename: 'link_url',
+					name: '🔗 Link Url',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+			},
+		},
+		weblinkint: {
+			codename: 'weblinkint',
+			name: '🔗 Web Link Internal',
+			elements: {
+				item: {
+					codename: 'item',
+					name: '🔗 Item',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				_sub_title: {
+					codename: '_sub_title',
+					name: '📜 Sub Title',
+				},
+			},
+		},
+		wp_glossary: {
+			codename: 'wp_glossary',
+			name: '🌐 Web Page Glossary',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				show_in_page_navigation: {
+					codename: 'show_in_page_navigation',
+					name: '🖇️ Show in-page navigation',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				redirect_url: {
+					codename: 'redirect_url',
+					name: '🔗 Redirect Url',
+				},
+			},
+		},
+		wp_homepage: {
+			codename: 'wp_homepage',
+			name: '🌏 Homepage',
+			elements: {
+				favicon: {
+					codename: 'favicon',
+					name: '📦 Favicon',
+				},
+				secondary_links: {
+					codename: 'secondary_links',
+					name: 'Secondary links',
+				},
+				logo_main: {
+					codename: 'logo_main',
+					name: '📦 Logo main',
+				},
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				footer_top_content: {
+					codename: 'footer_top_content',
+					name: '📜 Content',
+				},
+				social_links: {
+					codename: 'social_links',
+					name: '🔗 Social Links',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				acknowledgement: {
+					codename: 'acknowledgement',
+					name: '📜 Acknowledgement',
+				},
+				palette: {
+					codename: 'palette',
+					name: '⚙️ Palette',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				site_prefix: {
+					codename: 'site_prefix',
+					name: '📜 Site Title',
+				},
+				subtitle: {
+					codename: 'subtitle',
+					name: '📜 Subtitle',
+				},
+				main_menu: {
+					codename: 'main_menu',
+					name: '📂 Main Menu',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				copyright_link: {
+					codename: 'copyright_link',
+					name: 'Copyright link',
+				},
+				footer_menu_links: {
+					codename: 'footer_menu_links',
+					name: '📂 Menu links',
+				},
+				descriptor: {
+					codename: 'descriptor',
+					name: '📜 Descriptor',
+				},
+			},
+		},
+		wp_learningarea: {
+			codename: 'wp_learningarea',
+			name: '🌐 Web Page Learning Area',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+			},
+		},
+		wp_learningareas: {
+			codename: 'wp_learningareas',
+			name: '🌐 Web Page Learning Areas',
+			elements: {
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+			},
+		},
+		wp_resources: {
+			codename: 'wp_resources',
+			name: '🌐 WebPage Teaching Resources',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				redirect_url: {
+					codename: 'redirect_url',
+					name: '🔗 Redirect Url',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				show_in_page_navigation: {
+					codename: 'show_in_page_navigation',
+					name: '🖇️ Show in-page navigation',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+			},
+		},
+		wp_stage: {
+			codename: 'wp_stage',
+			name: '🌐 Web Page Stage',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				syllabuses: {
+					codename: 'syllabuses',
+					name: '🌐 Syllabuses',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+			},
+		},
+		wp_stagegroup: {
+			codename: 'wp_stagegroup',
+			name: '🌐 Web Page Stage Group',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+			},
+		},
+		wp_stages: {
+			codename: 'wp_stages',
+			name: '🌐 Web Page Stages',
+			elements: {
+				subpages: {
+					codename: 'subpages',
+					name: '🌐 Subpages',
+				},
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+			},
+		},
+		wp_teachingadvice: {
+			codename: 'wp_teachingadvice',
+			name: '🌐 Web Page Teaching Advice',
+			elements: {
+				web_content_rtb__content: {
+					codename: 'web_content_rtb__content',
+					name: '📜 Content',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
+				},
+				seo__description: {
+					codename: 'seo__description',
+					name: '📜 SEO Description',
+				},
+				seo__robots: {
+					codename: 'seo__robots',
+					name: '⚙️ Robots meta tag',
+				},
+				seo__canonical_url: {
+					codename: 'seo__canonical_url',
+					name: '🔗 Canonical URL',
+				},
+				show_in_page_navigation: {
+					codename: 'show_in_page_navigation',
+					name: '🖇️ Show in-page navigation',
+				},
+				redirect_url: {
+					codename: 'redirect_url',
+					name: '🔗 Redirect Url',
+				},
+				seo__keywords: {
+					codename: 'seo__keywords',
+					name: '📜 SEO Keywords',
+				},
+				seo__title: {
+					codename: 'seo__title',
+					name: '📜 SEO Title',
+				},
+				slug: {
+					codename: 'slug',
+					name: '🔗 Slug',
 				},
 			},
 		},
 	},
 	taxonomies: {
-		interacting: {
-			codename: 'interacting',
-			name: 'Literacy Interacting',
+		assetpublishedmonth: {
+			codename: 'assetpublishedmonth',
+			name: 'Asset Published Month',
 			terms: {
-				eci1a: {
-					codename: 'eci1a',
-					name: 'ECI1a',
+				n1: {
+					codename: 'n1',
+					name: '1',
 					terms: {},
 				},
-				eci1b: {
-					codename: 'eci1b',
-					name: 'ECI1b',
+				n2: {
+					codename: 'n2',
+					name: '2',
 					terms: {},
 				},
-				int1: {
-					codename: 'int1',
-					name: 'InT1',
+				n3: {
+					codename: 'n3',
+					name: '3',
 					terms: {},
 				},
-				int2: {
-					codename: 'int2',
-					name: 'InT2',
+				n4: {
+					codename: 'n4',
+					name: '4',
 					terms: {},
 				},
-				int3: {
-					codename: 'int3',
-					name: 'InT3',
+				n5: {
+					codename: 'n5',
+					name: '5',
 					terms: {},
 				},
-				int4: {
-					codename: 'int4',
-					name: 'InT4',
+				n6: {
+					codename: 'n6',
+					name: '6',
 					terms: {},
 				},
-				int5: {
-					codename: 'int5',
-					name: 'InT5',
+				n7: {
+					codename: 'n7',
+					name: '7',
 					terms: {},
 				},
-				int6: {
-					codename: 'int6',
-					name: 'InT6',
+				n8: {
+					codename: 'n8',
+					name: '8',
 					terms: {},
 				},
-				int7: {
-					codename: 'int7',
-					name: 'InT7',
+				n9: {
+					codename: 'n9',
+					name: '9',
+					terms: {},
+				},
+				n10: {
+					codename: 'n10',
+					name: '10',
+					terms: {},
+				},
+				n11: {
+					codename: 'n11',
+					name: '11',
+					terms: {},
+				},
+				n12: {
+					codename: 'n12',
+					name: '12',
 					terms: {},
 				},
 			},
 		},
-		listening: {
-			codename: 'listening',
-			name: 'Literacy Listening',
+		assetpublishedyear: {
+			codename: 'assetpublishedyear',
+			name: 'Asset Published Year',
 			terms: {
+				n2021: {
+					codename: 'n2021',
+					name: '2021',
+					terms: {},
+				},
+				n2022: {
+					codename: 'n2022',
+					name: '2022',
+					terms: {},
+				},
+				n2023: {
+					codename: 'n2023',
+					name: '2023',
+					terms: {},
+				},
+			},
+		},
+		endorsement_type: {
+			codename: 'endorsement_type',
+			name: 'Endorsement type',
+			terms: {
+				board_endorsed: {
+					codename: 'board_endorsed',
+					name: 'Board endorsed',
+					terms: {},
+				},
+				content_endorsed: {
+					codename: 'content_endorsed',
+					name: 'Content endorsed',
+					terms: {},
+				},
+			},
+		},
+		enrolment_type: {
+			codename: 'enrolment_type',
+			name: 'Enrolment Type',
+			terms: {
+				mandatory: {
+					codename: 'mandatory',
+					name: 'Mandatory',
+					terms: {},
+				},
+				elective: {
+					codename: 'elective',
+					name: 'Elective',
+					terms: {},
+				},
+				na: {
+					codename: 'na',
+					name: 'NA',
+					terms: {},
+				},
+			},
+		},
+		key_learning_area: {
+			codename: 'key_learning_area',
+			name: 'Key learning area',
+			terms: {
+				english: {
+					codename: 'english',
+					name: 'English',
+					terms: {},
+				},
+				mathematics: {
+					codename: 'mathematics',
+					name: 'Mathematics',
+					terms: {},
+				},
+				science: {
+					codename: 'science',
+					name: 'Science',
+					terms: {},
+				},
+				technologies: {
+					codename: 'technologies',
+					name: 'Technologies',
+					terms: {},
+				},
+				hsie: {
+					codename: 'hsie',
+					name: 'HSIE',
+					terms: {},
+				},
+				creative_arts: {
+					codename: 'creative_arts',
+					name: 'Creative Arts',
+					terms: {},
+				},
+				pdhpe: {
+					codename: 'pdhpe',
+					name: 'PDHPE',
+					terms: {},
+				},
+				languages: {
+					codename: 'languages',
+					name: 'Languages',
+					terms: {},
+				},
+				vet: {
+					codename: 'vet',
+					name: 'VET',
+					terms: {},
+				},
+			},
+		},
+		literacy: {
+			codename: 'literacy',
+			name: 'National Literacy Learning Progression',
+			terms: {
+				________________speaking_and_listening___listening: {
+					codename:
+						'________________speaking_and_listening___listening',
+					name: '--------------- Speaking and listening - Listening',
+					terms: {},
+				},
 				ecl1a: {
 					codename: 'ecl1a',
 					name: 'ECL1a',
@@ -1666,6 +1680,2117 @@ export const projectModel = {
 				lis8: {
 					codename: 'lis8',
 					name: 'LiS8',
+					terms: {},
+				},
+				________________speaking_and_listening___interacting: {
+					codename:
+						'________________speaking_and_listening___interacting',
+					name: '--------------- Speaking and listening - Interacting',
+					terms: {},
+				},
+				eci1a: {
+					codename: 'eci1a',
+					name: 'ECI1a',
+					terms: {},
+				},
+				eci1b: {
+					codename: 'eci1b',
+					name: 'ECI1b',
+					terms: {},
+				},
+				int1: {
+					codename: 'int1',
+					name: 'InT1',
+					terms: {},
+				},
+				int2: {
+					codename: 'int2',
+					name: 'InT2',
+					terms: {},
+				},
+				int3: {
+					codename: 'int3',
+					name: 'InT3',
+					terms: {},
+				},
+				int4: {
+					codename: 'int4',
+					name: 'InT4',
+					terms: {},
+				},
+				int5: {
+					codename: 'int5',
+					name: 'InT5',
+					terms: {},
+				},
+				int6: {
+					codename: 'int6',
+					name: 'InT6',
+					terms: {},
+				},
+				int7: {
+					codename: 'int7',
+					name: 'InT7',
+					terms: {},
+				},
+				________________speaking_and_listening___speaking: {
+					codename:
+						'________________speaking_and_listening___speaking',
+					name: '--------------- Speaking and listening - Speaking',
+					terms: {},
+				},
+				ecs1a: {
+					codename: 'ecs1a',
+					name: 'ECS1a',
+					terms: {},
+				},
+				ecs1b: {
+					codename: 'ecs1b',
+					name: 'ECS1b',
+					terms: {},
+				},
+				ecs1c: {
+					codename: 'ecs1c',
+					name: 'ECS1c',
+					terms: {},
+				},
+				spk1: {
+					codename: 'spk1',
+					name: 'SpK1',
+					terms: {},
+				},
+				spk2: {
+					codename: 'spk2',
+					name: 'SpK2',
+					terms: {},
+				},
+				spk3: {
+					codename: 'spk3',
+					name: 'SpK3',
+					terms: {},
+				},
+				spk4: {
+					codename: 'spk4',
+					name: 'SpK4',
+					terms: {},
+				},
+				spk5: {
+					codename: 'spk5',
+					name: 'SpK5',
+					terms: {},
+				},
+				spk6: {
+					codename: 'spk6',
+					name: 'SpK6',
+					terms: {},
+				},
+				spk7: {
+					codename: 'spk7',
+					name: 'SpK7',
+					terms: {},
+				},
+				spk8: {
+					codename: 'spk8',
+					name: 'SpK8',
+					terms: {},
+				},
+				________________reading_and_viewing___phonological_awareness: {
+					codename:
+						'________________reading_and_viewing___phonological_awareness',
+					name: '--------------- Reading and viewing - Phonological awareness',
+					terms: {},
+				},
+				pha1: {
+					codename: 'pha1',
+					name: 'PhA1',
+					terms: {},
+				},
+				pha2: {
+					codename: 'pha2',
+					name: 'PhA2',
+					terms: {},
+				},
+				pha3: {
+					codename: 'pha3',
+					name: 'PhA3',
+					terms: {},
+				},
+				pha4: {
+					codename: 'pha4',
+					name: 'PhA4',
+					terms: {},
+				},
+				pha5: {
+					codename: 'pha5',
+					name: 'PhA5',
+					terms: {},
+				},
+				________________reading_and_viewing___phonic_knowledge_and_word_recognition:
+					{
+						codename:
+							'________________reading_and_viewing___phonic_knowledge_and_word_recognition',
+						name: '--------------- Reading and viewing - Phonic knowledge and word recognition',
+						terms: {},
+					},
+				pkw1: {
+					codename: 'pkw1',
+					name: 'PKW1',
+					terms: {},
+				},
+				pkw2: {
+					codename: 'pkw2',
+					name: 'PKW2',
+					terms: {},
+				},
+				pkw3: {
+					codename: 'pkw3',
+					name: 'PKW3',
+					terms: {},
+				},
+				pkw4: {
+					codename: 'pkw4',
+					name: 'PKW4',
+					terms: {},
+				},
+				pkw5: {
+					codename: 'pkw5',
+					name: 'PKW5',
+					terms: {},
+				},
+				pkw6: {
+					codename: 'pkw6',
+					name: 'PKW6',
+					terms: {},
+				},
+				pkw7: {
+					codename: 'pkw7',
+					name: 'PKW7',
+					terms: {},
+				},
+				pkw8: {
+					codename: 'pkw8',
+					name: 'PKW8',
+					terms: {},
+				},
+				pkw9: {
+					codename: 'pkw9',
+					name: 'PKW9',
+					terms: {},
+				},
+				________________reading_and_viewing___fluency: {
+					codename: '________________reading_and_viewing___fluency',
+					name: '--------------- Reading and viewing - Fluency',
+					terms: {},
+				},
+				fly1: {
+					codename: 'fly1',
+					name: 'FlY1',
+					terms: {},
+				},
+				fly2: {
+					codename: 'fly2',
+					name: 'FlY2',
+					terms: {},
+				},
+				fly3: {
+					codename: 'fly3',
+					name: 'FlY3',
+					terms: {},
+				},
+				fly4: {
+					codename: 'fly4',
+					name: 'FlY4',
+					terms: {},
+				},
+				fly5: {
+					codename: 'fly5',
+					name: 'FlY5',
+					terms: {},
+				},
+				fly6: {
+					codename: 'fly6',
+					name: 'FlY6',
+					terms: {},
+				},
+				________________reading_and_viewing___understanding_texts: {
+					codename:
+						'________________reading_and_viewing___understanding_texts',
+					name: '--------------- Reading and viewing - Understanding texts',
+					terms: {},
+				},
+				ecu1a: {
+					codename: 'ecu1a',
+					name: 'ECU1a',
+					terms: {},
+				},
+				ecu1b: {
+					codename: 'ecu1b',
+					name: 'ECU1b',
+					terms: {},
+				},
+				unt3: {
+					codename: 'unt3',
+					name: 'UnT3',
+					terms: {},
+				},
+				unt4: {
+					codename: 'unt4',
+					name: 'UnT4',
+					terms: {},
+				},
+				unt5: {
+					codename: 'unt5',
+					name: 'UnT5',
+					terms: {},
+				},
+				unt6: {
+					codename: 'unt6',
+					name: 'UnT6',
+					terms: {},
+				},
+				unt7: {
+					codename: 'unt7',
+					name: 'UnT7',
+					terms: {},
+				},
+				unt8: {
+					codename: 'unt8',
+					name: 'UnT8',
+					terms: {},
+				},
+				unt9: {
+					codename: 'unt9',
+					name: 'UnT9',
+					terms: {},
+				},
+				unt10: {
+					codename: 'unt10',
+					name: 'UnT10',
+					terms: {},
+				},
+				unt11: {
+					codename: 'unt11',
+					name: 'UnT11',
+					terms: {},
+				},
+				________________writing___creating_texts: {
+					codename: '________________writing___creating_texts',
+					name: '--------------- Writing - Creating texts',
+					terms: {},
+				},
+				ecc1a: {
+					codename: 'ecc1a',
+					name: 'ECC1a',
+					terms: {},
+				},
+				ecc1b: {
+					codename: 'ecc1b',
+					name: 'ECC1b',
+					terms: {},
+				},
+				crt1: {
+					codename: 'crt1',
+					name: 'CrT1',
+					terms: {},
+				},
+				crt2: {
+					codename: 'crt2',
+					name: 'CrT2',
+					terms: {},
+				},
+				crt3: {
+					codename: 'crt3',
+					name: 'CrT3',
+					terms: {},
+				},
+				crt4: {
+					codename: 'crt4',
+					name: 'CrT4',
+					terms: {},
+				},
+				crt6: {
+					codename: 'crt6',
+					name: 'CrT6',
+					terms: {},
+				},
+				crt5: {
+					codename: 'crt5',
+					name: 'CrT5',
+					terms: {},
+				},
+				crt7: {
+					codename: 'crt7',
+					name: 'CrT7',
+					terms: {},
+				},
+				crt8: {
+					codename: 'crt8',
+					name: 'CrT8',
+					terms: {},
+				},
+				crt9: {
+					codename: 'crt9',
+					name: 'CrT9',
+					terms: {},
+				},
+				crt10: {
+					codename: 'crt10',
+					name: 'CrT10',
+					terms: {},
+				},
+				crt11: {
+					codename: 'crt11',
+					name: 'CrT11',
+					terms: {},
+				},
+				________________writing___grammar: {
+					codename: '________________writing___grammar',
+					name: '--------------- Writing - Grammar',
+					terms: {},
+				},
+				gra1: {
+					codename: 'gra1',
+					name: 'GrA1',
+					terms: {},
+				},
+				gra2: {
+					codename: 'gra2',
+					name: 'GrA2',
+					terms: {},
+				},
+				gra3: {
+					codename: 'gra3',
+					name: 'GrA3',
+					terms: {},
+				},
+				gra4: {
+					codename: 'gra4',
+					name: 'GrA4',
+					terms: {},
+				},
+				gra5: {
+					codename: 'gra5',
+					name: 'GrA5',
+					terms: {},
+				},
+				gra6: {
+					codename: 'gra6',
+					name: 'GrA6',
+					terms: {},
+				},
+				gra7: {
+					codename: 'gra7',
+					name: 'GrA7',
+					terms: {},
+				},
+				________________writing___punctuation: {
+					codename: '________________writing___punctuation',
+					name: '--------------- Writing - Punctuation',
+					terms: {},
+				},
+				pun1: {
+					codename: 'pun1',
+					name: 'PuN1',
+					terms: {},
+				},
+				pun2: {
+					codename: 'pun2',
+					name: 'PuN2',
+					terms: {},
+				},
+				pun3: {
+					codename: 'pun3',
+					name: 'PuN3',
+					terms: {},
+				},
+				pun4: {
+					codename: 'pun4',
+					name: 'PuN4',
+					terms: {},
+				},
+				pun5: {
+					codename: 'pun5',
+					name: 'PuN5',
+					terms: {},
+				},
+				pun6: {
+					codename: 'pun6',
+					name: 'PuN6',
+					terms: {},
+				},
+				pun7: {
+					codename: 'pun7',
+					name: 'PuN7',
+					terms: {},
+				},
+				pun8: {
+					codename: 'pun8',
+					name: 'PuN8',
+					terms: {},
+				},
+				________________writing___spelling: {
+					codename: '________________writing___spelling',
+					name: '--------------- Writing - Spelling',
+					terms: {},
+				},
+				spg1: {
+					codename: 'spg1',
+					name: 'SpG1',
+					terms: {},
+				},
+				spg2: {
+					codename: 'spg2',
+					name: 'SpG2',
+					terms: {},
+				},
+				spg3: {
+					codename: 'spg3',
+					name: 'SpG3',
+					terms: {},
+				},
+				spg4: {
+					codename: 'spg4',
+					name: 'SpG4',
+					terms: {},
+				},
+				spg5: {
+					codename: 'spg5',
+					name: 'SpG5',
+					terms: {},
+				},
+				spg6: {
+					codename: 'spg6',
+					name: 'SpG6',
+					terms: {},
+				},
+				spg7: {
+					codename: 'spg7',
+					name: 'SpG7',
+					terms: {},
+				},
+				spg8: {
+					codename: 'spg8',
+					name: 'SpG8',
+					terms: {},
+				},
+				spg9: {
+					codename: 'spg9',
+					name: 'SpG9',
+					terms: {},
+				},
+				spg10: {
+					codename: 'spg10',
+					name: 'SpG10',
+					terms: {},
+				},
+				spg11: {
+					codename: 'spg11',
+					name: 'SpG11',
+					terms: {},
+				},
+				spg12: {
+					codename: 'spg12',
+					name: 'SpG12',
+					terms: {},
+				},
+				spg13: {
+					codename: 'spg13',
+					name: 'SpG13',
+					terms: {},
+				},
+				spg14: {
+					codename: 'spg14',
+					name: 'SpG14',
+					terms: {},
+				},
+				________________writing___handwriting_and_keyboarding: {
+					codename:
+						'________________writing___handwriting_and_keyboarding',
+					name: '--------------- Writing - Handwriting and keyboarding',
+					terms: {},
+				},
+				hwk1: {
+					codename: 'hwk1',
+					name: 'HwK1',
+					terms: {},
+				},
+				hwk2: {
+					codename: 'hwk2',
+					name: 'HwK2',
+					terms: {},
+				},
+				hwk3: {
+					codename: 'hwk3',
+					name: 'HwK3',
+					terms: {},
+				},
+				hwk4: {
+					codename: 'hwk4',
+					name: 'HwK4',
+					terms: {},
+				},
+				hwk5: {
+					codename: 'hwk5',
+					name: 'HwK5',
+					terms: {},
+				},
+				hwk6: {
+					codename: 'hwk6',
+					name: 'HwK6',
+					terms: {},
+				},
+				hwk7: {
+					codename: 'hwk7',
+					name: 'HwK7',
+					terms: {},
+				},
+				hwk8: {
+					codename: 'hwk8',
+					name: 'HwK8',
+					terms: {},
+				},
+			},
+		},
+		numeracy: {
+			codename: 'numeracy',
+			name: 'National Numeracy Learning Progression',
+			terms: {
+				________________number_sense_and_algebra___number_and_place_value:
+					{
+						codename:
+							'________________number_sense_and_algebra___number_and_place_value',
+						name: '--------------- Number sense and algebra - Number and place value',
+						terms: {},
+					},
+				npv1: {
+					codename: 'npv1',
+					name: 'NPV1',
+					terms: {},
+				},
+				npv2: {
+					codename: 'npv2',
+					name: 'NPV2',
+					terms: {},
+				},
+				npv3: {
+					codename: 'npv3',
+					name: 'NPV3',
+					terms: {},
+				},
+				npv4: {
+					codename: 'npv4',
+					name: 'NPV4',
+					terms: {},
+				},
+				npv5: {
+					codename: 'npv5',
+					name: 'NPV5',
+					terms: {},
+				},
+				npv6: {
+					codename: 'npv6',
+					name: 'NPV6',
+					terms: {},
+				},
+				npv7: {
+					codename: 'npv7',
+					name: 'NPV7',
+					terms: {},
+				},
+				npv8: {
+					codename: 'npv8',
+					name: 'NPV8',
+					terms: {},
+				},
+				npv9: {
+					codename: 'npv9',
+					name: 'NPV9',
+					terms: {},
+				},
+				npv10: {
+					codename: 'npv10',
+					name: 'NPV10',
+					terms: {},
+				},
+				________________number_sense_and_algebra___counting_process: {
+					codename:
+						'________________number_sense_and_algebra___counting_process',
+					name: '--------------- Number sense and algebra - Counting process',
+					terms: {},
+				},
+				cpr1: {
+					codename: 'cpr1',
+					name: 'CPr1',
+					terms: {},
+				},
+				cpr2: {
+					codename: 'cpr2',
+					name: 'CPr2',
+					terms: {},
+				},
+				cpr3: {
+					codename: 'cpr3',
+					name: 'CPr3',
+					terms: {},
+				},
+				cpr4: {
+					codename: 'cpr4',
+					name: 'CPr4',
+					terms: {},
+				},
+				cpr5: {
+					codename: 'cpr5',
+					name: 'CPr5',
+					terms: {},
+				},
+				cpr6: {
+					codename: 'cpr6',
+					name: 'CPr6',
+					terms: {},
+				},
+				cpr7: {
+					codename: 'cpr7',
+					name: 'CPr7',
+					terms: {},
+				},
+				cpr8: {
+					codename: 'cpr8',
+					name: 'CPr8',
+					terms: {},
+				},
+				________________number_sense_and_algebra___additive_strategies:
+					{
+						codename:
+							'________________number_sense_and_algebra___additive_strategies',
+						name: '--------------- Number sense and algebra - Additive strategies',
+						terms: {},
+					},
+				ads1: {
+					codename: 'ads1',
+					name: 'AdS1',
+					terms: {},
+				},
+				ads2: {
+					codename: 'ads2',
+					name: 'AdS2',
+					terms: {},
+				},
+				ads3: {
+					codename: 'ads3',
+					name: 'AdS3',
+					terms: {},
+				},
+				ads4: {
+					codename: 'ads4',
+					name: 'AdS4',
+					terms: {},
+				},
+				ads5: {
+					codename: 'ads5',
+					name: 'AdS5',
+					terms: {},
+				},
+				ads6: {
+					codename: 'ads6',
+					name: 'AdS6',
+					terms: {},
+				},
+				ads7: {
+					codename: 'ads7',
+					name: 'AdS7',
+					terms: {},
+				},
+				ads8: {
+					codename: 'ads8',
+					name: 'AdS8',
+					terms: {},
+				},
+				ads9: {
+					codename: 'ads9',
+					name: 'AdS9',
+					terms: {},
+				},
+				ads10: {
+					codename: 'ads10',
+					name: 'AdS10',
+					terms: {},
+				},
+				________________number_sense_and_algebra___multiplicative_strategies:
+					{
+						codename:
+							'________________number_sense_and_algebra___multiplicative_strategies',
+						name: '--------------- Number sense and algebra - Multiplicative strategies',
+						terms: {},
+					},
+				mus1: {
+					codename: 'mus1',
+					name: 'MuS1',
+					terms: {},
+				},
+				mus2: {
+					codename: 'mus2',
+					name: 'MuS2',
+					terms: {},
+				},
+				mus3: {
+					codename: 'mus3',
+					name: 'MuS3',
+					terms: {},
+				},
+				mus4: {
+					codename: 'mus4',
+					name: 'MuS4',
+					terms: {},
+				},
+				mus5: {
+					codename: 'mus5',
+					name: 'MuS5',
+					terms: {},
+				},
+				mus6: {
+					codename: 'mus6',
+					name: 'MuS6',
+					terms: {},
+				},
+				mus7: {
+					codename: 'mus7',
+					name: 'MuS7',
+					terms: {},
+				},
+				mus8: {
+					codename: 'mus8',
+					name: 'MuS8',
+					terms: {},
+				},
+				mus9: {
+					codename: 'mus9',
+					name: 'MuS9',
+					terms: {},
+				},
+				mus10: {
+					codename: 'mus10',
+					name: 'MuS10',
+					terms: {},
+				},
+				________________number_sense_and_algebra___interpreting_fractions:
+					{
+						codename:
+							'________________number_sense_and_algebra___interpreting_fractions',
+						name: '--------------- Number sense and algebra - Interpreting fractions',
+						terms: {},
+					},
+				inf1: {
+					codename: 'inf1',
+					name: 'InF1',
+					terms: {},
+				},
+				inf2: {
+					codename: 'inf2',
+					name: 'InF2',
+					terms: {},
+				},
+				inf3: {
+					codename: 'inf3',
+					name: 'InF3',
+					terms: {},
+				},
+				inf4: {
+					codename: 'inf4',
+					name: 'InF4',
+					terms: {},
+				},
+				inf5: {
+					codename: 'inf5',
+					name: 'InF5',
+					terms: {},
+				},
+				inf6: {
+					codename: 'inf6',
+					name: 'InF6',
+					terms: {},
+				},
+				inf7: {
+					codename: 'inf7',
+					name: 'InF7',
+					terms: {},
+				},
+				________________number_sense_and_algebra___proportional_thinking:
+					{
+						codename:
+							'________________number_sense_and_algebra___proportional_thinking',
+						name: '--------------- Number sense and algebra - Proportional thinking',
+						terms: {},
+					},
+				prt1: {
+					codename: 'prt1',
+					name: 'PrT1',
+					terms: {},
+				},
+				prt2: {
+					codename: 'prt2',
+					name: 'PrT2',
+					terms: {},
+				},
+				prt3: {
+					codename: 'prt3',
+					name: 'PrT3',
+					terms: {},
+				},
+				prt4: {
+					codename: 'prt4',
+					name: 'PrT4',
+					terms: {},
+				},
+				prt5: {
+					codename: 'prt5',
+					name: 'PrT5',
+					terms: {},
+				},
+				prt6: {
+					codename: 'prt6',
+					name: 'PrT6',
+					terms: {},
+				},
+				prt7: {
+					codename: 'prt7',
+					name: 'PrT7',
+					terms: {},
+				},
+				________________number_sense_and_algebra___number_patterns_and_algebraic_thinking:
+					{
+						codename:
+							'________________number_sense_and_algebra___number_patterns_and_algebraic_thinking',
+						name: '--------------- Number sense and algebra - Number patterns and algebraic thinking',
+						terms: {},
+					},
+				npa1: {
+					codename: 'npa1',
+					name: 'NPA1',
+					terms: {},
+				},
+				npa2: {
+					codename: 'npa2',
+					name: 'NPA2',
+					terms: {},
+				},
+				npa3: {
+					codename: 'npa3',
+					name: 'NPA3',
+					terms: {},
+				},
+				npa4: {
+					codename: 'npa4',
+					name: 'NPA4',
+					terms: {},
+				},
+				npa5: {
+					codename: 'npa5',
+					name: 'NPA5',
+					terms: {},
+				},
+				npa6: {
+					codename: 'npa6',
+					name: 'NPA6',
+					terms: {},
+				},
+				npa7: {
+					codename: 'npa7',
+					name: 'NPA7',
+					terms: {},
+				},
+				npa8: {
+					codename: 'npa8',
+					name: 'NPA8',
+					terms: {},
+				},
+				npa9: {
+					codename: 'npa9',
+					name: 'NPA9',
+					terms: {},
+				},
+				________________number_sense_and_algebra___understanding_money:
+					{
+						codename:
+							'________________number_sense_and_algebra___understanding_money',
+						name: '--------------- Number sense and algebra - Understanding money',
+						terms: {},
+					},
+				unm1: {
+					codename: 'unm1',
+					name: 'UnM1',
+					terms: {},
+				},
+				unm2: {
+					codename: 'unm2',
+					name: 'UnM2',
+					terms: {},
+				},
+				unm3: {
+					codename: 'unm3',
+					name: 'UnM3',
+					terms: {},
+				},
+				unm4: {
+					codename: 'unm4',
+					name: 'UnM4',
+					terms: {},
+				},
+				unm5: {
+					codename: 'unm5',
+					name: 'UnM5',
+					terms: {},
+				},
+				unm6: {
+					codename: 'unm6',
+					name: 'UnM6',
+					terms: {},
+				},
+				unm7: {
+					codename: 'unm7',
+					name: 'UnM7',
+					terms: {},
+				},
+				unm8: {
+					codename: 'unm8',
+					name: 'UnM8',
+					terms: {},
+				},
+				unm9: {
+					codename: 'unm9',
+					name: 'UnM9',
+					terms: {},
+				},
+				unm10: {
+					codename: 'unm10',
+					name: 'UnM10',
+					terms: {},
+				},
+				________________measurement_and_geometry___understanding_units_of_measurement:
+					{
+						codename:
+							'________________measurement_and_geometry___understanding_units_of_measurement',
+						name: '--------------- Measurement and geometry - Understanding units of measurement',
+						terms: {},
+					},
+				uum1: {
+					codename: 'uum1',
+					name: 'UuM1',
+					terms: {},
+				},
+				uum2: {
+					codename: 'uum2',
+					name: 'UuM2',
+					terms: {},
+				},
+				uum3: {
+					codename: 'uum3',
+					name: 'UuM3',
+					terms: {},
+				},
+				uum4: {
+					codename: 'uum4',
+					name: 'UuM4',
+					terms: {},
+				},
+				uum5: {
+					codename: 'uum5',
+					name: 'UuM5',
+					terms: {},
+				},
+				uum6: {
+					codename: 'uum6',
+					name: 'UuM6',
+					terms: {},
+				},
+				uum7: {
+					codename: 'uum7',
+					name: 'UuM7',
+					terms: {},
+				},
+				uum8: {
+					codename: 'uum8',
+					name: 'UuM8',
+					terms: {},
+				},
+				uum9: {
+					codename: 'uum9',
+					name: 'UuM9',
+					terms: {},
+				},
+				uum10: {
+					codename: 'uum10',
+					name: 'UuM10',
+					terms: {},
+				},
+				________________measurement_and_geometry___understanding_geometric_properties:
+					{
+						codename:
+							'________________measurement_and_geometry___understanding_geometric_properties',
+						name: '--------------- Measurement and geometry - Understanding geometric properties',
+						terms: {},
+					},
+				ugp1: {
+					codename: 'ugp1',
+					name: 'UGP1',
+					terms: {},
+				},
+				ugp2: {
+					codename: 'ugp2',
+					name: 'UGP2',
+					terms: {},
+				},
+				ugp3: {
+					codename: 'ugp3',
+					name: 'UGP3',
+					terms: {},
+				},
+				ugp4: {
+					codename: 'ugp4',
+					name: 'UGP4',
+					terms: {},
+				},
+				ugp5: {
+					codename: 'ugp5',
+					name: 'UGP5',
+					terms: {},
+				},
+				ugp6: {
+					codename: 'ugp6',
+					name: 'UGP6',
+					terms: {},
+				},
+				ugp7: {
+					codename: 'ugp7',
+					name: 'UGP7',
+					terms: {},
+				},
+				________________measurement_and_geometry___positioning_and_locating:
+					{
+						codename:
+							'________________measurement_and_geometry___positioning_and_locating',
+						name: '--------------- Measurement and geometry - Positioning and locating',
+						terms: {},
+					},
+				pol1: {
+					codename: 'pol1',
+					name: 'PoL1',
+					terms: {},
+				},
+				pol2: {
+					codename: 'pol2',
+					name: 'PoL2',
+					terms: {},
+				},
+				pol3: {
+					codename: 'pol3',
+					name: 'PoL3',
+					terms: {},
+				},
+				pol4: {
+					codename: 'pol4',
+					name: 'PoL4',
+					terms: {},
+				},
+				pol5: {
+					codename: 'pol5',
+					name: 'PoL5',
+					terms: {},
+				},
+				________________measurement_and_geometry___measuring_time: {
+					codename:
+						'________________measurement_and_geometry___measuring_time',
+					name: '--------------- Measurement and geometry - Measuring time',
+					terms: {},
+				},
+				met1: {
+					codename: 'met1',
+					name: 'MeT1',
+					terms: {},
+				},
+				met2: {
+					codename: 'met2',
+					name: 'MeT2',
+					terms: {},
+				},
+				met3: {
+					codename: 'met3',
+					name: 'MeT3',
+					terms: {},
+				},
+				met4: {
+					codename: 'met4',
+					name: 'MeT4',
+					terms: {},
+				},
+				met5: {
+					codename: 'met5',
+					name: 'MeT5',
+					terms: {},
+				},
+				met6: {
+					codename: 'met6',
+					name: 'MeT6',
+					terms: {},
+				},
+				met7: {
+					codename: 'met7',
+					name: 'MeT7',
+					terms: {},
+				},
+				________________statistics_and_probability___understanding_chance:
+					{
+						codename:
+							'________________statistics_and_probability___understanding_chance',
+						name: '--------------- Statistics and probability - Understanding chance',
+						terms: {},
+					},
+				unc1: {
+					codename: 'unc1',
+					name: 'UnC1',
+					terms: {},
+				},
+				unc2: {
+					codename: 'unc2',
+					name: 'UnC2',
+					terms: {},
+				},
+				unc3: {
+					codename: 'unc3',
+					name: 'UnC3',
+					terms: {},
+				},
+				unc4: {
+					codename: 'unc4',
+					name: 'UnC4',
+					terms: {},
+				},
+				unc5: {
+					codename: 'unc5',
+					name: 'UnC5',
+					terms: {},
+				},
+				unc6: {
+					codename: 'unc6',
+					name: 'UnC6',
+					terms: {},
+				},
+				________________statistics_and_probability___interpreting_and_representing_data:
+					{
+						codename:
+							'________________statistics_and_probability___interpreting_and_representing_data',
+						name: '--------------- Statistics and probability - Interpreting and representing data',
+						terms: {},
+					},
+				ird1: {
+					codename: 'ird1',
+					name: 'IRD1',
+					terms: {},
+				},
+				ird2: {
+					codename: 'ird2',
+					name: 'IRD2',
+					terms: {},
+				},
+				ird3: {
+					codename: 'ird3',
+					name: 'IRD3',
+					terms: {},
+				},
+				ird4: {
+					codename: 'ird4',
+					name: 'IRD4',
+					terms: {},
+				},
+				ird5: {
+					codename: 'ird5',
+					name: 'IRD5',
+					terms: {},
+				},
+				ird6: {
+					codename: 'ird6',
+					name: 'IRD6',
+					terms: {},
+				},
+				ird7: {
+					codename: 'ird7',
+					name: 'IRD7',
+					terms: {},
+				},
+				ird8: {
+					codename: 'ird8',
+					name: 'IRD8',
+					terms: {},
+				},
+			},
+		},
+		resource_type: {
+			codename: 'resource_type',
+			name: 'Resource type',
+			terms: {
+				advice: {
+					codename: 'advice',
+					name: 'Teaching advice',
+					terms: {},
+				},
+				ssas: {
+					codename: 'ssas',
+					name: 'Sample scope and sequence',
+					terms: {},
+				},
+				sunit: {
+					codename: 'sunit',
+					name: 'Sample units',
+					terms: {},
+				},
+				swork: {
+					codename: 'swork',
+					name: 'Sample work',
+					terms: {},
+				},
+				lsow: {
+					codename: 'lsow',
+					name: 'Life Skills outcomes worksheet',
+					terms: {},
+				},
+				biblio: {
+					codename: 'biblio',
+					name: 'Bibliographies',
+					terms: {},
+				},
+				sugis: {
+					codename: 'sugis',
+					name: 'Suggested instructional sequences',
+					terms: {},
+				},
+				papa: {
+					codename: 'papa',
+					name: 'Planning and programming advice',
+					terms: {},
+				},
+				pguide: {
+					codename: 'pguide',
+					name: 'Parent guides',
+					terms: {},
+				},
+				web_resource: {
+					codename: 'web_resource',
+					name: 'Web resource',
+					terms: {},
+				},
+				other: {
+					codename: 'other',
+					name: 'Other',
+					terms: {},
+				},
+			},
+		},
+		resource_type_web: {
+			codename: 'resource_type_web',
+			name: 'Resource Type Web',
+			terms: {
+				web_resource: {
+					codename: 'web_resource',
+					name: 'Web Resource',
+					terms: {},
+				},
+			},
+		},
+		stage: {
+			codename: 'stage',
+			name: 'Stage',
+			terms: {
+				early_stage_1: {
+					codename: 'early_stage_1',
+					name: 'Early Stage 1 (K)',
+					terms: {},
+				},
+				stage_1: {
+					codename: 'stage_1',
+					name: 'Stage 1 (1-2)',
+					terms: {},
+				},
+				stage_2: {
+					codename: 'stage_2',
+					name: 'Stage 2 (3-4)',
+					terms: {},
+				},
+				stage_3: {
+					codename: 'stage_3',
+					name: 'Stage 3 (5-6)',
+					terms: {},
+				},
+				stage_4: {
+					codename: 'stage_4',
+					name: 'Stage 4 (7-8)',
+					terms: {},
+				},
+				stage_5: {
+					codename: 'stage_5',
+					name: 'Stage 5 (9-10)',
+					terms: {},
+				},
+				stage_6: {
+					codename: 'stage_6',
+					name: 'Stage 6 (11-12)',
+					terms: {},
+				},
+			},
+		},
+		stage_group: {
+			codename: 'stage_group',
+			name: 'Stage Group',
+			terms: {
+				primary: {
+					codename: 'primary',
+					name: 'Primary (K–6)',
+					terms: {},
+				},
+				secondary: {
+					codename: 'secondary',
+					name: 'Secondary (7-10)',
+					terms: {},
+				},
+				senior: {
+					codename: 'senior',
+					name: 'Senior (11-12)',
+					terms: {},
+				},
+			},
+		},
+		stage_year: {
+			codename: 'stage_year',
+			name: 'Stage Year',
+			terms: {
+				k1: {
+					codename: 'k1',
+					name: 'K1',
+					terms: {},
+				},
+				n1: {
+					codename: 'n1',
+					name: '1',
+					terms: {},
+				},
+				n2: {
+					codename: 'n2',
+					name: '2',
+					terms: {},
+				},
+				n3: {
+					codename: 'n3',
+					name: '3',
+					terms: {},
+				},
+				n4: {
+					codename: 'n4',
+					name: '4',
+					terms: {},
+				},
+				n5: {
+					codename: 'n5',
+					name: '5',
+					terms: {},
+				},
+				n6: {
+					codename: 'n6',
+					name: '6',
+					terms: {},
+				},
+				n7: {
+					codename: 'n7',
+					name: '7',
+					terms: {},
+				},
+				n8: {
+					codename: 'n8',
+					name: '8',
+					terms: {},
+				},
+				n9: {
+					codename: 'n9',
+					name: '9',
+					terms: {},
+				},
+				n10: {
+					codename: 'n10',
+					name: '10',
+					terms: {},
+				},
+				n11: {
+					codename: 'n11',
+					name: '11',
+					terms: {},
+				},
+				n12: {
+					codename: 'n12',
+					name: '12',
+					terms: {},
+				},
+			},
+		},
+		syllabus: {
+			codename: 'syllabus',
+			name: 'Syllabus',
+			terms: {
+				k_10: {
+					codename: 'k_10',
+					name: '------------ K-10',
+					terms: {},
+				},
+				aboriginal_lang_k_10_2022: {
+					codename: 'aboriginal_lang_k_10_2022',
+					name: 'Aboriginal Languages K–10 (2022)',
+					terms: {},
+				},
+				auslan_k_10_2023: {
+					codename: 'auslan_k_10_2023',
+					name: 'Auslan K–10 (2023)',
+					terms: {},
+				},
+				classical_lang_k_10_2022: {
+					codename: 'classical_lang_k_10_2022',
+					name: 'Classical Languages K–10 (2022)',
+					terms: {},
+				},
+				arts_k_6_2023: {
+					codename: 'arts_k_6_2023',
+					name: 'Creative Arts K–6 (2023)',
+					terms: {},
+				},
+				english_k_10_2022: {
+					codename: 'english_k_10_2022',
+					name: 'English K–10 (2022)',
+					terms: {},
+				},
+				mathematics_k_10_2022: {
+					codename: 'mathematics_k_10_2022',
+					name: 'Mathematics K–10 (2022)',
+					terms: {},
+				},
+				hsie_k_6_2022: {
+					codename: 'hsie_k_6_2022',
+					name: 'Human society and its environment K–6 (2022)',
+					terms: {},
+				},
+				pdhpe_k_10_2023: {
+					codename: 'pdhpe_k_10_2023',
+					name: 'Personal Development, Health and Physical Education K–10 (2023)',
+					terms: {},
+				},
+				sci_tech_k_6_2023: {
+					codename: 'sci_tech_k_6_2023',
+					name: 'Science and Technology K–6 (2023)',
+					terms: {},
+				},
+				modern_lang_k_10_2022: {
+					codename: 'modern_lang_k_10_2022',
+					name: 'Modern Languages K–10 (2022)',
+					terms: {},
+				},
+				aboriginal_7_10_2023: {
+					codename: 'aboriginal_7_10_2023',
+					name: 'Aboriginal Studies 7–10 (2023)',
+					terms: {},
+				},
+				applied_tech_7_10_2023: {
+					codename: 'applied_tech_7_10_2023',
+					name: 'Applied Technologies 7–10 (2023)',
+					terms: {},
+				},
+				child_7_10_2023: {
+					codename: 'child_7_10_2023',
+					name: 'Child Studies 7–10 (2023)',
+					terms: {},
+				},
+				commerce_7_10_2023: {
+					codename: 'commerce_7_10_2023',
+					name: 'Commerce 7–10 (2023)',
+					terms: {},
+				},
+				computing_7_10_2023: {
+					codename: 'computing_7_10_2023',
+					name: 'Computing Technology 7–10 (2022)',
+					terms: {},
+				},
+				dance_7_10_2023: {
+					codename: 'dance_7_10_2023',
+					name: 'Dance 7–10 (2023)',
+					terms: {},
+				},
+				drama_7_10_2023: {
+					codename: 'drama_7_10_2023',
+					name: 'Drama 7–10 (2023)',
+					terms: {},
+				},
+				env_tech_7_10_2023: {
+					codename: 'env_tech_7_10_2023',
+					name: 'Environmental Technologies 7–10 (2023)',
+					terms: {},
+				},
+				agricultural_tech_7_10_2019: {
+					codename: 'agricultural_tech_7_10_2019',
+					name: 'Agricultural Technology 7–10 Syllabus (2019)',
+					terms: {},
+				},
+				history_man_7_10_2023: {
+					codename: 'history_man_7_10_2023',
+					name: 'History Mandatory 7–10 (2023)',
+					terms: {},
+				},
+				industrial_7_10_2023: {
+					codename: 'industrial_7_10_2023',
+					name: 'Industrial Technology 7–10 (2023)',
+					terms: {},
+				},
+				music_7_10_2023: {
+					codename: 'music_7_10_2023',
+					name: 'Music 7–10 (2023)',
+					terms: {},
+				},
+				photo_media_7_10_2023: {
+					codename: 'photo_media_7_10_2023',
+					name: 'Photographic and Digital Media 7–10 (2023)',
+					terms: {},
+				},
+				pass_7_10_2023: {
+					codename: 'pass_7_10_2023',
+					name: 'Physical Activity and Sports Studies 7–10 (2023)',
+					terms: {},
+				},
+				science_7_10_2023: {
+					codename: 'science_7_10_2023',
+					name: 'Science 7–10 (2023)',
+					terms: {},
+				},
+				visual_arts_7_10_2023: {
+					codename: 'visual_arts_7_10_2023',
+					name: 'Visual Arts 7–10 (2023)',
+					terms: {},
+				},
+				visual_design_7_10_2023: {
+					codename: 'visual_design_7_10_2023',
+					name: 'Visual Design 7–10 (2023)',
+					terms: {},
+				},
+				work_edu_7_10_2023: {
+					codename: 'work_edu_7_10_2023',
+					name: 'Work Education 7–10 (2023)',
+					terms: {},
+				},
+				tech_man_7_10_2023: {
+					codename: 'tech_man_7_10_2023',
+					name: 'Technology Mandatory 7–8 (2023)',
+					terms: {},
+				},
+				history_ele_7_10_2023: {
+					codename: 'history_ele_7_10_2023',
+					name: 'History Elective 7–10 (2023)',
+					terms: {},
+				},
+				geo_man_7_10_2023: {
+					codename: 'geo_man_7_10_2023',
+					name: 'Geography Mandatory 7–10 (2023)',
+					terms: {},
+				},
+				geo_ele_7_10_2023: {
+					codename: 'geo_ele_7_10_2023',
+					name: 'Geography Elective 7–10 (2023)',
+					terms: {},
+				},
+				n11_12_english: {
+					codename: 'n11_12_english',
+					name: '------------ 11-12 English',
+					terms: {},
+				},
+				english_sta_11_12_2023: {
+					codename: 'english_sta_11_12_2023',
+					name: 'English Standard (2023)',
+					terms: {},
+				},
+				english_adv_11_12_2023: {
+					codename: 'english_adv_11_12_2023',
+					name: 'English Advanced (2023)',
+					terms: {},
+				},
+				english_exi_11_12_2023: {
+					codename: 'english_exi_11_12_2023',
+					name: 'English Extension 1 (2023)',
+					terms: {},
+				},
+				english_exii_11_12_2023: {
+					codename: 'english_exii_11_12_2023',
+					name: 'English Extension 2 (2023)',
+					terms: {},
+				},
+				english_eald_11_12_2023: {
+					codename: 'english_eald_11_12_2023',
+					name: 'English EAL/D (2023)',
+					terms: {},
+				},
+				english_stu_11_12_2023: {
+					codename: 'english_stu_11_12_2023',
+					name: 'English Studies (2023)',
+					terms: {},
+				},
+				english_ls_11_12_2023: {
+					codename: 'english_ls_11_12_2023',
+					name: 'English Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_mathematics: {
+					codename: 'n11_12_mathematics',
+					name: '------------ 11-12 Mathematics',
+					terms: {},
+				},
+				mathematics_sta_11_12_2023: {
+					codename: 'mathematics_sta_11_12_2023',
+					name: 'Mathematics Standard (2023)',
+					terms: {},
+				},
+				mathematics_adv_11_12_2023: {
+					codename: 'mathematics_adv_11_12_2023',
+					name: 'Mathematics Advanced (2023)',
+					terms: {},
+				},
+				mathematics_exi_11_12_2023: {
+					codename: 'mathematics_exi_11_12_2023',
+					name: 'Mathematics Extension 1 (2023)',
+					terms: {},
+				},
+				mathematics_exii_11_12_2023: {
+					codename: 'mathematics_exii_11_12_2023',
+					name: 'Mathematics Extension 2 (2023)',
+					terms: {},
+				},
+				numeracy_11_12_2023: {
+					codename: 'numeracy_11_12_2023',
+					name: 'Numeracy (2023)',
+					terms: {},
+				},
+				mathematics_ls_11_12_2023: {
+					codename: 'mathematics_ls_11_12_2023',
+					name: 'Mathematics Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_science: {
+					codename: 'n11_12_science',
+					name: '------------ 11-12 Science',
+					terms: {},
+				},
+				biology_11_12_2023: {
+					codename: 'biology_11_12_2023',
+					name: 'Biology (2023)',
+					terms: {},
+				},
+				chemistry_11_12_2023: {
+					codename: 'chemistry_11_12_2023',
+					name: 'Chemistry (2023)',
+					terms: {},
+				},
+				chemical_ls_11_12_2023: {
+					codename: 'chemical_ls_11_12_2023',
+					name: 'Chemical World Science Life Skills (2023)',
+					terms: {},
+				},
+				earth_11_12_2023: {
+					codename: 'earth_11_12_2023',
+					name: 'Earth and Environmental Science (2023)',
+					terms: {},
+				},
+				inv_science_11_12_2023: {
+					codename: 'inv_science_11_12_2023',
+					name: 'Investigating Science (2023)',
+					terms: {},
+				},
+				physics_11_12_2023: {
+					codename: 'physics_11_12_2023',
+					name: 'Physics (2023)',
+					terms: {},
+				},
+				science_ext_11_12_2023: {
+					codename: 'science_ext_11_12_2023',
+					name: 'Science Extension (2023)',
+					terms: {},
+				},
+				earth_ls_11_12_2023: {
+					codename: 'earth_ls_11_12_2023',
+					name: 'Earth and Space Science Life Skills (2023)',
+					terms: {},
+				},
+				inv_science_ls_11_12_2023: {
+					codename: 'inv_science_ls_11_12_2023',
+					name: 'Investigating Science Life Skills (2023)',
+					terms: {},
+				},
+				living_science_ls_11_12_2023: {
+					codename: 'living_science_ls_11_12_2023',
+					name: 'Living World Science Life Skills (2023)',
+					terms: {},
+				},
+				physical_sci_ls_11_12_2023: {
+					codename: 'physical_sci_ls_11_12_2023',
+					name: 'Physical World Science Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_technologies: {
+					codename: 'n11_12_technologies',
+					name: '------------ 11-12 Technologies',
+					terms: {},
+				},
+				agriculture_11_12_2023: {
+					codename: 'agriculture_11_12_2023',
+					name: 'Agriculture (2023)',
+					terms: {},
+				},
+				agriculture_ls_11_12_2023: {
+					codename: 'agriculture_ls_11_12_2023',
+					name: 'Agriculture Life Skills (2023)',
+					terms: {},
+				},
+				design_11_12_2023: {
+					codename: 'design_11_12_2023',
+					name: 'Design and Technology (2023)',
+					terms: {},
+				},
+				design_ls_11_12_2023: {
+					codename: 'design_ls_11_12_2023',
+					name: 'Design and Technology Life Skills (2023)',
+					terms: {},
+				},
+				technology_life_skills__2023_: {
+					codename: 'technology_life_skills__2023_',
+					name: 'Technology Life Skills (2023)',
+					terms: {},
+				},
+				engineering_11_12_2023: {
+					codename: 'engineering_11_12_2023',
+					name: 'Engineering Studies (2023)',
+					terms: {},
+				},
+				ent_computing_11_12_2022: {
+					codename: 'ent_computing_11_12_2022',
+					name: 'Enterprise Computing (2022)',
+					terms: {},
+				},
+				computing_ls_11_12_2022: {
+					codename: 'computing_ls_11_12_2022',
+					name: 'Computing Technology Life Skills (2023)',
+					terms: {},
+				},
+				food_tech_11_12_2023: {
+					codename: 'food_tech_11_12_2023',
+					name: 'Food Technology (2023)',
+					terms: {},
+				},
+				food_tech_ls_11_12_2023: {
+					codename: 'food_tech_ls_11_12_2023',
+					name: 'Food Technology Life Skills (2023)',
+					terms: {},
+				},
+				industrial_11_12_2023: {
+					codename: 'industrial_11_12_2023',
+					name: 'Industrial Technology (2023)',
+					terms: {},
+				},
+				industrial_ls_11_12_2023: {
+					codename: 'industrial_ls_11_12_2023',
+					name: 'Industrial Technology Life Skills (2023)',
+					terms: {},
+				},
+				marine_11_12_2023: {
+					codename: 'marine_11_12_2023',
+					name: 'Marine Studies (2023)',
+					terms: {},
+				},
+				textiles_11_12_2023: {
+					codename: 'textiles_11_12_2023',
+					name: 'Textiles and Design (2023)',
+					terms: {},
+				},
+				textiles_ls_11_12_2023: {
+					codename: 'textiles_ls_11_12_2023',
+					name: 'Textiles and Design Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_hsie: {
+					codename: 'n11_12_hsie',
+					name: '------------ 11-12 HSIE',
+					terms: {},
+				},
+				aboriginal_11_12_2023: {
+					codename: 'aboriginal_11_12_2023',
+					name: 'Aboriginal Studies (2023)',
+					terms: {},
+				},
+				aboriginal_ls_11_12_2023: {
+					codename: 'aboriginal_ls_11_12_2023',
+					name: 'Aboriginal Studies Life Skills (2023)',
+					terms: {},
+				},
+				ancient_11_12_2023: {
+					codename: 'ancient_11_12_2023',
+					name: 'Ancient History (2023)',
+					terms: {},
+				},
+				ancient_ls_11_12_2023: {
+					codename: 'ancient_ls_11_12_2023',
+					name: 'Ancient History Life Skills (2023)',
+					terms: {},
+				},
+				business_11_12_2023: {
+					codename: 'business_11_12_2023',
+					name: 'Business Studies (2023)',
+					terms: {},
+				},
+				economics_11_12_2023: {
+					codename: 'economics_11_12_2023',
+					name: 'Economics (2023)',
+					terms: {},
+				},
+				business_ls_11_12_2023: {
+					codename: 'business_ls_11_12_2023',
+					name: 'Business and Economics Life Skills (2023)',
+					terms: {},
+				},
+				geography_11_12_2022: {
+					codename: 'geography_11_12_2022',
+					name: 'Geography (2022)',
+					terms: {},
+				},
+				geography_ls_11_12_2022: {
+					codename: 'geography_ls_11_12_2022',
+					name: 'Geography Life Skills (2022)',
+					terms: {},
+				},
+				history_ext_11_12_2023: {
+					codename: 'history_ext_11_12_2023',
+					name: 'History Extension (2023)',
+					terms: {},
+				},
+				legal_11_12_2023: {
+					codename: 'legal_11_12_2023',
+					name: 'Legal Studies (2023)',
+					terms: {},
+				},
+				legal_ls_11_12_2023: {
+					codename: 'legal_ls_11_12_2023',
+					name: 'Legal Studies Life Skills (2023)',
+					terms: {},
+				},
+				modern_11_12_2023: {
+					codename: 'modern_11_12_2023',
+					name: 'Modern History (2023)',
+					terms: {},
+				},
+				modern_ls_11_12_2023: {
+					codename: 'modern_ls_11_12_2023',
+					name: 'Modern History Life Skills (2023)',
+					terms: {},
+				},
+				society_11_12_2023: {
+					codename: 'society_11_12_2023',
+					name: 'Society and Culture (2023)',
+					terms: {},
+				},
+				society_ls_11_12_2023: {
+					codename: 'society_ls_11_12_2023',
+					name: 'Society and Culture Life Skills (2023)',
+					terms: {},
+				},
+				hsie_ls_11_12_2023: {
+					codename: 'hsie_ls_11_12_2023',
+					name: 'Human Society and its Environment Life Skills (2023)',
+					terms: {},
+				},
+				software_11_12_2022: {
+					codename: 'software_11_12_2022',
+					name: 'Software Engineering (2022)',
+					terms: {},
+				},
+				religion_i_11_12_2023: {
+					codename: 'religion_i_11_12_2023',
+					name: 'Studies of Religion I (2023)',
+					terms: {},
+				},
+				religion_i_ls_11_12_2023: {
+					codename: 'religion_i_ls_11_12_2023',
+					name: 'Studies of Religion 1 Life Skills (2023)',
+					terms: {},
+				},
+				religion_ii_11_12_2023: {
+					codename: 'religion_ii_11_12_2023',
+					name: 'Studies of Religion 2 (2023)',
+					terms: {},
+				},
+				religion_ii_ls_11_12_2023: {
+					codename: 'religion_ii_ls_11_12_2023',
+					name: 'Studies of Religion 2 Life Skills (2023)',
+					terms: {},
+				},
+				work_studies_11_12_2023: {
+					codename: 'work_studies_11_12_2023',
+					name: 'Work Studies (2023)',
+					terms: {},
+				},
+				work_ls_11_12_2023: {
+					codename: 'work_ls_11_12_2023',
+					name: 'Work and the Community Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_creatve_arts: {
+					codename: 'n11_12_creatve_arts',
+					name: '------------ 11-12 Creatve Arts',
+					terms: {},
+				},
+				dance_11_12_2023: {
+					codename: 'dance_11_12_2023',
+					name: 'Dance (2023)',
+					terms: {},
+				},
+				drama_11_12_2023: {
+					codename: 'drama_11_12_2023',
+					name: 'Drama (2023)',
+					terms: {},
+				},
+				music_i_11_12_2023: {
+					codename: 'music_i_11_12_2023',
+					name: 'Music 1 (2023)',
+					terms: {},
+				},
+				music_ii_11_12_2023: {
+					codename: 'music_ii_11_12_2023',
+					name: 'Music 2 (2023)',
+					terms: {},
+				},
+				music_ext_11_12_2023: {
+					codename: 'music_ext_11_12_2023',
+					name: 'Music Extension (2023)',
+					terms: {},
+				},
+				visual_arts_11_12_2023: {
+					codename: 'visual_arts_11_12_2023',
+					name: 'Visual Arts (2023)',
+					terms: {},
+				},
+				visual_design_11_12_2023: {
+					codename: 'visual_design_11_12_2023',
+					name: 'Visual Design (2023)',
+					terms: {},
+				},
+				photo_video_11_12_2023: {
+					codename: 'photo_video_11_12_2023',
+					name: 'Photography, Video and Digital Imaging (2023)',
+					terms: {},
+				},
+				arts_ls_11_12_2023: {
+					codename: 'arts_ls_11_12_2023',
+					name: 'Creative Arts Life Skills (2023)',
+					terms: {},
+				},
+				dance_ls_11_12_2023: {
+					codename: 'dance_ls_11_12_2023',
+					name: 'Dance Life Skills (2023)',
+					terms: {},
+				},
+				drama_ls_11_12_2023: {
+					codename: 'drama_ls_11_12_2023',
+					name: 'Drama Life Skills (2023)',
+					terms: {},
+				},
+				music_ls_11_12_2023: {
+					codename: 'music_ls_11_12_2023',
+					name: 'Music Life Skills (2023)',
+					terms: {},
+				},
+				visual_arts_ls_11_12_2023: {
+					codename: 'visual_arts_ls_11_12_2023',
+					name: 'Visual Arts Life Skills (2023)',
+					terms: {},
+				},
+				n11_12_pdhpe_: {
+					codename: 'n11_12_pdhpe_',
+					name: '------------ 11-12 PDHPE ',
+					terms: {},
+				},
+				cfs_11_12_2023: {
+					codename: 'cfs_11_12_2023',
+					name: 'Community and Family Studies (2023)',
+					terms: {},
+				},
+				childhood_11_12_2023: {
+					codename: 'childhood_11_12_2023',
+					name: 'Exploring Early Childhood (2023)',
+					terms: {},
+				},
+				health_11_12_2022: {
+					codename: 'health_11_12_2022',
+					name: 'Health and Movement Science (2022)',
+					terms: {},
+				},
+				health_ls_11_12_2022: {
+					codename: 'health_ls_11_12_2022',
+					name: 'Health and Movement Science Life Skills (2022)',
+					terms: {},
+				},
+				sport_11_12_2023: {
+					codename: 'sport_11_12_2023',
+					name: 'Sport, Lifestyle and Recreation Studies (2023)',
+					terms: {},
+				},
+				cfs_ls_11_12_2023: {
+					codename: 'cfs_ls_11_12_2023',
+					name: 'Community and Family Studies Life Skills (2023)',
+					terms: {},
+				},
+				_____________11_12_vet: {
+					codename: '_____________11_12_vet',
+					name: '------------ 11-12 VET',
+					terms: {},
+				},
+				auto_vet_11_12_2023: {
+					codename: 'auto_vet_11_12_2023',
+					name: 'Automotive (2023)',
+					terms: {},
+				},
+				bus_vet_11_12_2023: {
+					codename: 'bus_vet_11_12_2023',
+					name: 'Business Services (2023)',
+					terms: {},
+				},
+				con_vet_11_12_2023: {
+					codename: 'con_vet_11_12_2023',
+					name: 'Construction (2023)',
+					terms: {},
+				},
+				elec_vet_11_12_2023: {
+					codename: 'elec_vet_11_12_2023',
+					name: 'Electrotechnology (2023)',
+					terms: {},
+				},
+				info_vet_11_12_2023: {
+					codename: 'info_vet_11_12_2023',
+					name: 'Information and Digital Technology (2023)',
+					terms: {},
+				},
+			},
+		},
+		syllabuss: {
+			codename: 'syllabuss',
+			name: 'Syllabus Type',
+			terms: {
+				mainstream: {
+					codename: 'mainstream',
+					name: 'Mainstream',
+					terms: {},
+				},
+				life_skills: {
+					codename: 'life_skills',
+					name: 'Life Skills',
+					terms: {},
+				},
+				vet: {
+					codename: 'vet',
+					name: 'VET',
 					terms: {},
 				},
 			},

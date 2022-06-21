@@ -1,4 +1,3 @@
-import { Action } from '@/models/action'
 import { KontentCurriculumResult, Mapping } from '@/types'
 import { Button } from '@material-ui/core'
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
@@ -12,6 +11,11 @@ import MobileHeader from '../components/navigation/MobileHeader'
 import Header, { HeaderProps } from '../components/navigation/Header'
 import NavFooter from '../components/navigation/NavFooter'
 import SiteFooter from '../components/navigation/SiteFooter'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import { CollectionWeblink } from '@/models/collection_weblink'
+import { Weblinkext } from '@/models/weblinkext'
+import { Weblinkint } from '@/models/weblinkint'
+import { UiMenu } from '@/models/ui_menu'
 
 export interface NavPageProps
 	extends KontentCurriculumResult,
@@ -35,6 +39,8 @@ const NavPage = (props: NavPageProps) => {
 	const [hidden, setHidden] = useState(true)
 	const [isIE, setIsIE] = useState(false)
 	const browser = detect()
+
+	console.log(props)
 
 	useEffect(() => {
 		// handle the case where we don't detect the browser
@@ -135,9 +141,16 @@ const NavPage = (props: NavPageProps) => {
 				acknowledge={
 					props.data.config.item.elements.acknowledgement.value
 				}
-				menu={props.data.config.item.elements.footer_bottom_menu.linkedItems.map(
-					(item) => item as Action,
-				)}
+				copyrightLink={
+					props.data.config.item.elements.copyright_link
+						.linkedItems[0] as Weblinkext | Weblinkint | UiMenu
+				}
+				menu={
+					flattenCollectionWebLinks(
+						props.data.config.item.elements.secondary_links
+							.linkedItems as CollectionWeblink[],
+					) || []
+				}
 			/>
 			{/* {isIE && (
 				<CustomModal

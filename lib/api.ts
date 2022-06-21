@@ -1,5 +1,5 @@
 import type { Glossary } from '@/models/glossary'
-import { Homepage } from '@/models/homepage'
+import { Homepage as WpHomepage } from '@/models/homepage'
 import type { KeyLearningArea } from '@/models/key_learning_area'
 import type { Stage } from '@/models/stage'
 import type { StageGroup } from '@/models/stage_group'
@@ -31,7 +31,7 @@ const client = new DeliveryClient({
 
 async function loadWebsiteConfig(
 	preview = false,
-): Promise<Responses.IViewContentItemResponse<Homepage>> {
+): Promise<Responses.IViewContentItemResponse<WpHomepage>> {
 	const config = await client
 		.item('homepage')
 		.depthParameter(10)
@@ -57,7 +57,6 @@ async function loadWebsiteConfig(
 			'options',
 			'footer_sections',
 			'image',
-			'content',
 			'fields',
 			'name',
 			'type',
@@ -72,10 +71,21 @@ async function loadWebsiteConfig(
 			'palette',
 			'font',
 			'acknowledgement',
-			'footer_top_top_sections',
-			'footer_top_menu_sections',
-			'footer_bottom_menu',
 			'menu',
+			'footer_top_content',
+			'social_links',
+			'footer_menu_links',
+			'secondary_links',
+			'copyright_link',
+
+			// Footer menu links child
+			'items',
+			'subtitle',
+			'subitems',
+			'item',
+
+			// Web External
+			'link_url',
 		])
 		.queryConfig({
 			usePreviewMode: preview,
@@ -88,55 +98,37 @@ async function loadWebsiteConfig(
 
 async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 	const paths = []
+	console.log(
+		'🚀 ~ file: api.ts ~ line 89 ~ getSubPaths ~ data',
+		data,
+		pagesCodenames,
+		parentSlug,
+	)
 
 	for (const pageCodename of pagesCodenames) {
 		const currentItem = data.linkedItems[pageCodename]
 		const pageSlug = parentSlug.concat(currentItem.elements.slug.value)
 		const currentItemContentWrapper =
-			data.linkedItems[currentItem.elements.content.value[0]]
+			currentItem.elements.web_content_rtb__content
+
 		paths.push({
 			params: {
 				slug: pageSlug,
 				navigationItem: currentItem.system, // will be ignored by next in getContentPaths
-				contentItem: currentItemContentWrapper?.system || {}, // will be ignored by next in getContentPaths
+				contentItem: currentItemContentWrapper, // will be ignored by next in getContentPaths
+				webPageItem: currentItem,
 			},
 		})
 
-		// Listing pages
-		if (
-			currentItemContentWrapper &&
-			currentItemContentWrapper.system.type === 'listing_page'
-		) {
-			const subItemsData = await client
-				.items()
-				.type(currentItemContentWrapper.elements.content_type.value)
-				.elementsParameter(['slug'])
-				.queryConfig({
-					usePreviewMode: preview,
-				})
-				.toPromise()
-				.then(fnReturnData)
-
-			subItemsData.items.forEach((subItem) => {
-				const subItemSlug = pageSlug.concat(subItem.elements.slug.value)
-				paths.push({
-					params: {
-						slug: subItemSlug,
-						navigationItem: subItem.system, // will be ignored by next in getContentPaths
-						// Listing items contains navigation and content item in one content model
-						contentItem: subItem.system, // will be ignored by next in getContentPaths
-					},
-				})
-			})
+		if (currentItem.elements?.subpages?.value) {
+			const subPaths = await getSubPaths(
+				data,
+				currentItem.elements.subpages.value,
+				pageSlug,
+				preview,
+			)
+			paths.push(...subPaths)
 		}
-
-		const subPaths = await getSubPaths(
-			data,
-			currentItem.elements.subpages.value,
-			pageSlug,
-			preview,
-		)
-		paths.push(...subPaths)
 	}
 
 	return paths
@@ -145,8 +137,8 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	const data = await client
 		.item('homepage')
-		.depthParameter(4) // depends on the sitemap level (+1 for content type to download)
-		.elementsParameter(['subpages', 'slug', 'content', 'content_type'])
+		.depthParameter(10) // depends on the sitemap level (+1 for content type to download)
+		// .elementsParameter(['subpages', 'slug', 'content', 'content_type'])
 		.queryConfig({
 			usePreviewMode: preview,
 		})
@@ -159,9 +151,8 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 			params: {
 				slug: rootSlug,
 				navigationItem: data.item.system, // will be ignored by next in getContentPaths
-				contentItem:
-					data.linkedItems[data.item.elements.content.value[0]]
-						.system, // will be ignored by next in getContentPaths
+				contentItem: data.item.elements.web_content_rtb__content,
+				webPageItem: data.item,
 			},
 		},
 	]
@@ -194,6 +185,8 @@ function getAllItemsByType<T extends IContentItem>({
 }
 
 export async function getPageStaticPropsForPath(params, preview = false) {
+	console.log(params)
+
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
 	const mappings = await getSitemapMappings(preview) // TODO could be cached
 
@@ -206,11 +199,9 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 	const navigationItemSystemInfo =
 		pathMapping && pathMapping.params.navigationItem
 	const contentItemSystemInfo = pathMapping && pathMapping.params.contentItem
+	const webPageItem = pathMapping && pathMapping.params.webPageItem
 
-	if (
-		!navigationItemSystemInfo?.codename ||
-		!contentItemSystemInfo?.codename
-	) {
+	if (!navigationItemSystemInfo?.codename) {
 		return undefined
 	}
 
@@ -251,86 +242,39 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		}))
 
 	// Loading content data
-	const pageResponse = await client
-		.item(contentItemSystemInfo.codename)
-		.depthParameter(5)
-		.queryConfig({
-			usePreviewMode: preview,
-		})
-		.toPromise()
-		.then(fnReturnData)
+	// const pageResponse = await client
+	// 	.item(contentItemSystemInfo.codename)
+	// 	.depthParameter(5)
+	// 	.queryConfig({
+	// 		usePreviewMode: preview,
+	// 	})
+	// 	.toPromise()
+	// 	.then(fnReturnData)
 
 	const result = {
 		seo: seoData,
 		mappings: mappings,
 		data: {
 			config: config,
-			page: pageResponse,
+			page: webPageItem,
 		},
 	}
 
-	const isListingPage = pageResponse.item.system.type === 'listing_page'
-	const isLandingPage = pageResponse.item.system.type === 'landing_page'
-	const isStagePage = pageResponse.item.system.type === 'page_stage'
-	const isSyllabusPage = pageResponse.item.system.type === 'page_kla_syllabus'
-	const isGlossaryPage = pageResponse.item.system.type === 'page_glossary'
+	const isHomePage = webPageItem.system.type === 'wp_homepage'
+	const isStagePage = webPageItem.system.type === 'page_stage'
+	const isSyllabusPage = webPageItem.system.type === 'page_kla_syllabus'
+	const isGlossaryPage = webPageItem.system.type === 'page_glossary'
 	const isTeachingAdvicePage =
-		pageResponse.item.system.type === 'page_teaching_advice'
+		webPageItem.system.type === 'page_teaching_advice'
 
-	if (isListingPage) {
+	if (isHomePage) {
 		const _result = {
 			...result,
 			data: {
 				...result.data,
-				listingItems: {},
 			},
 		}
-
-		const linkedItemsResponse = await client
-			.items()
-			.type(pageResponse.item.elements.content_type.value)
-			.queryConfig({
-				usePreviewMode: preview,
-			})
-			.toPromise()
-			.then(fnReturnData)
-
-		_result.data.listingItems[pageResponse.item.system.codename] =
-			linkedItemsResponse
-
 		return _result
-	} else if (isLandingPage) {
-		const _result = {
-			...result,
-			data: {
-				...result.data,
-				listingSections: {},
-			},
-		}
-		const listingSections = pageResponse.item.elements.sections.value
-			.map((sectionCodename) => pageResponse.linkedItems[sectionCodename])
-			.filter((section) => section.system.type === 'listing_section')
-
-		if (listingSections.length > 0) {
-			_result.data.listingSections = {}
-		}
-
-		for (const listingSection of listingSections) {
-			const linkedItemsResponse = await client
-				.items()
-				.type(listingSection.elements.content_type.value)
-				.orderByDescending(listingSection.elements.order_by.value)
-				.limitParameter(listingSection.elements.number_of_items.value)
-				.queryConfig({
-					usePreviewMode: preview,
-				})
-				.toPromise()
-				.then(fnReturnData)
-
-			_result.data.listingSections[listingSection.system.codename] =
-				linkedItemsResponse
-			return _result
-		}
 	} else if (isStagePage || isSyllabusPage || isGlossaryPage) {
 		const _result: KontentCurriculumResult = {
 			...result,
