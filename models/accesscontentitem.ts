@@ -6,7 +6,7 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
 export type Accesscontentitem = IContentItem<{
 	_syllabus: Elements.TaxonomyElement
 	stages__stage_years: Elements.TaxonomyElement
-	title: Elements.TextElement
+	title: Elements.RichTextElement
 	learningprogression_tags__literacy: Elements.TaxonomyElement
 	learningprogression_tags__numeracy: Elements.TaxonomyElement
 	stages__stages: Elements.TaxonomyElement

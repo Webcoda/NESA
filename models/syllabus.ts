@@ -12,17 +12,17 @@ export type Syllabus = IContentItem<{
 	syllabus_type__items: Elements.TaxonomyElement
 	stages__stage_years: Elements.TaxonomyElement
 	enrolment_type__items: Elements.TaxonomyElement
-	learning1_10: Elements.RichTextElement
+	learning_k10: Elements.RichTextElement
 	introduction: Elements.RichTextElement
 	from_date: Elements.DateTimeElement
 	aim: Elements.RichTextElement
-	achievementhsc: Elements.LinkedItemsElement<IContentItem>
+	rosa_hsc: Elements.LinkedItemsElement<IContentItem>
 	prerequisits: Elements.LinkedItemsElement<IContentItem>
 	rationale: Elements.RichTextElement
 	assessments: Elements.LinkedItemsElement<IContentItem>
-	learning11: Elements.RichTextElement
+	learning_y11: Elements.RichTextElement
 	related_life_skills_syllabus: Elements.LinkedItemsElement<IContentItem>
-	learning12: Elements.RichTextElement
+	learning_y12: Elements.RichTextElement
 	selftuition: Elements.MultipleChoiceElement
 	overview_200hourrules: Elements.RichTextElement
 	outcomes: Elements.LinkedItemsElement<IContentItem>
@@ -30,7 +30,7 @@ export type Syllabus = IContentItem<{
 	stages__stages: Elements.TaxonomyElement
 	stages__stage_groups: Elements.TaxonomyElement
 	exclusions: Elements.LinkedItemsElement<IContentItem>
-	achievementstage4_5: Elements.LinkedItemsElement<IContentItem>
+	rosa_stage4_5: Elements.LinkedItemsElement<IContentItem>
 	to_date: Elements.DateTimeElement
 	title: Elements.TextElement
 	redirecturl: Elements.TextElement

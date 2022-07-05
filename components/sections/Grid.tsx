@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import UnknownComponent from '@/components/UnknownComponent'
 import { Grid as GridModel } from '@/models/grid'
 import { GridColumn } from '@/models/grid_column'
 import type { Mapping } from '@/types'
@@ -7,7 +8,6 @@ import { Grid as MuiGrid, GridSize } from '@material-ui/core'
 import camelCase from 'lodash.camelcase'
 import get from 'lodash.get'
 import upperFirst from 'lodash.upperfirst'
-import { UnknownComponent } from '..'
 import sections from './index'
 
 export interface GridProps {

@@ -34,10 +34,6 @@ export default function Anchor(props: AnchorProps) {
 	} else {
 		let _link = link as Weblinkint | UiMenu
 		const item = _link.elements.item.linkedItems[0]
-		console.log(
-			'🚀 ~ file: Anchor.tsx ~ line 40 ~ Anchor ~ href',
-			_link.elements.item,
-		)
 		if (!item) return null
 		const href = getUrlFromMapping(mappings, item?.system.codename)
 		return href ? (

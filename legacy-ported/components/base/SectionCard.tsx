@@ -1,10 +1,10 @@
-import React from 'react'
 import { Grid, GridSize } from '@material-ui/core'
-import { HomepageTileCalloutTile } from '@/models/homepage_tile_callout_tile'
 // import { SectionPage } from '../../pages/Home'
-import ArrowButton from '../base/ArrowButton'
-import { getLinkFromNavigationItem } from '@/utils'
+import { UiMenu } from '@/models/ui_menu'
 import { Mapping } from '@/types'
+import { getLinkFromLinkUI, getLinkFromNavigationItem } from '@/utils'
+import ArrowButton from '../base/ArrowButton'
+import { Weblinkext } from '@/models/weblinkext'
 
 export interface SectionCardProps {
 	/**
@@ -46,7 +46,7 @@ export interface SectionCardProps {
 	/**
 	 * Array of section pages
 	 */
-	tiles: HomepageTileCalloutTile[]
+	tiles: UiMenu[]
 
 	mappings: Mapping[]
 }
@@ -107,13 +107,15 @@ export default function SectionCard(props: SectionCardProps) {
 					className="section-card__buttons"
 				>
 					{tiles.map((tile) => {
-						const navigationItem = tile.elements.path.linkedItems[0]
-						const path = navigationItem
-							? getLinkFromNavigationItem(
-									navigationItem,
-									mappings,
-							  )
-							: '#'
+						const navigationItem = tile.elements.item.linkedItems[0]
+						console.log(
+							'🚀 ~ file: SectionCard.tsx ~ line 111 ~ {tiles.map ~ path',
+							navigationItem.system.codename,
+						)
+						const { url, isExternal } = getLinkFromLinkUI(
+							navigationItem,
+							mappings,
+						)
 
 						return (
 							<Grid
@@ -121,16 +123,17 @@ export default function SectionCard(props: SectionCardProps) {
 								xs={12}
 								sm={6}
 								md={6}
-								lg={
-									tile.elements.column_widths__lg
-										.value as GridSize
-								}
+								lg={Math.max(12 / tiles.length, 4)}
+								// lg={
+								// 	tile.elements.column_widths__lg
+								// 		.value as GridSize
+								// }
 								key={tile.system.id}
 							>
 								<ArrowButton
 									title={tile.elements.title.value}
-									prefix={tile.elements.prefix.value}
-									path={path}
+									prefix={tile.elements.subtitle.value}
+									path={url}
 									fontColor={fontColor}
 									arrowColor={arrowColor}
 								/>

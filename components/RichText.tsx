@@ -1,10 +1,11 @@
-import { makeStyles, Typography, useTheme } from '@material-ui/core'
+import Image from '@/components/Image'
+import Link from '@/components/Link'
+import rteSections from '@/components/sections'
+import { makeStyles, useTheme } from '@material-ui/core'
 import classNames from 'classnames'
 import get from 'lodash.get'
-import { Image, Link } from '.'
 import { getUrlFromMapping } from '../utils'
 import RichTextComponent from './RichTextComponent'
-import MathJax from 'react-mathjax'
 
 const useStyles = makeStyles((theme) => ({
 	richText: {
@@ -52,59 +53,18 @@ function RichText(props) {
 			mappings={mappings}
 			resolveLinkedItem={(linkedItem, domNode, domToReact) => {
 				if (!linkedItem) return domToReact([domNode])
-				switch (linkedItem.system.type) {
-					case 'quote':
-						return (
-							<blockquote className={classes.quote}>
-								&ldquo;{linkedItem.elements.quote_text.value}
-								&rdquo;
-							</blockquote>
-						)
-					case 'code_block':
-						return (
-							<Typography
-								component="div"
-								className={classes.code}
-							>
-								<RichText
-									{...props}
-									richTextElement={get(
-										linkedItem,
-										'elements.code',
-										null,
-									)}
-								/>
-							</Typography>
-						)
-					case 'external_image':
-						return (
-							<img
-								src={get(linkedItem, 'elements.url.value', '')}
-								alt={get(
-									linkedItem,
-									'elements.alt.value',
-									null,
-								)}
-							/>
-						)
-					case 'math_formula':
-						return (
-							<MathJax.Provider script="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-MML-AM_SVG">
-								<span className="math-formula">
-									<MathJax.Node
-										inline
-										formula={get(
-											linkedItem,
-											'elements.formula.value',
-											null,
-										)}
-									/>
-								</span>
-							</MathJax.Provider>
-						)
-					default:
-						return domToReact([domNode])
+				const RichtextSectionComponent =
+					rteSections[linkedItem.system.type]
+
+				if (RichtextSectionComponent) {
+					return (
+						<RichtextSectionComponent
+							linkedItem={linkedItem}
+							mappings={mappings}
+						/>
+					)
 				}
+				return domToReact([domNode])
 			}}
 			resolveImage={(image, _domNode, _domToReact) => {
 				return (

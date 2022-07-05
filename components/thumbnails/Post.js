@@ -1,8 +1,7 @@
-import React from 'react'
-import get from 'lodash.get'
-import { Image, Link } from '..'
+import Image from '@/components/Image'
+import Link from '@/components/Link'
 import { useTheme } from '@material-ui/core'
-
+import get from 'lodash.get'
 function Post(props) {
 	let post = get(props, 'item', null)
 	let columnCount = get(props, 'columnCount', 1)

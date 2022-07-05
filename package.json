@@ -6,7 +6,7 @@
 		"build": "next build",
 		"static-export": "cross-env STATIC_EXPORT=true yarn build && next export",
 		"start": "next start",
-		"lint": "eslint --ext .js,.jsx .",
+		"lint": "eslint --ext .js,.jsx,.ts,.tsx .",
 		"lint-fix": "eslint --fix --ext .js,.jsx .",
 		"gm": "cd ./models && npx kontent-generate --projectId=1fca4f1b-02c2-0280-78bf-45714366857c",
 		"generate-model": "cd ./models && npx kontent-generate --projectId=1fca4f1b-02c2-0280-78bf-45714366857c",

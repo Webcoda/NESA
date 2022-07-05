@@ -11,9 +11,11 @@ export type Focusarea = IContentItem<{
 	resources: Elements.AssetsElement
 	stages__stages: Elements.TaxonomyElement
 	stages__stage_groups: Elements.TaxonomyElement
+	addressedinparallel: Elements.LinkedItemsElement<IContentItem>
 	accesspointgroups: Elements.LinkedItemsElement<IContentItem>
 	syllabus: Elements.TaxonomyElement
 	title: Elements.TextElement
 	teachingadvice: Elements.LinkedItemsElement<IContentItem>
+	content: Elements.RichTextElement
 	contentgroups: Elements.LinkedItemsElement<IContentItem>
 }>

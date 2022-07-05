@@ -85,121 +85,121 @@ export const projectModel = {
 			codename: 'assessment',
 			name: '📃 Syllabus Assessment',
 			elements: {
-				introduction: {
-					codename: 'introduction',
-					name: '📜 Introduction',
+				hsc_examinations: {
+					codename: 'hsc_examinations',
+					name: '📜 HSC examinations',
 				},
-				common_grade_scale: {
-					codename: 'common_grade_scale',
-					name: '📜 Common Grade Scale',
-				},
-				course_performance_descriptions: {
-					codename: 'course_performance_descriptions',
-					name: '📜 Course Performance Descriptions',
-				},
-				life_skills: {
-					codename: 'life_skills',
-					name: '📜 Life Skills',
-				},
-				other_information: {
-					codename: 'other_information',
-					name: '📜 Other Information',
-				},
-				related_ace_rules: {
-					codename: 'related_ace_rules',
-					name: '📜 Related ACE Rules',
-				},
-				pbd_supportingtext: {
-					codename: 'pbd_supportingtext',
-					name: '📜 Supporting Text',
-				},
-				pbd_6: {
-					codename: 'pbd_6',
-					name: '📜 Performance Band Descriptors (PBD) 6',
-				},
-				pbd_5: {
-					codename: 'pbd_5',
-					name: '📜 Performance Band Descriptors (PBD) 5',
-				},
-				pbd_4: {
-					codename: 'pbd_4',
-					name: '📜 Performance Band Descriptors (PBD) 4',
+				_syllabus: {
+					codename: '_syllabus',
+					name: '🏷️ Syllabus',
 				},
 				pbd_3: {
 					codename: 'pbd_3',
-					name: '📜 Performance Band Descriptors (PBD) 3',
-				},
-				pbd_2: {
-					codename: 'pbd_2',
-					name: '📜 Performance Band Descriptors (PBD) 2',
-				},
-				performance_band_descriptors__pbd__1: {
-					codename: 'performance_band_descriptors__pbd__1',
-					name: '📜 Performance Band Descriptors (PBD) 1',
-				},
-				examspec_supportingtext: {
-					codename: 'examspec_supportingtext',
-					name: '📜 Supporting Text',
-				},
-				examspec_hscspecification: {
-					codename: 'examspec_hscspecification',
-					name: '📜 HSC Specification',
-				},
-				examspec_samplematerial: {
-					codename: 'examspec_samplematerial',
-					name: '📜 Sample Material',
-				},
-				majorwork_supportingtext: {
-					codename: 'majorwork_supportingtext',
-					name: '📜 Supporting Text',
-				},
-				majorwork_advice: {
-					codename: 'majorwork_advice',
-					name: '📜 Advice',
-				},
-				sba_supportingtext: {
-					codename: 'sba_supportingtext',
-					name: '📜 Supporting Text',
-				},
-				sba_11: {
-					codename: 'sba_11',
-					name: '📜 SBA - 11',
+					name: '📜 Performance band descriptors (PBD) 3',
 				},
 				sba_12: {
 					codename: 'sba_12',
 					name: '📜 SBA - 12',
 				},
-				assessment_requirements_supportingtext: {
-					codename: 'assessment_requirements_supportingtext',
-					name: '📜 Supporting text: Assessment requirements',
-				},
-				assessment_requirements: {
-					codename: 'assessment_requirements',
-					name: '📜 Assessment requirements',
-				},
-				hsc_supportingtext: {
-					codename: 'hsc_supportingtext',
-					name: '📜 Supporting text',
-				},
-				hsc_examinations: {
-					codename: 'hsc_examinations',
-					name: '📜 HSC examinations',
-				},
-				stages__stage_groups: {
-					codename: 'stages__stage_groups',
-					name: '🏷️ Stage Groups',
-				},
-				stages__stages: {
-					codename: 'stages__stages',
-					name: '🏷️ Stages',
+				lifeskills: {
+					codename: 'lifeskills',
+					name: '📜 Life skills',
 				},
 				stages__stage_years: {
 					codename: 'stages__stage_years',
 					name: '🏷️ Stage Years',
 				},
-				_syllabus: {
-					codename: '_syllabus',
-					name: '🏷️ Syllabus',
+				majorwork_supportingtext: {
+					codename: 'majorwork_supportingtext',
+					name: '📜 Supporting text',
+				},
+				majorwork_advice: {
+					codename: 'majorwork_advice',
+					name: '📜 Advice',
+				},
+				assessmentrequirements_supportingtext: {
+					codename: 'assessmentrequirements_supportingtext',
+					name: '📜 Supporting text: Assessment requirements',
+				},
+				assessmentrequirements: {
+					codename: 'assessmentrequirements',
+					name: '📜 Assessment requirements',
+				},
+				sba_supportingtext: {
+					codename: 'sba_supportingtext',
+					name: '📜 Supporting text',
+				},
+				relatedacerules: {
+					codename: 'relatedacerules',
+					name: '📜 Related ACE rules',
+				},
+				pbd_5: {
+					codename: 'pbd_5',
+					name: '📜 Performance band descriptors (PBD) 5',
+				},
+				examspec_hscspecification: {
+					codename: 'examspec_hscspecification',
+					name: '📜 HSC specification',
+				},
+				hsc_supportingtext: {
+					codename: 'hsc_supportingtext',
+					name: '📜 Supporting text',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				sba_11: {
+					codename: 'sba_11',
+					name: '📜 SBA - 11',
+				},
+				introduction: {
+					codename: 'introduction',
+					name: '📜 Introduction',
+				},
+				examspec_samplematerial: {
+					codename: 'examspec_samplematerial',
+					name: '📜 Sample material',
+				},
+				commongradescale: {
+					codename: 'commongradescale',
+					name: '📜 Common grade scale',
+				},
+				otherinformation: {
+					codename: 'otherinformation',
+					name: '📜 Other information',
+				},
+				examspec_supportingtext: {
+					codename: 'examspec_supportingtext',
+					name: '📜 Supporting text',
+				},
+				pbd_supportingtext: {
+					codename: 'pbd_supportingtext',
+					name: '📜 Supporting text',
+				},
+				courseperformancedescriptions: {
+					codename: 'courseperformancedescriptions',
+					name: '📜 Course performance descriptions (CPDs)',
+				},
+				pbd_6: {
+					codename: 'pbd_6',
+					name: '📜 Performance band descriptors (PBD) 6',
+				},
+				pbd_2: {
+					codename: 'pbd_2',
+					name: '📜 Performance band descriptors (PBD) 2',
+				},
+				pbd_4: {
+					codename: 'pbd_4',
+					name: '📜 Performance band descriptors (PBD) 4',
+				},
+				performance_band_descriptors__pbd__1: {
+					codename: 'performance_band_descriptors__pbd__1',
+					name: '📜 Performance band descriptors (PBD) 1',
 				},
 			},
 		},
@@ -227,10 +227,6 @@ export const projectModel = {
 			codename: 'contentblock',
 			name: '📜 Content Block',
 			elements: {
-				moreinfourl: {
-					codename: 'moreinfourl',
-					name: '🔗 More Info Link Url',
-				},
 				content: {
 					codename: 'content',
 					name: '📜 Content',
@@ -239,16 +235,16 @@ export const projectModel = {
 					codename: 'title',
 					name: '📜 Title',
 				},
-				_more_info_link_title: {
-					codename: '_more_info_link_title',
-					name: '📜 More Info Link Title',
-				},
 				image: {
 					codename: 'image',
 					name: '📦 Image',
 				},
-				_sub_title: {
-					codename: '_sub_title',
+				more_info_link: {
+					codename: 'more_info_link',
+					name: 'More Info Link',
+				},
+				sub_title: {
+					codename: 'sub_title',
 					name: '📜 Sub Title',
 				},
 			},
@@ -291,10 +287,6 @@ export const projectModel = {
 					codename: 'stages__stage_years',
 					name: '🏷️ Stage Years',
 				},
-				title: {
-					codename: 'title',
-					name: '📜 Title',
-				},
 				examples: {
 					codename: 'examples',
 					name: '📜 Examples',
@@ -318,6 +310,10 @@ export const projectModel = {
 				stages__stage_groups: {
 					codename: 'stages__stage_groups',
 					name: '🏷️ Stage Groups',
+				},
+				title: {
+					codename: 'title',
+					name: '📜 Title',
 				},
 				including_statements: {
 					codename: 'including_statements',
@@ -385,6 +381,10 @@ export const projectModel = {
 					codename: 'stages__stage_groups',
 					name: '🏷️ Stage Groups',
 				},
+				addressedinparallel: {
+					codename: 'addressedinparallel',
+					name: '📃 Addressed in parallel',
+				},
 				accesspointgroups: {
 					codename: 'accesspointgroups',
 					name: '📑 Access Points Content Groups',
@@ -400,6 +400,10 @@ export const projectModel = {
 				teachingadvice: {
 					codename: 'teachingadvice',
 					name: '📑 Teaching Advice',
+				},
+				content: {
+					codename: 'content',
+					name: '📜 Content',
 				},
 				contentgroups: {
 					codename: 'contentgroups',
@@ -513,7 +517,7 @@ export const projectModel = {
 			elements: {
 				organisationofcontent: {
 					codename: 'organisationofcontent',
-					name: '📜 Organisation Of Content',
+					name: '📜 Organisation of content',
 				},
 				_syllabus: {
 					codename: '_syllabus',
@@ -521,7 +525,7 @@ export const projectModel = {
 				},
 				coursenumbers: {
 					codename: 'coursenumbers',
-					name: '📒 Course Numbers',
+					name: '📒 Course numbers',
 				},
 				doredirect: {
 					codename: 'doredirect',
@@ -543,9 +547,9 @@ export const projectModel = {
 					codename: 'enrolment_type__items',
 					name: '🏷️ Enrolment Type',
 				},
-				learning1_10: {
-					codename: 'learning1_10',
-					name: '📜 Learning Year 1-10',
+				learning_k10: {
+					codename: 'learning_k10',
+					name: '📜 What students learn (Year K-10)',
 				},
 				introduction: {
 					codename: 'introduction',
@@ -553,15 +557,15 @@ export const projectModel = {
 				},
 				from_date: {
 					codename: 'from_date',
-					name: '📅 From Date',
+					name: '📅 From date',
 				},
 				aim: {
 					codename: 'aim',
 					name: '📜 Aim',
 				},
-				achievementhsc: {
-					codename: 'achievementhsc',
-					name: '📜 Achievement HSC',
+				rosa_hsc: {
+					codename: 'rosa_hsc',
+					name: '📜 RoSA / HSC links',
 				},
 				prerequisits: {
 					codename: 'prerequisits',
@@ -575,25 +579,25 @@ export const projectModel = {
 					codename: 'assessments',
 					name: '📃 Assessments',
 				},
-				learning11: {
-					codename: 'learning11',
-					name: '📜 Learning Year 11',
+				learning_y11: {
+					codename: 'learning_y11',
+					name: '📜 What students learn (Year 11)',
 				},
 				related_life_skills_syllabus: {
 					codename: 'related_life_skills_syllabus',
-					name: '📒 Related Life Skills Syllabus',
+					name: '📒 Related life skills syllabus',
 				},
-				learning12: {
-					codename: 'learning12',
-					name: '📜 Learning Year 12',
+				learning_y12: {
+					codename: 'learning_y12',
+					name: '📜 What students learn (Year 12)',
 				},
 				selftuition: {
 					codename: 'selftuition',
-					name: '📜 Self Tuition',
+					name: '📜 Self tuition',
 				},
 				overview_200hourrules: {
 					codename: 'overview_200hourrules',
-					name: '📜 200 Hour Rules',
+					name: '📜 200 hour rules',
 				},
 				outcomes: {
 					codename: 'outcomes',
@@ -615,13 +619,13 @@ export const projectModel = {
 					codename: 'exclusions',
 					name: '📒 Exclusions',
 				},
-				achievementstage4_5: {
-					codename: 'achievementstage4_5',
-					name: '📜 Achievement Stage 4-5',
+				rosa_stage4_5: {
+					codename: 'rosa_stage4_5',
+					name: '📜 RoSA stage 4 and 5',
 				},
 				to_date: {
 					codename: 'to_date',
-					name: '📅 To Date',
+					name: '📅 To date',
 				},
 				title: {
 					codename: 'title',
@@ -629,11 +633,11 @@ export const projectModel = {
 				},
 				redirecturl: {
 					codename: 'redirecturl',
-					name: '🔗 Redirect Url',
+					name: '🔗 Redirect url',
 				},
 				_focus_area_continum_groups: {
 					codename: '_focus_area_continum_groups',
-					name: '📈 Focus Area Continum Groups',
+					name: '📈 Focus area continum groups',
 				},
 				key_learning_area__items: {
 					codename: 'key_learning_area__items',
@@ -645,11 +649,11 @@ export const projectModel = {
 				},
 				corequisites: {
 					codename: 'corequisites',
-					name: '📒 Corequisites',
+					name: '📒 Co-requisites',
 				},
 				overview100hourrules: {
 					codename: 'overview100hourrules',
-					name: '📜 100 Hour Rules',
+					name: '📜 100 hour rules',
 				},
 				requirements: {
 					codename: 'requirements',
@@ -657,11 +661,11 @@ export const projectModel = {
 				},
 				otherinfo: {
 					codename: 'otherinfo',
-					name: '📜 Other Info',
+					name: '📜 Other information',
 				},
 				focus_areas: {
 					codename: 'focus_areas',
-					name: '📃 Focus Areas',
+					name: '📃 Focus areas',
 				},
 			},
 		},
@@ -692,6 +696,16 @@ export const projectModel = {
 				content: {
 					codename: 'content',
 					name: '📑 Content',
+				},
+			},
+		},
+		test_model: {
+			codename: 'test_model',
+			name: 'Test Model',
+			elements: {
+				title2: {
+					codename: 'title2',
+					name: 'Title2',
 				},
 			},
 		},
@@ -733,8 +747,34 @@ export const projectModel = {
 				},
 			},
 		},
-		ui_card: {
-			codename: 'ui_card',
+		ui_card_newsletter_subscription: {
+			codename: 'ui_card_newsletter_subscription',
+			name: '💠Web UI Card Newsletter Subscription',
+			elements: {
+				title: {
+					codename: 'title',
+					name: 'Title',
+				},
+				createsend_action: {
+					codename: 'createsend_action',
+					name: 'CreateSend Action',
+				},
+				createsend_id: {
+					codename: 'createsend_id',
+					name: 'CreateSend Id',
+				},
+				button_label: {
+					codename: 'button_label',
+					name: 'Button Label',
+				},
+				input_label: {
+					codename: 'input_label',
+					name: 'Input Label',
+				},
+			},
+		},
+		ui_cards: {
+			codename: 'ui_cards',
 			name: '💠 Web UI Cards',
 			elements: {
 				title: {
@@ -798,6 +838,32 @@ export const projectModel = {
 				items: {
 					codename: 'items',
 					name: '📜 Items',
+				},
+			},
+		},
+		ui_homepage_tile_callout: {
+			codename: 'ui_homepage_tile_callout',
+			name: '💠Web UI Homepage Tile Callout',
+			elements: {
+				arrow_color: {
+					codename: 'arrow_color',
+					name: 'Arrow Color',
+				},
+				divider_color: {
+					codename: 'divider_color',
+					name: 'Divider Color',
+				},
+				tiles: {
+					codename: 'tiles',
+					name: 'Tiles',
+				},
+				font_color: {
+					codename: 'font_color',
+					name: 'Font Color',
+				},
+				background_color: {
+					codename: 'background_color',
+					name: 'Background Color',
 				},
 			},
 		},
@@ -971,8 +1037,8 @@ export const projectModel = {
 			codename: 'weblinkext',
 			name: '🔗 Web Link External',
 			elements: {
-				_sub_title: {
-					codename: '_sub_title',
+				sub_title: {
+					codename: 'sub_title',
 					name: '📜 Sub Title',
 				},
 				link_url: {

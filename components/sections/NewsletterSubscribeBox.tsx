@@ -1,8 +1,8 @@
 import LegacyNewsletterSubscribeBox from '@/legacy-ported/components/teachers/NewsletterSubscribeBox'
-import { NewsletterSubscribeBox as NewsletterSubscribeBoxModel } from '@/models/newsletter_subscribe_box'
+import { UiCardNewsletterSubscription } from '@/models/ui_card_newsletter_subscription'
 
 export interface NewsletterSubscribeBoxProps {
-	section: NewsletterSubscribeBoxModel
+	section: UiCardNewsletterSubscription
 }
 
 export const NewsletterSubscribeBox = (props: NewsletterSubscribeBoxProps) => {

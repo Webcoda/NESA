@@ -1,11 +1,8 @@
-import React from 'react'
-import get from 'lodash.get'
-
-import pageLayouts from '../layouts'
-import { getSitemapMappings, getPageStaticPropsForPath } from '../lib/api'
-import UnknownComponent from '../components/UnknownComponent'
-import { useRouter } from 'next/router'
 import Error from 'next/error'
+import { useRouter } from 'next/router'
+import UnknownComponent from '../components/UnknownComponent'
+import pageLayouts from '../layouts'
+import { getPageStaticPropsForPath, getSitemapMappings } from '../lib/api'
 
 function Page(props) {
 	const router = useRouter()
@@ -31,7 +28,10 @@ function Page(props) {
 		)
 		return (
 			<UnknownComponent {...props} useLayout={true}>
-				<pre>{JSON.stringify(props, undefined, 2)}</pre>
+				<p>
+					Unknown Layout component for page content type:{' '}
+					{contentType}
+				</p>
 			</UnknownComponent>
 		)
 	}

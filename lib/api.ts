@@ -98,12 +98,6 @@ async function loadWebsiteConfig(
 
 async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 	const paths = []
-	console.log(
-		'🚀 ~ file: api.ts ~ line 89 ~ getSubPaths ~ data',
-		data,
-		pagesCodenames,
-		parentSlug,
-	)
 
 	for (const pageCodename of pagesCodenames) {
 		const currentItem = data.linkedItems[pageCodename]
@@ -185,8 +179,6 @@ function getAllItemsByType<T extends IContentItem>({
 }
 
 export async function getPageStaticPropsForPath(params, preview = false) {
-	console.log(params)
-
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
 	const mappings = await getSitemapMappings(preview) // TODO could be cached
 
@@ -242,14 +234,14 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		}))
 
 	// Loading content data
-	// const pageResponse = await client
-	// 	.item(contentItemSystemInfo.codename)
-	// 	.depthParameter(5)
-	// 	.queryConfig({
-	// 		usePreviewMode: preview,
-	// 	})
-	// 	.toPromise()
-	// 	.then(fnReturnData)
+	const pageResponse = await client
+		.item(webPageItem.system.codename)
+		.depthParameter(5)
+		.queryConfig({
+			usePreviewMode: preview,
+		})
+		.toPromise()
+		.then(fnReturnData)
 
 	const result = {
 		seo: seoData,
@@ -257,6 +249,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		data: {
 			config: config,
 			page: webPageItem,
+			pageResponse,
 		},
 	}
 

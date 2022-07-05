@@ -14,6 +14,9 @@ import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import NavBar from './NavBar'
 import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import { UiMenu } from '@/models/ui_menu'
+import { CollectionWeblink } from '@/models/collection_weblink'
 
 export interface HeaderProps extends CommonPageProps {
 	/**
@@ -47,18 +50,16 @@ const data = [
 	{ firstname: 'Yezzi', lastname: 'Min l3b', email: 'ymin@cocococo.com' },
 ]
 
-export const createNavItem = (item: Action, mappings): NavGroup => {
-	const url =
-		getUrlFromMapping(mappings, item.elements.navigation_item.value[0]) ||
-		'/'
-	const subNav = item.elements?.actions?.linkedItems?.map((_item: Action) =>
+export const createNavItem = (item: UiMenu, mappings): NavGroup => {
+	const url = getUrlFromMapping(mappings, item.elements.item.value[0]) || '/'
+	const subNav = item.elements?.subitems?.linkedItems?.map((_item: UiMenu) =>
 		createNavItem(_item, mappings),
 	)
 	return {
 		description: '',
 		id: item.system.id,
 		subNav,
-		text: item.elements.label.value,
+		text: item.elements.title.value,
 		url,
 	}
 }
@@ -110,11 +111,13 @@ const Header = (props: HeaderProps): JSX.Element => {
 		// console.log('Implement PDF once finished from Custom view');
 	}
 
-	const navItems: NavigationItem[] = get(
-		props,
-		'data.config.item.elements.main_menu.linkedItems[0].elements.actions.linkedItems',
-		[],
-	).map((item: Action) => createNavItem(item, mappings))
+	const initialNavs = flattenCollectionWebLinks(
+		props.data.config.item.elements.main_menu
+			.linkedItems as CollectionWeblink[],
+	)
+	const navItems = initialNavs.map((item: UiMenu) =>
+		createNavItem(item, mappings),
+	)
 
 	return (
 		<div className={`header ${className || ''}`}>

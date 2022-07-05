@@ -13,28 +13,29 @@ export interface LinkCardsListSectionProps {
 export const LinkCardsListSection = (props: LinkCardsListSectionProps) => {
 	const { section, mappings } = props
 
-	return (
-		<SyllabusGroup
-			heading={section.elements.title.value}
-			items={section.elements.cards.linkedItems
-				.map((item) => item as LinkCard)
-				.map((linkCard) => {
-					const navItem: IContentItem =
-						linkCard.elements.path.linkedItems?.[0]
-					const url = getLinkFromNavigationItem(navItem, mappings)
-					return {
-						headline: linkCard.elements.title.value,
-						body: linkCard.elements.body.value,
-						url: {
-							title: linkCard.elements.title.value,
-							external: isNavItemExternalUrl(navItem),
-							url,
-						},
-						colour: linkCard.elements.color.value[0]?.codename,
-					}
-				})}
-		/>
-	)
+	return null
+	// return (
+	// 	<SyllabusGroup
+	// 		heading={section.elements.title.value}
+	// 		items={section.elements.cards.linkedItems
+	// 			.map((item) => item as LinkCard)
+	// 			.map((linkCard) => {
+	// 				const navItem: IContentItem =
+	// 					linkCard.elements.path.linkedItems?.[0]
+	// 				const url = getLinkFromNavigationItem(navItem, mappings)
+	// 				return {
+	// 					headline: linkCard.elements.title.value,
+	// 					body: linkCard.elements.body.value,
+	// 					url: {
+	// 						title: linkCard.elements.title.value,
+	// 						external: isNavItemExternalUrl(navItem),
+	// 						url,
+	// 					},
+	// 					colour: linkCard.elements.color.value[0]?.codename,
+	// 				}
+	// 			})}
+	// 	/>
+	// )
 }
 
 export default LinkCardsListSection

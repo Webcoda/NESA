@@ -17,6 +17,9 @@ import upperFirst from 'lodash.upperfirst'
 import getUrlFromMapping from './getUrlFromMapping'
 import kontentImageLoader from './kontentImageLoader'
 import srcIsKontentAsset from './srcIsKontentAsset'
+import { Weblinkint } from '@/models/weblinkint'
+import { Weblinkext } from '@/models/weblinkext'
+import { UiMenu } from '@/models/ui_menu'
 
 export const isIntersect = (...arrays) => intersection(...arrays).length > 0
 
@@ -76,21 +79,36 @@ export const getLinkElementUsedByRichtext = (
 	}, {})
 }
 
-export const getLinkFromNavigationItem = (
-	navigationItem: IContentItem,
+export const getLinkFromLinkUI = (
+	navItem: IContentItem,
 	mappings: Mapping[],
-): string => {
-	if (
-		navigationItem.system.type === 'external_url' &&
-		'url' in navigationItem.elements
-	) {
-		return navigationItem.elements.url.value
+) => {
+	const isExternal = isNavItemExternalUrl(navItem)
+	if (isExternal) {
+		const _navItem = navItem as Weblinkext
+		return {
+			url: _navItem.elements.link_url.value,
+			isExternal,
+		}
 	}
-	return getUrlFromMapping(mappings, navigationItem.system.codename)
+
+	console.log(
+		'🚀 ~ file: index.tsx ~ line 97 ~ navItem.system.codename',
+		navItem.system.codename,
+	)
+	return {
+		url: getUrlFromMapping(mappings, navItem.system.codename),
+		isExternal,
+	}
 }
 
-export const isNavItemExternalUrl = (navItem: IContentItem) =>
-	navItem.system.type === 'external_url'
+export const isNavItemExternalUrl = (navItem: IContentItem) => {
+	if (!navItem) {
+		console.error(`navItem is undefined`)
+		return false
+	}
+	return navItem.system.type === 'weblinkext'
+}
 
 export const renderSections = (page, props) => {
 	return get(page, 'elements.sections.linkedItems', []).map(

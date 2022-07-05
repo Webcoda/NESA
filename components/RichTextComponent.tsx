@@ -36,6 +36,7 @@ function replaceNode(
 	resolveDomNode,
 ) {
 	const { images, links } = richTextElement
+
 	if (resolveLinkedItem && linkedItems) {
 		if (isLinkedItem(domNode)) {
 			const codeName = domNode.attribs?.['data-codename']

@@ -65,10 +65,6 @@ const FooterGroup = (props: SectionProps) => {
 									key={c[0].system.id}
 								>
 									{c.map((action) => {
-										console.log(
-											'🚀 ~ file: NavFooter.tsx ~ line 67 ~ {c.map ~ action',
-											action,
-										)
 										return (
 											<li
 												className="nav-footer-group__section-link"
@@ -109,8 +105,6 @@ export const PureNavFooter = (props: NavPageProps): JSX.Element => {
 		props.data.config.item.elements.footer_menu_links
 			.linkedItems as CollectionWeblink[],
 	)
-	console.log('🚀 ~ file: NavFooter.tsx ~ line 103 ~ menus', menus)
-
 	return (
 		<footer className="nav-footer nsw-container">
 			<div className="nav-footer__nesa">

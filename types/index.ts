@@ -3,6 +3,8 @@ import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import {
 	Elements,
+	IContentItem,
+	IContentItemElements,
 	IContentItemSystemAttributes,
 	Responses,
 } from '@kentico/kontent-delivery'
@@ -37,9 +39,12 @@ export interface HomepageConfig
 		| 'seo__title'
 	> {}
 
-export interface KontentCurriculumResultData {
+export interface KontentCurriculumResultData<
+	TKontentModel extends IContentItem<IContentItemElements>,
+> {
 	config: Responses.IViewContentItemResponse<WpHomepage>
-	page: Responses.IViewContentItemResponse<WpHomepage>
+	page: TKontentModel
+	pageResponse: Responses.IViewContentItemResponse<TKontentModel>
 	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
 	// TODO: fix
 	// keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
@@ -55,10 +60,12 @@ export interface KontentCurriculumResultData {
 	// stageGroups?: Responses.IListContentItemsResponse<StageGroup>
 }
 
-export interface KontentCurriculumResult {
+export interface KontentCurriculumResult<
+	TKontentModel extends IContentItem<IContentItemElements>,
+> {
 	seo: Seo
 	mappings: Mapping[]
-	data: KontentCurriculumResultData
+	data: KontentCurriculumResultData<TKontentModel>
 }
 
 /**
@@ -70,7 +77,9 @@ export interface KontentCurriculumResult {
 // 	available: boolean
 // }
 
-export interface CommonPageProps extends KontentCurriculumResult {
+export interface CommonPageProps<
+	TKontentModel extends IContentItem<IContentItemElements>,
+> extends KontentCurriculumResult<TKontentModel> {
 	className?: string
 	errorCode?: number
 	params: any

@@ -40,8 +40,6 @@ const NavPage = (props: NavPageProps) => {
 	const [isIE, setIsIE] = useState(false)
 	const browser = detect()
 
-	console.log(props)
-
 	useEffect(() => {
 		// handle the case where we don't detect the browser
 		if (browser && browser.name === 'ie') {

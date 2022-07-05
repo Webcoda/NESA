@@ -5,12 +5,12 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
  */
 export type Contentitem = IContentItem<{
 	stages__stage_years: Elements.TaxonomyElement
-	title: Elements.TextElement
 	examples: Elements.RichTextElement
 	learningprogression_tags__literacy: Elements.TaxonomyElement
 	learningprogression_tags__numeracy: Elements.TaxonomyElement
 	syllabus: Elements.TaxonomyElement
 	stages__stages: Elements.TaxonomyElement
 	stages__stage_groups: Elements.TaxonomyElement
+	title: Elements.RichTextElement
 	including_statements: Elements.RichTextElement
 }>
