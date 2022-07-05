@@ -1,8 +1,6 @@
 import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
-import { Action } from '@/models/action'
-import { NavigationItem } from '@/models/navigation_item'
 import get from 'lodash.get'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 // import { useHistory } from 'react-router-dom'
 import { UrlLinkWithChildrenFlag } from '../../utilities/frontendTypes'
 import { NavGroup } from '../../utilities/hooks/useNavGroups'
@@ -187,7 +185,7 @@ const MobileHeader = (props: HeaderProps) => {
 		props,
 		'data.config.item.elements.main_menu.linkedItems[0].elements.actions.linkedItems',
 		[],
-	).map((item: Action) => createNavItem(item, mappings))
+	).map((item) => createNavItem(item, mappings))
 
 	// console.log(navItems)
 

@@ -2,9 +2,8 @@ import { Grid, GridSize } from '@material-ui/core'
 // import { SectionPage } from '../../pages/Home'
 import { UiMenu } from '@/models/ui_menu'
 import { Mapping } from '@/types'
-import { getLinkFromLinkUI, getLinkFromNavigationItem } from '@/utils'
-import ArrowButton from '../base/ArrowButton'
-import { Weblinkext } from '@/models/weblinkext'
+import { getLinkFromLinkUI } from '@/utils'
+import ArrowButton from './ArrowButton'
 
 export interface SectionCardProps {
 	/**
@@ -123,7 +122,7 @@ export default function SectionCard(props: SectionCardProps) {
 								xs={12}
 								sm={6}
 								md={6}
-								lg={Math.max(12 / tiles.length, 4)}
+								lg={Math.max(12 / tiles.length, 4) as GridSize}
 								// lg={
 								// 	tile.elements.column_widths__lg
 								// 		.value as GridSize

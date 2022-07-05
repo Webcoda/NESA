@@ -1,8 +1,5 @@
 import type { Glossary } from '@/models/glossary'
-import { Homepage as WpHomepage } from '@/models/homepage'
-import type { KeyLearningArea } from '@/models/key_learning_area'
-import type { Stage } from '@/models/stage'
-import type { StageGroup } from '@/models/stage_group'
+import { WpHomepage } from '@/models/wp_homepage'
 import type { KontentCurriculumResult, Mapping, Seo } from '@/types/index'
 import {
 	DeliveryClient,
@@ -268,130 +265,131 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			},
 		}
 		return _result
-	} else if (isStagePage || isSyllabusPage || isGlossaryPage) {
-		const _result: KontentCurriculumResult = {
-			...result,
-			data: {
-				config: result.data.config,
-				page: result.data.page,
-				syllabuses: null,
-				keyLearningAreas: null,
-				glossaries: null,
-				stages: null,
-				stageGroups: null,
-			},
-		}
-
-		const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] =
-			await Promise.all([
-				getAllItemsByType<Syllabus>({
-					type: 'syllabus',
-					depth: 6,
-					preview,
-				}),
-				getAllItemsByType<KeyLearningArea>({
-					type: 'key_learning_area',
-					preview,
-					order: {
-						element: 'elements.order',
-						sortOrder: 'asc',
-					},
-				}),
-				getAllItemsByType<Glossary>({
-					type: 'glossary',
-					preview,
-					order: {
-						element: 'elements.title',
-						sortOrder: 'asc',
-					},
-				}),
-				getAllItemsByType<Stage>({
-					type: 'stage',
-					preview,
-					order: {
-						element: 'elements.order',
-						sortOrder: 'asc',
-					},
-				}),
-				getAllItemsByType<StageGroup>({
-					type: 'stage_group',
-					preview,
-					order: {
-						element: 'elements.order',
-						sortOrder: 'asc',
-					},
-				}),
-			])
-
-		_result.data.syllabuses = syllabuses
-		_result.data.keyLearningAreas = keyLearningAreas
-		_result.data.glossaries = glossaries
-		_result.data.stages = stages
-		_result.data.stageGroups = stageGroups
-
-		const allYearsAssignedToSyllabus =
-			_result.data.syllabuses.items.flatMap((syllabus) =>
-				syllabus.elements.stagesyears__years.value.flatMap(
-					(item) => item.name,
-				),
-			)
-
-		_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
-			(stageGroup) => {
-				return (
-					intersection(
-						stageGroup.elements.years.value.flatMap(
-							(item) => item.name,
-						),
-						allYearsAssignedToSyllabus,
-					).length > 0
-				)
-			},
-		)
-
-		return _result
-	} else if (isTeachingAdvicePage) {
-		const _result: KontentCurriculumResult = {
-			...result,
-			data: {
-				config: result.data.config,
-				page: result.data.page,
-				syllabuses: null,
-				keyLearningAreas: null,
-				stages: null,
-			},
-		}
-
-		const [syllabuses, keyLearningAreas, stages] = await Promise.all([
-			getAllItemsByType<Syllabus>({
-				type: 'syllabus',
-				depth: 6,
-				preview,
-			}),
-			getAllItemsByType<KeyLearningArea>({
-				type: 'key_learning_area',
-				preview,
-				order: {
-					element: 'elements.order',
-					sortOrder: 'asc',
-				},
-			}),
-			getAllItemsByType<Stage>({
-				type: 'stage',
-				preview,
-				order: {
-					element: 'elements.order',
-					sortOrder: 'asc',
-				},
-			}),
-		])
-
-		_result.data.syllabuses = syllabuses
-		_result.data.keyLearningAreas = keyLearningAreas
-		_result.data.stages = stages
-
-		return _result
 	}
+	// else if (isStagePage || isSyllabusPage || isGlossaryPage) {
+	// 	const _result: KontentCurriculumResult<IContentItem> = {
+	// 		...result,
+	// 		data: {
+	// 			config: result.data.config,
+	// 			page: result.data.page,
+	// 			syllabuses: null,
+	// 			keyLearningAreas: null,
+	// 			glossaries: null,
+	// 			stages: null,
+	// 			stageGroups: null,
+	// 		},
+	// 	}
+
+	// 	const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] =
+	// 		await Promise.all([
+	// 			getAllItemsByType<Syllabus>({
+	// 				type: 'syllabus',
+	// 				depth: 6,
+	// 				preview,
+	// 			}),
+	// 			getAllItemsByType<KeyLearningArea>({
+	// 				type: 'key_learning_area',
+	// 				preview,
+	// 				order: {
+	// 					element: 'elements.order',
+	// 					sortOrder: 'asc',
+	// 				},
+	// 			}),
+	// 			getAllItemsByType<Glossary>({
+	// 				type: 'glossary',
+	// 				preview,
+	// 				order: {
+	// 					element: 'elements.title',
+	// 					sortOrder: 'asc',
+	// 				},
+	// 			}),
+	// 			getAllItemsByType<Stage>({
+	// 				type: 'stage',
+	// 				preview,
+	// 				order: {
+	// 					element: 'elements.order',
+	// 					sortOrder: 'asc',
+	// 				},
+	// 			}),
+	// 			getAllItemsByType<StageGroup>({
+	// 				type: 'stage_group',
+	// 				preview,
+	// 				order: {
+	// 					element: 'elements.order',
+	// 					sortOrder: 'asc',
+	// 				},
+	// 			}),
+	// 		])
+
+	// 	_result.data.syllabuses = syllabuses
+	// 	_result.data.keyLearningAreas = keyLearningAreas
+	// 	_result.data.glossaries = glossaries
+	// 	_result.data.stages = stages
+	// 	_result.data.stageGroups = stageGroups
+
+	// 	const allYearsAssignedToSyllabus =
+	// 		_result.data.syllabuses.items.flatMap((syllabus) =>
+	// 			syllabus.elements.stagesyears__years.value.flatMap(
+	// 				(item) => item.name,
+	// 			),
+	// 		)
+
+	// 	_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
+	// 		(stageGroup) => {
+	// 			return (
+	// 				intersection(
+	// 					stageGroup.elements.years.value.flatMap(
+	// 						(item) => item.name,
+	// 					),
+	// 					allYearsAssignedToSyllabus,
+	// 				).length > 0
+	// 			)
+	// 		},
+	// 	)
+
+	// 	return _result
+	// } else if (isTeachingAdvicePage) {
+	// 	const _result: KontentCurriculumResult<IContentItem> = {
+	// 		...result,
+	// 		data: {
+	// 			config: result.data.config,
+	// 			page: result.data.page,
+	// 			syllabuses: null,
+	// 			keyLearningAreas: null,
+	// 			stages: null,
+	// 		},
+	// 	}
+
+	// 	const [syllabuses, keyLearningAreas, stages] = await Promise.all([
+	// 		getAllItemsByType<Syllabus>({
+	// 			type: 'syllabus',
+	// 			depth: 6,
+	// 			preview,
+	// 		}),
+	// 		getAllItemsByType<IContentItem>({
+	// 			type: 'key_learning_area',
+	// 			preview,
+	// 			order: {
+	// 				element: 'elements.order',
+	// 				sortOrder: 'asc',
+	// 			},
+	// 		}),
+	// 		getAllItemsByType<IContentItem>({
+	// 			type: 'stage',
+	// 			preview,
+	// 			order: {
+	// 				element: 'elements.order',
+	// 				sortOrder: 'asc',
+	// 			},
+	// 		}),
+	// 	])
+
+	// 	_result.data.syllabuses = syllabuses
+	// 	_result.data.keyLearningAreas = keyLearningAreas
+	// 	_result.data.stages = stages
+
+	// 	return _result
+	// }
 
 	return result
 }

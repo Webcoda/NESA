@@ -5,20 +5,21 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp'
 import { detect } from 'detect-browser'
 // import { frontendPages } from '../utilities/hooks/useNavGroups'
 // import CustomModal from '../components/base/CustomModal'
-import dynamic from 'next/dynamic'
-import React, { ReactNode, useEffect, useState } from 'react'
-import MobileHeader from '../components/navigation/MobileHeader'
-import Header, { HeaderProps } from '../components/navigation/Header'
-import NavFooter from '../components/navigation/NavFooter'
-import SiteFooter from '../components/navigation/SiteFooter'
-import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
 import { CollectionWeblink } from '@/models/collection_weblink'
+import { UiMenu } from '@/models/ui_menu'
 import { Weblinkext } from '@/models/weblinkext'
 import { Weblinkint } from '@/models/weblinkint'
-import { UiMenu } from '@/models/ui_menu'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import { IContentItem } from '@kentico/kontent-delivery'
+import dynamic from 'next/dynamic'
+import { ReactNode, useEffect, useState } from 'react'
+import Header, { HeaderProps } from '../components/navigation/Header'
+import MobileHeader from '../components/navigation/MobileHeader'
+import NavFooter from '../components/navigation/NavFooter'
+import SiteFooter from '../components/navigation/SiteFooter'
 
 export interface NavPageProps
-	extends KontentCurriculumResult,
+	extends KontentCurriculumResult<IContentItem>,
 		Omit<HeaderProps, 'onSearch'> {
 	children?: ReactNode
 	mappings: Mapping[]

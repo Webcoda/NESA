@@ -1,24 +1,16 @@
 // import useNavGroups, { NavGroup, NavGroupSection, useRowCount } from '../../utilities/hooks/useNavGroups'
-import ActionComponent from '@/components/Action'
-import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
-import {
-	FOOTER_TOP_SECTION_SOCIAL_MENU,
-	FOOTER_TOP_SECTION_TITLE,
-} from '@/constants/codenames'
+import Anchor from '@/components/Anchor'
+import RichText from '@/components/RichText'
 import { NavPageProps } from '@/legacy-ported/containers/NavPage'
 import {
 	NavGroup,
 	NavGroupSection,
 	useRowCount as getRowCount,
 } from '@/legacy-ported/utilities/hooks/useNavGroups'
-import { Mapping } from '@/types'
-import { IContentItem } from '@kentico/kontent-delivery'
-import React, { Fragment } from 'react'
-import RichText from '@/components/RichText'
-import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
 import { CollectionWeblink } from '@/models/collection_weblink'
 import { UiMenu } from '@/models/ui_menu'
-import Anchor from '@/components/Anchor'
+import { Mapping } from '@/types'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
 
 interface SectionProps {
 	/**

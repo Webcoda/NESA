@@ -1,24 +1,23 @@
 import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
-import { Action } from '@/models/action'
-import { NavigationItem } from '@/models/navigation_item'
-import { CommonPageProps, Mapping } from '@/types'
+import { CommonPageProps } from '@/types'
 import { getBreadcrumb, getUrlFromMapping } from '@/utils'
 import { Grid } from '@material-ui/core'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 // import PATHS from '../../constants/pathConstants'
 // import { UrlLink } from '../../utilities/frontendTypes'
-import BetaSiteBanner from '../base/BetaSiteBanner'
 import get from 'lodash.get'
+import BetaSiteBanner from '../base/BetaSiteBanner'
 // import { Link, useHistory } from 'react-router-dom'
-import Link from 'next/link'
-import React, { useRef, useState } from 'react'
-import NavBar from './NavBar'
 import { NavGroup } from '@/legacy-ported/utilities/hooks/useNavGroups'
-import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
-import { UiMenu } from '@/models/ui_menu'
 import { CollectionWeblink } from '@/models/collection_weblink'
+import { UiMenu } from '@/models/ui_menu'
+import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import Link from 'next/link'
+import { useRef, useState } from 'react'
+import NavBar from './NavBar'
+import { IContentItem } from '@kentico/kontent-delivery'
 
-export interface HeaderProps extends CommonPageProps {
+export interface HeaderProps extends CommonPageProps<IContentItem> {
 	/**
 	 * A list of urls to display as the breadcrumb links
 	 */

@@ -1,14 +1,12 @@
-import { ReactNode } from 'react'
-import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
+import { WpHomepage } from '@/models/wp_homepage'
 import {
-	Elements,
 	IContentItem,
 	IContentItemElements,
 	IContentItemSystemAttributes,
 	Responses,
 } from '@kentico/kontent-delivery'
-import { WpHomepage } from '@/models/wp_homepage'
+import { ReactNode } from 'react'
 
 export interface MappingParams {
 	slug: string[]
@@ -49,7 +47,10 @@ export interface KontentCurriculumResultData<
 	// TODO: fix
 	// keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
 	keyLearningAreas?: any
-	glossaries?: Responses.IListContentItemsResponse<Glossary>
+
+	// TODO: fix
+	// glossaries?: Responses.IListContentItemsResponse<Glossary>
+	glossaries?: any
 
 	// TODO: fix
 	stages?: any
