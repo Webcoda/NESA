@@ -803,9 +803,27 @@ export const projectModel = {
 					codename: 'title',
 					name: '📜 Title',
 				},
+				tile_colour: {
+					codename: 'tile_colour',
+					name: 'Tile colour',
+				},
 				items: {
 					codename: 'items',
 					name: '📂 Items',
+				},
+			},
+		},
+		ui_collection_syllabus: {
+			codename: 'ui_collection_syllabus',
+			name: '💠Web UI Collection Syllabus',
+			elements: {
+				collection: {
+					codename: 'collection',
+					name: 'Collection',
+				},
+				tile_colour: {
+					codename: 'tile_colour',
+					name: 'Tile Colour',
 				},
 			},
 		},
@@ -1037,8 +1055,8 @@ export const projectModel = {
 			codename: 'weblinkext',
 			name: '🔗 Web Link External',
 			elements: {
-				sub_title: {
-					codename: 'sub_title',
+				subtitle: {
+					codename: 'subtitle',
 					name: '📜 Sub Title',
 				},
 				link_url: {
@@ -1063,8 +1081,8 @@ export const projectModel = {
 					codename: 'title',
 					name: '📜 Title',
 				},
-				_sub_title: {
-					codename: '_sub_title',
+				subtitle: {
+					codename: 'subtitle',
 					name: '📜 Sub Title',
 				},
 			},
@@ -1347,6 +1365,10 @@ export const projectModel = {
 					codename: 'web_content_rtb__content',
 					name: '📜 Content',
 				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
 				seo__description: {
 					codename: 'seo__description',
 					name: '📜 SEO Description',
@@ -1370,6 +1392,14 @@ export const projectModel = {
 				seo__title: {
 					codename: 'seo__title',
 					name: '📜 SEO Title',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
 				},
 				syllabuses: {
 					codename: 'syllabuses',
@@ -3127,9 +3157,9 @@ export const projectModel = {
 			codename: 'stage_year',
 			name: 'Stage Year',
 			terms: {
-				k1: {
-					codename: 'k1',
-					name: 'K1',
+				k: {
+					codename: 'k',
+					name: 'K',
 					terms: {},
 				},
 				n1: {

@@ -3,9 +3,12 @@ import { Grid, makeStyles, Popover } from '@material-ui/core'
 import Slide from '@material-ui/core/Slide'
 import { isMobile } from 'react-device-detect'
 
-const Transition = React.forwardRef((props: { children?: React.ReactElement<any, any> }, ref: React.Ref<unknown>) => (
-	<Slide direction="right" ref={ref} {...props} />
-))
+const Transition = React.forwardRef(
+	(
+		props: { children?: React.ReactElement<any, any> },
+		ref: React.Ref<unknown>,
+	) => <Slide direction="right" ref={ref} {...props} />,
+)
 
 export interface CustomPopoverProps {
 	/**
@@ -44,7 +47,14 @@ const useStyles = makeStyles({
 })
 
 export default function CustomPopover(props: CustomPopoverProps) {
-	const { title, popoverStatus, popoverAnchor, children, onConfirm, onCancel } = props
+	const {
+		title,
+		popoverStatus,
+		popoverAnchor,
+		children,
+		onConfirm,
+		onCancel,
+	} = props
 
 	return (
 		<Popover
@@ -65,10 +75,18 @@ export default function CustomPopover(props: CustomPopoverProps) {
 				<h4>{title}</h4>
 				<div className="custom-popover__content">{children}</div>
 				<Grid className="custom-popover__actions">
-					<button type="button" className="nsw-button nsw-button--white" onClick={onCancel}>
+					<button
+						type="button"
+						className="nsw-button nsw-button--white"
+						onClick={onCancel}
+					>
 						Cancel
 					</button>
-					<button type="button" className="nsw-button nsw-button--primary" onClick={onConfirm}>
+					<button
+						type="button"
+						className="nsw-button nsw-button--primary"
+						onClick={onConfirm}
+					>
 						Done
 					</button>
 				</Grid>

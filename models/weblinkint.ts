@@ -6,5 +6,5 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
 export type Weblinkint = IContentItem<{
 	item: Elements.LinkedItemsElement<IContentItem>
 	title: Elements.TextElement
-	_sub_title: Elements.TextElement
+	subtitle: Elements.TextElement
 }>

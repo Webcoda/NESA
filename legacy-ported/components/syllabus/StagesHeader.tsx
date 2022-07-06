@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { Grid } from '@material-ui/core'
 import Tabs from '@material-ui/core/Tabs'
 import { makeStyles } from '@material-ui/core/styles'
-import { KeyLearningArea } from '@/models/key_learning_area'
 import SyllabusStagesHeader from './SyllabusStagesHeader'
-import { StageGroup } from '@/models/stage_group'
+import { ITaxonomyTerms } from '@kentico/kontent-delivery'
 // import { ILearningArea } from '../../utilities/backendTypes'
 // import { KlaIds } from '../../store/mock/keyLearningAreas'
 
@@ -28,11 +27,11 @@ export interface StagesHeaderProps {
 	/**
 	 * Subject tag
 	 */
-	learningAreas: KeyLearningArea[]
+	learningAreas: ITaxonomyTerms[]
 	/**
 	 * Stage Categories (Parent)
 	 */
-	stageGroups: StageGroup[]
+	stageGroups: ITaxonomyTerms[]
 	/**
 	 * Callback fired when version history is clicked
 	 */
@@ -100,7 +99,14 @@ const StagesHeader = (props: StagesHeaderProps) => {
 							/>
 						</Grid>
 					</Grid>
-					<Grid container item sm={12} md={6} alignItems="center" className="syllabus-header__select-right">
+					<Grid
+						container
+						item
+						sm={12}
+						md={6}
+						alignItems="center"
+						className="syllabus-header__select-right"
+					>
 						{/* TODO: Enable after MVP */}
 						{/* <Grid>
 						<button
@@ -141,9 +147,12 @@ const StagesHeader = (props: StagesHeaderProps) => {
 										.map((subject) => (
 											<div
 												className={`custom-tab ${
-													tabValue === subject.system.id ? 'custom-tab--selected' : ''
+													tabValue ===
+													subject.codename
+														? 'custom-tab--selected'
+														: ''
 												}`}
-												key={subject.system.id}
+												key={subject.codename}
 												role="tab"
 											>
 												{/* TODO: Enable after MVP */}
@@ -157,17 +166,23 @@ const StagesHeader = (props: StagesHeaderProps) => {
 													<h4>{subject.label}</h4>
 												</a> */}
 												{/* TODO: Remove after MVP */}
-												{subject.elements.available.value.length ? (
+												{subject.codename ? (
 													<a
-														href={`#${subject.system.id}`}
+														href={`#${subject.codename}`}
 														className="nsw-link"
-														onClick={() => handleTabChange(subject.system.id)}
+														onClick={() =>
+															handleTabChange(
+																subject.codename,
+															)
+														}
 														role="button"
 													>
-														<h4>{subject.elements.title.value}</h4>
+														<h4>{subject.name}</h4>
 													</a>
 												) : (
-													<h4 className="custom-tab--disabled">{subject.elements.title.value}</h4>
+													<h4 className="custom-tab--disabled">
+														{subject.name}
+													</h4>
 												)}
 											</div>
 										))}

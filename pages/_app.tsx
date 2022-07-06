@@ -1,36 +1,36 @@
 import '@/legacy-ported/sass/app.scss'
 import { CommonPageProps } from '@/types'
+import { IContentItem } from '@kentico/kontent-delivery'
 import KontentSmartLink from '@kentico/kontent-smart-link'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import get from 'lodash.get'
 import Head from 'next/head'
 import React from 'react'
+
 // import "../styles/main.css";
 
-function MyApp({ Component, pageProps }) {
-	const configObject = get(pageProps, 'data.config', null)
+interface MyAppProps {
+	Component: any
+	pageProps: CommonPageProps<IContentItem>
+}
+
+function MyApp({ Component, pageProps }: MyAppProps) {
+	const configObject = pageProps?.data?.config
 
 	const fontName = 'Montserrat'
 
-	let title = get(pageProps, 'seo.title', null)
-	let siteDescriptor = get(
-		configObject,
-		'item.elements.descriptor.value',
-		null,
-	)
+	let title = pageProps?.seo?.title || ''
+	let siteDescriptor = configObject?.item?.elements?.descriptor?.value || ''
 	if (title) {
 		title += ' | '
 	}
-	title += get(configObject, 'item.elements.title.value', '')
+	title += configObject?.item?.elements?.title?.value || ''
 	if (siteDescriptor) {
 		title = title + ' | ' + siteDescriptor
 	}
 
-	const palette = get(
-		configObject,
-		'item.elements.palette.value[0].codename',
-		null,
-	)
+	const palette =
+		configObject?.item?.elements?.palette?.value?.[0]?.codename || null
 	const colors = {
 		primary: '#F05A22',
 		secondary: '#B72929',

@@ -4,13 +4,13 @@ import LinkCardLegacy from '@/legacy-ported/components/teachers/LinkCard'
 import { Contentblock } from '@/models/contentblock'
 import { css } from '@emotion/react'
 
-import { UiCard } from '@/models/ui_card'
 import { getLinkFromLinkUI } from '@/utils'
 import { Grid as MuiGrid } from '@material-ui/core'
 import { UiCardNewsletterSubscription } from '@/models/ui_card_newsletter_subscription'
 import NewsletterSubscribeBox from '@/components/sections/NewsletterSubscribeBox'
+import { UiCards } from '@/models/ui_cards'
 
-export default function LinkCard(props: RichtextSectionProps<UiCard>) {
+export default function LinkCard(props: RichtextSectionProps<UiCards>) {
 	const { linkedItem, mappings } = props
 
 	const gapVertical = 26

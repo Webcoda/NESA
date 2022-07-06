@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import StageSelectOverlay from './StageSelectOverlay'
-import { StageGroup } from '@/models/stage_group'
+import { ITaxonomyTerms } from '@kentico/kontent-delivery'
 // import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
 
 export interface SyllabusStagesHeaderProps {
@@ -26,17 +26,25 @@ export interface SyllabusStagesHeaderProps {
 	/**
 	 * All Stage Categories
 	 */
-	stageGroups: StageGroup[]
+	stageGroups: ITaxonomyTerms[]
 
 	/**
 	 * Fire when stages header popover confirm button clicked
 	 */
 	onStagesHeaderConfirm: (ids: string[]) => void
-
 }
 
-const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => {
-	const { title, selectedStages, area, isMainHeader, stageGroups, onStagesHeaderConfirm } = props
+const SyllabusStagesHeader = (
+	props: SyllabusStagesHeaderProps,
+): JSX.Element => {
+	const {
+		title,
+		selectedStages,
+		area,
+		isMainHeader,
+		stageGroups,
+		onStagesHeaderConfirm,
+	} = props
 
 	const stageHeaderButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -45,7 +53,9 @@ const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => 
 	const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement>()
 
 	// stages
-	const handleDisplayStageModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleDisplayStageModal = (
+		event: React.MouseEvent<HTMLButtonElement>,
+	) => {
 		setDisplayStageModal(!displayStageModal)
 		setPopoverAnchor(event.currentTarget)
 	}
@@ -72,7 +82,11 @@ const SyllabusStagesHeader = (props: SyllabusStagesHeaderProps): JSX.Element => 
 					onClick={handleDisplayStageModal}
 					ref={stageHeaderButtonRef}
 				>
-					{isMainHeader ? <h3 className="syllabus-header__main-title">{title}</h3> : <h3>{title}</h3>}
+					{isMainHeader ? (
+						<h3 className="syllabus-header__main-title">{title}</h3>
+					) : (
+						<h3>{title}</h3>
+					)}
 					<ExpandMoreIcon />
 				</button>
 				{/* TODO: Enable after MVP */}

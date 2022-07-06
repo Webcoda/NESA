@@ -33,7 +33,12 @@ const BuildTreeNodes = (
 			existingNodes.push(layerNode)
 		}
 
-		layerNode.children = BuildTreeNodes(layerNode.children!, leafId, layerId, layers.slice(1))
+		layerNode.children = BuildTreeNodes(
+			layerNode.children!,
+			leafId,
+			layerId,
+			layers.slice(1),
+		)
 	}
 
 	return existingNodes
@@ -45,7 +50,12 @@ export const TagTree: TreeElement[] = AllTags.reduce<TreeElement[]>(
 			acc,
 			tag.code,
 			'',
-			[tag.category, tag.sub_category, tag.sub_sub_category, tag.tag].filter((s) => s !== NullTag),
+			[
+				tag.category,
+				tag.sub_category,
+				tag.sub_sub_category,
+				tag.tag,
+			].filter((s) => s !== NullTag),
 		),
 	[],
 )
@@ -62,7 +72,10 @@ const TagPicker = (props: FixedTreePickerProps): JSX.Element => {
 	let filteredTags: TreeElement[] = TagTree
 	if (tagFilter) {
 		filteredTags = filteredTags.flatMap(
-			(root) => filterTree(root, (e) => e.label.toLowerCase().includes(tagFilter.toLowerCase())) ?? [],
+			(root) =>
+				filterTree(root, (e) =>
+					e.label.toLowerCase().includes(tagFilter.toLowerCase()),
+				) ?? [],
 		)
 	}
 

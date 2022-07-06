@@ -21,7 +21,13 @@ export interface CustomAccordionProps extends HTMLProps<HTMLDivElement> {
 }
 
 const CustomAccordion = (props: CustomAccordionProps): JSX.Element => {
-	const { title, startOpen = false, isComingSoon, children, ...others } = props
+	const {
+		title,
+		startOpen = false,
+		isComingSoon,
+		children,
+		...others
+	} = props
 	const classes = useStyles()
 	const [expandStatus, setExpandStatus] = useState(startOpen)
 
@@ -34,10 +40,18 @@ const CustomAccordion = (props: CustomAccordionProps): JSX.Element => {
 
 	return (
 		<div className={classes.root} {...others}>
-			<Accordion className="nesa-accordion" expanded={expandStatus} onChange={onChange}>
+			<Accordion
+				className="nesa-accordion"
+				expanded={expandStatus}
+				onChange={onChange}
+			>
 				<AccordionSummary
-					expandIcon={<ExpandMoreIcon className="nesa-accordion__icon" />}
-					className={`nesa-accordion__header ${expandStatus ? 'nesa-accordion__active' : ''}`}
+					expandIcon={
+						<ExpandMoreIcon className="nesa-accordion__icon" />
+					}
+					className={`nesa-accordion__header ${
+						expandStatus ? 'nesa-accordion__active' : ''
+					}`}
 					disabled={isComingSoon} // TODO: Remove condition after MVP
 				>
 					{/* TODO: Remove condition after MVP */}
@@ -45,10 +59,16 @@ const CustomAccordion = (props: CustomAccordionProps): JSX.Element => {
 						<p>{`${title} (Coming Soon)`}</p>
 					) : (
 						// eslint-disable-next-line react/no-danger
-						<p dangerouslySetInnerHTML={{ __html: sanitizeHtml(title) }} />
+						<p
+							dangerouslySetInnerHTML={{
+								__html: sanitizeHtml(title),
+							}}
+						/>
 					)}
 				</AccordionSummary>
-				<AccordionDetails className="nesa-accordion__content">{children}</AccordionDetails>
+				<AccordionDetails className="nesa-accordion__content">
+					{children}
+				</AccordionDetails>
 			</Accordion>
 		</div>
 	)

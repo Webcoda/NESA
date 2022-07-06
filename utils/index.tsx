@@ -46,7 +46,7 @@ export const convertGlossaryToIGlossary = (
 
 // Get year text from yearss
 export const getTagFromYears = (
-	years: ElementModels.MultipleChoiceOption[],
+	years: ElementModels.MultipleChoiceOption[] | ElementModels.TaxonomyTerm[],
 ) => {
 	const yearRanges = years.map((item) => item.name)
 	let yearText = ''
@@ -92,12 +92,18 @@ export const getLinkFromLinkUI = (
 		}
 	}
 
-	console.log(
-		'🚀 ~ file: index.tsx ~ line 97 ~ navItem.system.codename',
-		navItem.system.codename,
-	)
+	let _navItemCodename = navItem.system.codename
+	if (navItem.system.type === 'ui_menu') {
+		const _navItem = navItem as UiMenu
+		_navItemCodename =
+			_navItem.elements.item.linkedItems[0]?.system.codename
+	} else if (navItem.system.type === 'weblinkint') {
+		const _navItem = navItem as Weblinkint
+		_navItemCodename = _navItem.elements.item.linkedItems[0].system.codename
+	}
+
 	return {
-		url: getUrlFromMapping(mappings, navItem.system.codename),
+		url: getUrlFromMapping(mappings, _navItemCodename),
 		isExternal,
 	}
 }
@@ -166,7 +172,7 @@ export const getBreadcrumb = (
 		if (!_mapping) return
 
 		return {
-			title: _mapping.params.navigationItem.name,
+			title: _mapping.params.webPageItem.elements['title'].value,
 			url: getUrlFromMapping(
 				mappings,
 				_mapping.params.navigationItem.codename,

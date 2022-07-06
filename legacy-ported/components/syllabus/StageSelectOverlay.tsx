@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import { ITaxonomyTerms } from '@kentico/kontent-delivery'
 import { Grid } from '@material-ui/core'
-import CustomPopover, { CustomPopoverProps } from '../base/CustomPopover'
-import StagePicker from '../custom/StagePicker'
+import { useState } from 'react'
 import { IStage } from '../../utilities/backendTypes'
 import { arrayToggleMultiple } from '../../utilities/functions'
-import { StageGroup } from '@/models/stage_group'
-import { Stage } from '@/models/stage'
+import CustomPopover, { CustomPopoverProps } from '../base/CustomPopover'
+import StagePicker from '../custom/StagePicker'
 
 export interface StageSelectOverlayProps
 	extends Pick<
@@ -13,8 +12,8 @@ export interface StageSelectOverlayProps
 		'title' | 'popoverStatus' | 'popoverAnchor' | 'onCancel'
 	> {
 	selected: IStage['id'][]
-	stageGroups: StageGroup[]
-	disabledStages?: Stage[]
+	stageGroups: ITaxonomyTerms[]
+	disabledStages?: ITaxonomyTerms[]
 	onConfirm: (selected: IStage['id'][]) => void
 }
 

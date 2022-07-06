@@ -125,7 +125,9 @@ const Header = (props: HeaderProps): JSX.Element => {
 			<div className="header__body nsw-container">
 				<NavBar
 					mappings={mappings}
-					title={props.data.config.item.elements.title.value}
+					title={
+						props.data.config.item.elements.site_prefix?.value || ''
+					}
 					subtitle={props.data.config.item.elements.descriptor.value}
 					navItems={navItems}
 					className="header__navbar"

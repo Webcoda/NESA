@@ -5,12 +5,15 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
  */
 export type WpStage = IContentItem<{
 	web_content_rtb__content: Elements.RichTextElement
+	stages__stage_years: Elements.TaxonomyElement
 	seo__description: Elements.TextElement
 	seo__robots: Elements.MultipleChoiceElement
 	seo__canonical_url: Elements.TextElement
 	slug: Elements.UrlSlugElement
 	seo__keywords: Elements.TextElement
 	seo__title: Elements.TextElement
+	stages__stages: Elements.TaxonomyElement
+	stages__stage_groups: Elements.TaxonomyElement
 	syllabuses: Elements.LinkedItemsElement<IContentItem>
 	title: Elements.TextElement
 }>

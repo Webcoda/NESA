@@ -1,4 +1,7 @@
 import { Syllabus } from '@/models/syllabus'
+import { UiMenu } from '@/models/ui_menu'
+import { Weblinkext } from '@/models/weblinkext'
+import { Weblinkint } from '@/models/weblinkint'
 import { WpHomepage } from '@/models/wp_homepage'
 import {
 	IContentItem,
@@ -8,11 +11,13 @@ import {
 } from '@kentico/kontent-delivery'
 import { ReactNode } from 'react'
 
+export type LinkType = UiMenu | Weblinkint | Weblinkext
+
 export interface MappingParams {
 	slug: string[]
 	navigationItem?: IContentItemSystemAttributes
 	contentItem?: IContentItemSystemAttributes
-	webPageItem?: any
+	webPageItem?: IContentItem
 }
 
 export interface Mapping {

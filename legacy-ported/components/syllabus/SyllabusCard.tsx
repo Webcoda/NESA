@@ -6,6 +6,8 @@ import Link from '@/components/Link'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { Icon } from '@iconify/react'
 
+export type SyllabusCardColor = 'primary' | 'secondary'
+
 export interface SyllabusCardProps {
 	/**
 	 * Headline text of the card.
@@ -25,7 +27,7 @@ export interface SyllabusCardProps {
 	/**
 	 * Marks the card with a coloured top border
 	 */
-	colour?: 'primary' | 'secondary'
+	colour?: SyllabusCardColor
 
 	className?: string
 }

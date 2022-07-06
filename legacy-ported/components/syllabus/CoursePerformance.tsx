@@ -18,10 +18,16 @@ const CoursePerformance = (props: CoursePerformanceProps): JSX.Element => {
 		<Grid className="syllabus-content-section">
 			{sections?.map((sec: Assessment) => (
 				<Grid key={sec.system.id} className="assessment__container">
-					<CustomAccordion title={'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'}>
+					<CustomAccordion
+						title={
+							'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'
+						}
+					>
 						{/* TODO: Syllabus Content */}
 						<SyllabusContentSection
-							innerHtml={'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'}
+							innerHtml={
+								'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'
+							}
 						/>
 					</CustomAccordion>
 				</Grid>

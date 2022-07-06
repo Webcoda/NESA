@@ -9,8 +9,11 @@ import {
 } from '@/legacy-ported/utilities/hooks/useNavGroups'
 import { CollectionWeblink } from '@/models/collection_weblink'
 import { UiMenu } from '@/models/ui_menu'
+import { Weblinkext } from '@/models/weblinkext'
 import { Mapping } from '@/types'
+import { getLinkFromLinkUI } from '@/utils'
 import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
+import { Icon } from '@iconify/react'
 
 interface SectionProps {
 	/**
@@ -93,18 +96,39 @@ export interface NavFooterProps {
 
 export const PureNavFooter = (props: NavPageProps): JSX.Element => {
 	const topSections = props.data.config.item.elements.footer_top_content
+	const socialMenus = props.data.config.item.elements.social_links.linkedItems
 	const menus = flattenCollectionWebLinks(
 		props.data.config.item.elements.footer_menu_links
 			.linkedItems as CollectionWeblink[],
 	)
+	const { mappings } = props
 	return (
 		<footer className="nav-footer nsw-container">
 			<div className="nav-footer__nesa">
 				<RichText
 					{...props}
+					linkedItems={props.data.pageResponse.linkedItems}
 					className="nav-footer__nesa"
 					richTextElement={topSections}
 				/>
+				<div className="nav-footer__icons">
+					{socialMenus.map((item: Weblinkext) => {
+						return (
+							<Anchor
+								key={item.system.id}
+								link={item}
+								className="no-icon"
+								mappings={mappings}
+							>
+								<Icon
+									icon={`fa-brands:${item.elements.title.value.toLowerCase()}`}
+									width={24}
+									height={24}
+								/>
+							</Anchor>
+						)
+					})}
+				</div>
 			</div>
 			{/* TODO: fix */}
 			<div className="nav-footer__sections">

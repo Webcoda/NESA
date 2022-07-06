@@ -1,6 +1,8 @@
 import Image from '@/components/Image'
 import Link from '@/components/Link'
 import rteSections from '@/components/sections'
+import { Mapping } from '@/types'
+import { Elements, IContentItemsContainer } from '@kentico/kontent-delivery'
 import { makeStyles, useTheme } from '@material-ui/core'
 import classNames from 'classnames'
 import get from 'lodash.get'
@@ -36,11 +38,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
-function RichText(props) {
-	const richTextElement = get(props, 'richTextElement', '')
+export interface RichTextProps {
+	className?: string
+	richTextElement: Elements.RichTextElement
+	linkedItems: IContentItemsContainer
+	mappings: Mapping[]
+}
+
+function RichText(props: RichTextProps) {
+	const { richTextElement, mappings } = props
 	const linkedItems =
 		props.linkedItems || get(props, 'data.page.linkedItems', [])
-	const mappings = get(props, 'mappings')
 
 	const classes = useStyles()
 	const theme = useTheme()
@@ -52,6 +60,7 @@ function RichText(props) {
 			linkedItems={linkedItems}
 			mappings={mappings}
 			resolveLinkedItem={(linkedItem, domNode, domToReact) => {
+				console.log(linkedItem?.system?.type)
 				if (!linkedItem) return domToReact([domNode])
 				const RichtextSectionComponent =
 					rteSections[linkedItem.system.type]

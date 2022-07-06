@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { Checkbox, FormControlLabel, Grid, IconButton, Tooltip } from '@material-ui/core'
+import {
+	Checkbox,
+	FormControlLabel,
+	Grid,
+	IconButton,
+	Tooltip,
+} from '@material-ui/core'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import ErrorIcon from '@material-ui/icons/Error'
@@ -7,7 +13,10 @@ import { getLeaves, getNodes, TreeElement } from './treeUtils'
 import DESIGN from '../../constants/designConstants'
 import { arrayToggle } from '../../utilities/functions'
 
-const ChildTaken = (element: TreeElement, selected: TreeElement['id'][]): boolean => {
+const ChildTaken = (
+	element: TreeElement,
+	selected: TreeElement['id'][],
+): boolean => {
 	if (element.children) {
 		for (let i = 0; i < element.children.length; i++) {
 			const child = element.children[i]
@@ -33,7 +42,10 @@ const recursiveChildrenTakenCheck = (
 			const child = element.children[i]
 
 			if (child.children?.length) {
-				const [ca, ua, ud] = recursiveChildrenTakenCheck(child, selected)
+				const [ca, ua, ud] = recursiveChildrenTakenCheck(
+					child,
+					selected,
+				)
 				childAvailable = childAvailable || ca
 				untakenAvailableChild = untakenAvailableChild || ua
 				untakenDisabledChild = untakenDisabledChild || ud
@@ -53,10 +65,17 @@ const recursiveChildrenTakenCheck = (
 	return [childAvailable, untakenAvailableChild, untakenDisabledChild]
 }
 
-const AllChildrenTaken = (element: TreeElement, selected: TreeElement['id'][]): boolean => {
-	const [childAvailable, untakenAvailableChild, untakenDisabledChild] = recursiveChildrenTakenCheck(element, selected)
+const AllChildrenTaken = (
+	element: TreeElement,
+	selected: TreeElement['id'][],
+): boolean => {
+	const [childAvailable, untakenAvailableChild, untakenDisabledChild] =
+		recursiveChildrenTakenCheck(element, selected)
 
-	return (childAvailable && !untakenAvailableChild) || (!childAvailable && !untakenDisabledChild)
+	return (
+		(childAvailable && !untakenAvailableChild) ||
+		(!childAvailable && !untakenDisabledChild)
+	)
 }
 
 const CustomTooltip = withStyles(() => ({
@@ -92,7 +111,15 @@ interface SubtreeProps {
 }
 
 const Subtree = (props: SubtreeProps) => {
-	const { rootElement, selected, collapsed, depth, forceExpand, onToggle, onExpand } = props
+	const {
+		rootElement,
+		selected,
+		collapsed,
+		depth,
+		forceExpand,
+		onToggle,
+		onExpand,
+	} = props
 
 	const classes = useStyles()
 
@@ -109,10 +136,13 @@ const Subtree = (props: SubtreeProps) => {
 	}
 
 	const hasChildren = rootElement.children && rootElement.children.length > 0
-	const isSelected = hasChildren ? AllChildrenTaken(rootElement, selected) : selected.includes(rootElement.id)
+	const isSelected = hasChildren
+		? AllChildrenTaken(rootElement, selected)
+		: selected.includes(rootElement.id)
 
 	const allowExpand = !forceExpand && hasChildren && !rootElement.disabled
-	const isExpanded = (forceExpand || !collapsed.includes(rootElement.id)) && hasChildren
+	const isExpanded =
+		(forceExpand || !collapsed.includes(rootElement.id)) && hasChildren
 
 	return (
 		<div className="tree-picker__element-wrapper">
@@ -132,7 +162,10 @@ const Subtree = (props: SubtreeProps) => {
 								<Checkbox
 									className="tree-picker__checkbox"
 									checked={isSelected}
-									indeterminate={!isSelected && ChildTaken(rootElement, selected)}
+									indeterminate={
+										!isSelected &&
+										ChildTaken(rootElement, selected)
+									}
 									onChange={handleToggle}
 									classes={{ root: classes.checkbox }}
 									disabled={rootElement.disabled}
@@ -153,13 +186,20 @@ const Subtree = (props: SubtreeProps) => {
 							<CustomTooltip
 								title={
 									<Grid className="tree-picker__info">
-										<p className="tree-picker__info-detail">{rootElement.moreInfo}</p>
+										<p className="tree-picker__info-detail">
+											{rootElement.moreInfo}
+										</p>
 									</Grid>
 								}
 								placement="right"
 							>
 								<div className="tree-picker__tooltip-icon">
-									<ErrorIcon style={{ fontSize: '18px', color: DESIGN.COLOR_BLUE_PRIMARY }} />
+									<ErrorIcon
+										style={{
+											fontSize: '18px',
+											color: DESIGN.COLOR_BLUE_PRIMARY,
+										}}
+									/>
 								</div>
 							</CustomTooltip>
 						)}
@@ -183,14 +223,20 @@ const Subtree = (props: SubtreeProps) => {
 	)
 }
 
-export interface PureTreePickerProps extends Pick<SubtreeProps, 'selected' | 'collapsed' | 'onToggle' | 'onExpand'> {
+export interface PureTreePickerProps
+	extends Pick<
+		SubtreeProps,
+		'selected' | 'collapsed' | 'onToggle' | 'onExpand'
+	> {
 	/**
 	 * Top level tree elements, these form the root of independent trees
 	 */
 	rootElements: TreeElement[]
 }
 
-export const PureTreePicker = <T extends string>(props: PureTreePickerProps): JSX.Element => {
+export const PureTreePicker = <T extends string>(
+	props: PureTreePickerProps,
+): JSX.Element => {
 	const { rootElements, selected, collapsed, onToggle, onExpand } = props
 
 	return (
@@ -211,7 +257,8 @@ export const PureTreePicker = <T extends string>(props: PureTreePickerProps): JS
 	)
 }
 
-export interface TreePickerProps extends Pick<PureTreePickerProps, 'rootElements' | 'selected'> {
+export interface TreePickerProps
+	extends Pick<PureTreePickerProps, 'rootElements' | 'selected'> {
 	/**
 	 * callback fired with all selected leaf nodes
 	 * @param ids all leaf nodes that are currently selected
@@ -225,28 +272,43 @@ export interface TreePickerProps extends Pick<PureTreePickerProps, 'rootElements
 }
 
 export const TreePicker = (props: TreePickerProps) => {
-	const { rootElements, selected, onChange, defaultExpanded = 'top-level' } = props
+	const {
+		rootElements,
+		selected,
+		onChange,
+		defaultExpanded = 'top-level',
+	} = props
 
 	let defaultCollapsed: TreeElement[] = []
 	switch (defaultExpanded) {
 		case 'none':
-			defaultCollapsed = getNodes(rootElements, (n) => !!n.children?.length)
+			defaultCollapsed = getNodes(
+				rootElements,
+				(n) => !!n.children?.length,
+			)
 			break
 		case 'top-level':
-			defaultCollapsed = getNodes(rootElements, (n) => !rootElements.includes(n))
+			defaultCollapsed = getNodes(
+				rootElements,
+				(n) => !rootElements.includes(n),
+			)
 			break
 		default:
 			break
 	}
 
-	const [collapsed, setCollapsed] = useState(defaultCollapsed.map((n) => n.id))
+	const [collapsed, setCollapsed] = useState(
+		defaultCollapsed.map((n) => n.id),
+	)
 
 	const handleToggle = (node: TreeElement) => {
 		if (onChange) {
 			if (node.children?.length) {
 				// Node has children, we're gonna operate on the enabled leaf children.
 				const childNodes = getLeaves([node]).filter((n) => !n.disabled)
-				const unSelected = childNodes.filter((n) => !selected.includes(n.id))
+				const unSelected = childNodes.filter(
+					(n) => !selected.includes(n.id),
+				)
 
 				if (unSelected.length) {
 					// This node was indeterminate or unchecked, so this action is select all

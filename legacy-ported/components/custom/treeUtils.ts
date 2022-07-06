@@ -59,7 +59,10 @@ export const patchTree = (
 	return { tree: root, updated: false }
 }
 
-export const filterTree = (root: TreeElement, filter: (e: TreeElement) => boolean): TreeElement | null => {
+export const filterTree = (
+	root: TreeElement,
+	filter: (e: TreeElement) => boolean,
+): TreeElement | null => {
 	let children: TreeElement[] | undefined
 	if (root.children?.length) {
 		children = root.children.flatMap((e) => filterTree(e, filter) ?? [])
@@ -74,7 +77,10 @@ export const filterTree = (root: TreeElement, filter: (e: TreeElement) => boolea
 	return null
 }
 
-export const getNode = (elements: TreeElement[], id: TreeElement['id']): TreeElement | null => {
+export const getNode = (
+	elements: TreeElement[],
+	id: TreeElement['id'],
+): TreeElement | null => {
 	for (let i = 0; i < elements.length; i++) {
 		const root = elements[i]
 		if (root.id === id) {
@@ -91,7 +97,10 @@ export const getNode = (elements: TreeElement[], id: TreeElement['id']): TreeEle
 	return null
 }
 
-export const getNodes = (elements: TreeElement[], discriminator: (node: TreeElement) => boolean): TreeElement[] => {
+export const getNodes = (
+	elements: TreeElement[],
+	discriminator: (node: TreeElement) => boolean,
+): TreeElement[] => {
 	const nodes: TreeElement[] = []
 
 	for (let i = 0; i < elements.length; i++) {
@@ -109,4 +118,5 @@ export const getNodes = (elements: TreeElement[], discriminator: (node: TreeElem
 	return nodes
 }
 
-export const getLeaves = (elements: TreeElement[]) => getNodes(elements, (n) => !n.children?.length)
+export const getLeaves = (elements: TreeElement[]) =>
+	getNodes(elements, (n) => !n.children?.length)
