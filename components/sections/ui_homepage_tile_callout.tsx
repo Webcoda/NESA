@@ -13,7 +13,7 @@ export const HomepageTileCallout = (
 	const tiles = mainTile.elements.subitems.linkedItems as UiMenu[]
 
 	return (
-		<section id={linkedItem.system.codename}>
+		<section data-kontent-item-id={linkedItem.system.id}>
 			<SectionCard
 				backgroundColor={linkedItem.elements.background_color.value}
 				dividerColor={linkedItem.elements.divider_color.value}

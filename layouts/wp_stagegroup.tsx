@@ -5,8 +5,8 @@ import { WpStagegroup as WpStageGroupModel } from '@/models/wp_stagegroup'
 import { CommonPageProps } from '@/types'
 
 function WpStageGroup(props: CommonPageProps<WpStageGroupModel>) {
-	const { page, pageResponse } = props.data
-	page.elements.web_content_rtb__content
+	const { pageResponse } = props.data
+	const page = pageResponse.item
 
 	if (!page) {
 		return (

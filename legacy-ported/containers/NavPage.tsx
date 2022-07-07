@@ -9,7 +9,6 @@ import { CollectionWeblink } from '@/models/collection_weblink'
 import { UiMenu } from '@/models/ui_menu'
 import { Weblinkext } from '@/models/weblinkext'
 import { Weblinkint } from '@/models/weblinkint'
-import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
 import { IContentItem } from '@kentico/kontent-delivery'
 import dynamic from 'next/dynamic'
 import { ReactNode, useEffect, useState } from 'react'
@@ -136,6 +135,7 @@ const NavPage = (props: NavPageProps) => {
 			</main>
 			<NavFooter {...props} />
 			<SiteFooter
+				data-kontent-item-id={props.data.config.item.system.id}
 				mappings={props.mappings}
 				acknowledge={
 					props.data.config.item.elements.acknowledgement.value
@@ -145,10 +145,12 @@ const NavPage = (props: NavPageProps) => {
 						.linkedItems[0] as Weblinkext | Weblinkint | UiMenu
 				}
 				menu={
-					flattenCollectionWebLinks(
-						props.data.config.item.elements.secondary_links
-							.linkedItems as CollectionWeblink[],
-					) || []
+					props.data.config.item.elements.secondary_links
+						.linkedItems as CollectionWeblink[]
+				}
+				kontentItemIdMenu={
+					props.data.config.item.elements.secondary_links
+						.linkedItems[0]?.system.id
 				}
 			/>
 			{/* {isIE && (

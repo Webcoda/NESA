@@ -23,6 +23,7 @@ const LinkCard = (props: LinkCardProps): JSX.Element => {
 							verticalAlign: 'middle',
 							marginRight: isExternal ? 8 : 0,
 						}}
+						data-kontent-element-codename="title"
 					>
 						{headline}
 					</span>

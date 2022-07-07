@@ -172,13 +172,39 @@ export const getBreadcrumb = (
 		if (!_mapping) return
 
 		return {
-			title: _mapping.params.webPageItem.elements['title'].value,
+			title: _mapping.params.navigationItem.elements['title'].value,
 			url: getUrlFromMapping(
 				mappings,
-				_mapping.params.navigationItem.codename,
+				_mapping.params.navigationItem.system.codename,
 			),
 		}
 	})
+}
+
+/**
+ * Limit depth of any object by key name (ex: limitDepth(myObj, {foo: 3, bar: 5}) limits “foo” to 3 nested occurrences and “bar” to 5 nested occurrences)
+ * @param  {any} obj
+ * @param  {{[index:string]:number}} depth
+ */
+export function limitDepth(obj, depth) {
+	const count = {}
+
+	return JSON.parse(
+		JSON.stringify(obj, (name, value) => {
+			if (typeof count[name] !== 'number') {
+				count[name] = 0
+			}
+			count[name] += 1
+			const max = depth[name] >= 0 ? depth[name] : Infinity
+			if (count[name] <= max) {
+				if (typeof value === 'object') {
+					return Array.isArray(value) ? [...value] : { ...value }
+				}
+				return value
+			}
+			return undefined
+		}),
+	)
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

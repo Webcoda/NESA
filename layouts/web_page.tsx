@@ -6,8 +6,8 @@ import { WebPage as WebPageModel } from '@/models/web_page'
 import { CommonPageProps } from '@/types'
 
 function WebPage(props: CommonPageProps<WebPageModel>) {
-	const { page, pageResponse } = props.data
-
+	const { pageResponse } = props.data
+	const page = pageResponse.item
 	if (!page) {
 		return (
 			<UnknownComponent>

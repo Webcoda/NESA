@@ -17,7 +17,12 @@ const SyllabusGroup = (props: SyllabusGroupProps): JSX.Element => {
 	return (
 		<div className="syllabus-group">
 			{typeof heading === 'string' && heading && (
-				<h2 className="syllabus-group__heading">{heading}</h2>
+				<h2
+					className="syllabus-group__heading"
+					data-kontent-element-codename="title"
+				>
+					{heading}
+				</h2>
 			)}
 			{typeof heading !== 'string' && heading}
 			<div className="syllabus-group__card-grid">

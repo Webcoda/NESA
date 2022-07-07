@@ -4,9 +4,9 @@ export default function getUrlFromMapping(
 	mappings: Mapping[],
 	codename: string,
 ) {
-	const mapping = mappings.find(
-		(mapping) => mapping.params.navigationItem.codename === codename,
-	)
+	const mapping = mappings.find((_mapping) => {
+		return _mapping.params.navigationItem.system.codename === codename
+	})
 
 	if (!mapping) {
 		return undefined

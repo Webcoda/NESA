@@ -1,5 +1,7 @@
+import { limitDepth } from '@/utils'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
+import safeJsonStringify from 'safe-json-stringify'
 import UnknownComponent from '../components/UnknownComponent'
 import pageLayouts from '../layouts'
 import { getPageStaticPropsForPath, getSitemapMappings } from '../lib/api'
@@ -18,7 +20,7 @@ function Page(props) {
 	}
 
 	// every page can have different layout, pick the layout based on content type
-	const contentType = props.data.page.system.type
+	const contentType = props.data.pageResponse.item.system.type
 
 	const PageLayout = pageLayouts[contentType]
 
@@ -53,15 +55,35 @@ export async function getStaticPaths(ctx) {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-	const props = await getPageStaticPropsForPath(params, preview)
+	const _props = await getPageStaticPropsForPath(params, preview)
+	const { seo, mappings, data } = _props || {}
+	const {
+		config,
+		pageResponse,
+		syllabuses = null,
+		stageGroups = null,
+		stages = null,
+		keyLearningAreas = null,
+	} = data || {}
+
+	const props = {
+		seo,
+		mappings,
+		data: {
+			config,
+			pageResponse,
+			stages,
+			stageGroups,
+			syllabuses: syllabuses,
+			keyLearningAreas,
+		},
+		errorCode: !_props ? 404 : null,
+		params,
+		preview,
+	}
 
 	return {
-		props: {
-			...props,
-			errorCode: !props ? 404 : null,
-			params,
-			preview,
-		},
+		props: JSON.parse(safeJsonStringify(props)),
 		// Next.js will attempt to re-generate the page:
 		// https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
 		// - When a request comes in

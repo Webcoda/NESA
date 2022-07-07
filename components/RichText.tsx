@@ -70,6 +70,7 @@ function RichText(props: RichTextProps) {
 						<RichtextSectionComponent
 							linkedItem={linkedItem}
 							mappings={mappings}
+							linkedItems={linkedItems}
 						/>
 					)
 				}

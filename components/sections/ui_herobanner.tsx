@@ -4,7 +4,7 @@ import { Contentblock } from '@/models/contentblock'
 import { UiHerobanner } from '@/models/ui_herobanner'
 import { Weblinkext } from '@/models/weblinkext'
 import { getLinkFromLinkUI } from '@/utils'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { RichtextSectionProps } from '.'
 
 export const HomepageBanner = (props: RichtextSectionProps<UiHerobanner>) => {
@@ -20,14 +20,18 @@ export const HomepageBanner = (props: RichtextSectionProps<UiHerobanner>) => {
 	}
 
 	return (
-		<>
+		<div
+			data-kontent-item-id={linkedItem.system.id}
+			data-kontent-element-codename="web_content_rtb__content"
+		>
 			{linkedItem.elements.items.linkedItems.map((item: Contentblock) => {
 				const moreInfoLink = item.elements.more_info_link
 					.linkedItems[0] as Weblinkext
 				const { url } = getLinkFromLinkUI(moreInfoLink, mappings)
 				return (
-					<>
+					<Fragment key={item.system.id}>
 						<Banner
+							id={item.system.id}
 							name="teachers"
 							title={item.elements.title.value}
 							buttonLabel={moreInfoLink.elements.title.value}
@@ -41,10 +45,10 @@ export const HomepageBanner = (props: RichtextSectionProps<UiHerobanner>) => {
 								video={url}
 							/>
 						)}
-					</>
+					</Fragment>
 				)
 			})}
-		</>
+		</div>
 	)
 }
 

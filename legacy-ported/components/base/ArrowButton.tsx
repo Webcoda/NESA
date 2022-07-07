@@ -28,16 +28,39 @@ export interface ArrowButtonProps {
 	 * Arrow's font colour
 	 */
 	arrowColor?: string
+
+	// Kontent Smartlink codename
+	codenamePrefix?: string
+	codenameTitle?: string
 }
 
 export default function ArrowButton(props: ArrowButtonProps) {
-	const { prefix, title, path, className, fontColor, arrowColor } = props
+	const {
+		prefix,
+		title,
+		path,
+		className,
+		fontColor,
+		arrowColor,
+		codenamePrefix = '',
+		codenameTitle = '',
+	} = props
+	props
 
 	return (
 		<div className="arrow-btn">
 			<Link className={`arrow-btn__link ${className}`} href={path}>
-				{prefix && <p>{prefix}</p>}
-				<h3 style={{ color: fontColor }}>{title}</h3>
+				{prefix && (
+					<p data-kontent-element-codename={codenamePrefix}>
+						{prefix}
+					</p>
+				)}
+				<h3
+					style={{ color: fontColor }}
+					data-kontent-element-codename={codenameTitle}
+				>
+					{title}
+				</h3>
 				<div className="arrow-btn__label">
 					<i
 						className="material-icons nsw-material-icons"

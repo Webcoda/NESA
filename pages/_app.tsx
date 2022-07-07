@@ -19,12 +19,15 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 
 	const fontName = 'Montserrat'
 
-	let title = pageProps?.seo?.title || ''
+	let title =
+		pageProps?.seo?.title ||
+		pageProps?.data?.pageResponse?.item?.elements?.title?.value ||
+		''
 	let siteDescriptor = configObject?.item?.elements?.descriptor?.value || ''
 	if (title) {
 		title += ' | '
 	}
-	title += configObject?.item?.elements?.title?.value || ''
+	title += configObject?.item?.elements?.site_prefix?.value || ''
 	if (siteDescriptor) {
 		title = title + ' | ' + siteDescriptor
 	}

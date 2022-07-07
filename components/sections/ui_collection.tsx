@@ -38,6 +38,7 @@ export default function ui_collection(
 						url: url || '#',
 					},
 					colour: tileColor,
+					codenameHeadline: 'title',
 				}
 			},
 		)
@@ -56,6 +57,8 @@ export default function ui_collection(
 						url: url || '#',
 					},
 					colour: tileColor,
+					codenameTitle: 'title',
+					codenameBody: 'subtitle',
 				}
 			},
 		)
@@ -73,6 +76,7 @@ export default function ui_collection(
 		<SyllabusGroup
 			heading={linkedItem.elements.title.value}
 			items={renderCollection(collection)}
+			data-kontent-item-id={linkedItem.system.id}
 		/>
 	)
 }

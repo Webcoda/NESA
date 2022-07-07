@@ -15,9 +15,8 @@ export type LinkType = UiMenu | Weblinkint | Weblinkext
 
 export interface MappingParams {
 	slug: string[]
-	navigationItem?: IContentItemSystemAttributes
+	navigationItem?: IContentItem
 	contentItem?: IContentItemSystemAttributes
-	webPageItem?: IContentItem
 }
 
 export interface Mapping {
@@ -46,7 +45,6 @@ export interface KontentCurriculumResultData<
 	TKontentModel extends IContentItem<IContentItemElements>,
 > {
 	config: Responses.IViewContentItemResponse<WpHomepage>
-	page: TKontentModel
 	pageResponse: Responses.IViewContentItemResponse<TKontentModel>
 	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
 	// TODO: fix

@@ -2,13 +2,13 @@ import Link from '@/components/Link'
 import { UiMenu } from '@/models/ui_menu'
 import { Weblinkext } from '@/models/weblinkext'
 import { Weblinkint } from '@/models/weblinkint'
-import { Mapping } from '@/types'
+import { LinkType, Mapping } from '@/types'
 import getUrlFromMapping from '@/utils/getUrlFromMapping'
 import { ReactNode } from 'react'
 
 export interface AnchorProps {
 	className?: string
-	link: Weblinkext | Weblinkint | UiMenu
+	link: LinkType
 	mappings: Mapping[]
 	children?: ReactNode
 }

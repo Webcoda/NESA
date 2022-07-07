@@ -79,7 +79,7 @@ export default function SectionCard(props: SectionCardProps) {
 					className="section-card__item"
 				>
 					<div className="section-card__titles">
-						<h2>{title}</h2>
+						<h2 data-kontent-element-codename="title">{title}</h2>
 						{subtitle && <p>{subtitle}</p>}
 					</div>
 				</Grid>
@@ -107,11 +107,7 @@ export default function SectionCard(props: SectionCardProps) {
 				>
 					{tiles.map((tile) => {
 						const navigationItem = tile.elements.item.linkedItems[0]
-						console.log(
-							'🚀 ~ file: SectionCard.tsx ~ line 111 ~ {tiles.map ~ path',
-							navigationItem.system.codename,
-						)
-						const { url, isExternal } = getLinkFromLinkUI(
+						const { url = '' } = getLinkFromLinkUI(
 							navigationItem,
 							mappings,
 						)
@@ -128,6 +124,7 @@ export default function SectionCard(props: SectionCardProps) {
 								// 		.value as GridSize
 								// }
 								key={tile.system.id}
+								data-kontent-item-id={tile.system.id}
 							>
 								<ArrowButton
 									title={tile.elements.title.value}
@@ -135,6 +132,8 @@ export default function SectionCard(props: SectionCardProps) {
 									path={url}
 									fontColor={fontColor}
 									arrowColor={arrowColor}
+									codenamePrefix="subtitle"
+									codenameTitle="title"
 								/>
 							</Grid>
 						)

@@ -1,11 +1,11 @@
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
-import { WpStage } from '@/models/wp_stage'
 import type { KontentCurriculumResult, Mapping, Seo } from '@/types/index'
 import {
 	DeliveryClient,
 	IContentItem,
+	IContentItemElements,
 	Responses,
 	SortOrder,
 } from '@kentico/kontent-delivery'
@@ -100,6 +100,7 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 
 	for (const pageCodename of pagesCodenames) {
 		const currentItem = data.linkedItems[pageCodename]
+		if (!currentItem) continue
 		const pageSlug = parentSlug.concat(currentItem.elements.slug.value)
 		const currentItemContentWrapper =
 			currentItem.elements.web_content_rtb__content
@@ -107,9 +108,8 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 		paths.push({
 			params: {
 				slug: pageSlug,
-				navigationItem: currentItem.system, // will be ignored by next in getContentPaths
+				navigationItem: currentItem, // will be ignored by next in getContentPaths
 				contentItem: currentItemContentWrapper, // will be ignored by next in getContentPaths
-				webPageItem: currentItem,
 			},
 		})
 
@@ -131,7 +131,12 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	const data = await client
 		.item('homepage')
 		.depthParameter(10) // depends on the sitemap level (+1 for content type to download)
-		// .elementsParameter(['subpages', 'slug', 'content', 'content_type'])
+		.elementsParameter([
+			'subpages',
+			'slug',
+			'title',
+			'web_content_rtb__content',
+		])
 		.queryConfig({
 			usePreviewMode: preview,
 		})
@@ -143,9 +148,8 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 		{
 			params: {
 				slug: rootSlug,
-				navigationItem: data.item.system, // will be ignored by next in getContentPaths
+				navigationItem: data.item, // will be ignored by next in getContentPaths
 				contentItem: data.item.elements.web_content_rtb__content,
-				webPageItem: data.item,
 			},
 		},
 	]
@@ -208,7 +212,10 @@ function getTaxonomy(
 	return client.taxonomy(taxonomyGroup).toPromise().then(fnReturnData)
 }
 
-export async function getPageStaticPropsForPath(params, preview = false) {
+export async function getPageStaticPropsForPath(
+	params,
+	preview = false,
+): Promise<KontentCurriculumResult<IContentItem<IContentItemElements>>> {
 	const config = await loadWebsiteConfig(preview) // TODO could be cached
 	const mappings = await getSitemapMappings(preview) // TODO could be cached
 
@@ -220,16 +227,14 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 
 	const navigationItemSystemInfo =
 		pathMapping && pathMapping.params.navigationItem
-	const contentItemSystemInfo = pathMapping && pathMapping.params.contentItem
-	const webPageItem = pathMapping && pathMapping.params.webPageItem
 
-	if (!navigationItemSystemInfo?.codename) {
+	if (!navigationItemSystemInfo?.system.codename) {
 		return undefined
 	}
 
 	// TODO could be loaded right in getSitemapMappings
 	const seoData: Seo = await client
-		.item(navigationItemSystemInfo.codename)
+		.item(navigationItemSystemInfo.system.codename)
 		.elementsParameter([
 			'seo__title',
 			'label',
@@ -264,9 +269,11 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		}))
 
 	// Loading content data
-	const pageResponse = await client
-		.item(webPageItem.system.codename)
-		.depthParameter(5)
+	const pageResponse: Responses.IViewContentItemResponse<
+		IContentItem<IContentItemElements>
+	> = await client
+		.item(navigationItemSystemInfo.system.codename)
+		.depthParameter(2)
 		.queryConfig({
 			usePreviewMode: preview,
 		})
@@ -278,17 +285,18 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 		mappings: mappings,
 		data: {
 			config: config,
-			page: webPageItem,
 			pageResponse,
 		},
 	}
 
-	const isHomePage = webPageItem.system.type === 'wp_homepage'
-	const isStagePage = webPageItem.system.type === 'wp_stage'
-	const isSyllabusPage = webPageItem.system.type === 'page_kla_syllabus'
-	const isGlossaryPage = webPageItem.system.type === 'page_glossary'
+	const isHomePage = navigationItemSystemInfo.system.type === 'wp_homepage'
+	const isStagePage = navigationItemSystemInfo.system.type === 'wp_stage'
+	const isSyllabusPage =
+		navigationItemSystemInfo.system.type === 'page_kla_syllabus'
+	const isGlossaryPage =
+		navigationItemSystemInfo.system.type === 'page_glossary'
 	const isTeachingAdvicePage =
-		webPageItem.system.type === 'page_teaching_advice'
+		navigationItemSystemInfo.system.type === 'page_teaching_advice'
 
 	if (isHomePage) {
 		const _result = {
@@ -303,7 +311,6 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			...result,
 			data: {
 				config: result.data.config,
-				page: result.data.page,
 				pageResponse,
 				syllabuses: null,
 				keyLearningAreas: null,
@@ -313,14 +320,12 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 			},
 		}
 
-		const page = result.data.page as WpStage
-
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
-			depth: 6,
+			depth: 1,
 			containsFilter: {
 				element: 'elements.stages__stages',
-				value: page.elements.stages__stages.value.map(
+				value: pageResponse.item.elements.stages__stages.value.map(
 					(item) => item.codename,
 				),
 			},
@@ -329,7 +334,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 
 		// all syllabus tags for selected stage (coming from each syllabus in syllabuses)
 		const stageSyllabusTags = syllabuses.items.flatMap((item) =>
-			item.elements._syllabus.value.map((v) => v.codename),
+			item.elements.syllabus.value.map((v) => v.codename),
 		)
 
 		const [glossaries, stages, stageGroups, keyLearningAreas] =
@@ -341,6 +346,7 @@ export async function getPageStaticPropsForPath(params, preview = false) {
 						value: stageSyllabusTags,
 					},
 					preview,
+					depth: 0,
 				}),
 				getTaxonomy('stage'),
 				getTaxonomy('stage_group'),

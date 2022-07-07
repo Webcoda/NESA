@@ -5,7 +5,7 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
  */
 export type Assessment = IContentItem<{
 	hsc_examinations: Elements.RichTextElement
-	_syllabus: Elements.TaxonomyElement
+	syllabus: Elements.TaxonomyElement
 	pbd_3: Elements.RichTextElement
 	sba_12: Elements.RichTextElement
 	lifeskills: Elements.RichTextElement

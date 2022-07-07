@@ -10,7 +10,7 @@ import { UiCardNewsletterSubscription } from '@/models/ui_card_newsletter_subscr
 import NewsletterSubscribeBox from '@/components/sections/NewsletterSubscribeBox'
 import { UiCards } from '@/models/ui_cards'
 
-export default function LinkCard(props: RichtextSectionProps<UiCards>) {
+export default function ui_cards(props: RichtextSectionProps<UiCards>) {
 	const { linkedItem, mappings } = props
 
 	const gapVertical = 26
@@ -29,12 +29,14 @@ export default function LinkCard(props: RichtextSectionProps<UiCards>) {
 					className=""
 					link={url}
 					linkTarget={isExternal ? '_blank' : ''}
-				></LinkCardLegacy>
+					data-kontent-item-id={item.system.id}
+				/>
 			)
 		}
 		return (
 			<NewsletterSubscribeBox
 				section={item as UiCardNewsletterSubscription}
+				data-kontent-item-id={item.system.id}
 			/>
 		)
 	}
@@ -71,6 +73,7 @@ export default function LinkCard(props: RichtextSectionProps<UiCards>) {
 								sm={12}
 								md={6}
 								lg={6}
+								data-kontent-item-id={item.system.id}
 							>
 								{renderTile(item)}
 							</MuiGrid>

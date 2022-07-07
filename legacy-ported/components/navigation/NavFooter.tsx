@@ -11,7 +11,6 @@ import { CollectionWeblink } from '@/models/collection_weblink'
 import { UiMenu } from '@/models/ui_menu'
 import { Weblinkext } from '@/models/weblinkext'
 import { Mapping } from '@/types'
-import { getLinkFromLinkUI } from '@/utils'
 import { flattenCollectionWebLinks } from '@/utils/collectionWebLinks'
 import { Icon } from '@iconify/react'
 
@@ -24,10 +23,10 @@ interface SectionProps {
 }
 
 const FooterGroup = (props: SectionProps) => {
-	const { sections, mappings } = props
+	const { sections, mappings, ...rest } = props
 
 	return (
-		<div className="nav-footer-group">
+		<div {...rest} className="nav-footer-group">
 			{sections.map((section) => {
 				const rowCount = getRowCount(section.links.length)
 
@@ -56,14 +55,18 @@ const FooterGroup = (props: SectionProps) => {
 						<div className="nav-footer-group__section-body">
 							{columns.map((c) => (
 								<ul
-									className="nav-footer-group__section-column"
 									key={c[0].system.id}
+									className="nav-footer-group__section-column"
+									data-kontent-item-id={c[0].system.id}
 								>
 									{c.map((action) => {
 										return (
 											<li
-												className="nav-footer-group__section-link"
 												key={action.system.id}
+												className="nav-footer-group__section-link"
+												data-kontent-item-id={
+													action.system.id
+												}
 											>
 												<Anchor
 													key={action.system.id}
@@ -103,15 +106,23 @@ export const PureNavFooter = (props: NavPageProps): JSX.Element => {
 	)
 	const { mappings } = props
 	return (
-		<footer className="nav-footer nsw-container">
+		<footer
+			className="nav-footer nsw-container"
+			data-kontent-item-id={props.data.config.item.system.id}
+		>
 			<div className="nav-footer__nesa">
-				<RichText
-					{...props}
-					linkedItems={props.data.pageResponse.linkedItems}
-					className="nav-footer__nesa"
-					richTextElement={topSections}
-				/>
-				<div className="nav-footer__icons">
+				<div data-kontent-element-codename="footer_top_content">
+					<RichText
+						{...props}
+						linkedItems={props.data.pageResponse.linkedItems}
+						className="nav-footer__nesa"
+						richTextElement={topSections}
+					/>
+				</div>
+				<div
+					className="nav-footer__icons"
+					data-kontent-element-codename="social_links"
+				>
 					{socialMenus.map((item: Weblinkext) => {
 						return (
 							<Anchor
@@ -149,6 +160,7 @@ export const PureNavFooter = (props: NavPageProps): JSX.Element => {
 								key={g.system.id}
 								sections={sections}
 								mappings={props.mappings}
+								data-kontent-item-id={g.system.id}
 							/>
 						)
 					})}

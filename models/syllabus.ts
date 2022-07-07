@@ -5,7 +5,7 @@ import { IContentItem, Elements } from '@kentico/kontent-delivery'
  */
 export type Syllabus = IContentItem<{
 	organisationofcontent: Elements.RichTextElement
-	_syllabus: Elements.TaxonomyElement
+	syllabus: Elements.TaxonomyElement
 	coursenumbers: Elements.LinkedItemsElement<IContentItem>
 	doredirect: Elements.MultipleChoiceElement
 	web_content_rtb__content: Elements.RichTextElement
@@ -34,7 +34,7 @@ export type Syllabus = IContentItem<{
 	to_date: Elements.DateTimeElement
 	title: Elements.TextElement
 	redirecturl: Elements.TextElement
-	_focus_area_continum_groups: Elements.LinkedItemsElement<IContentItem>
+	focus_area_continum_groups: Elements.LinkedItemsElement<IContentItem>
 	key_learning_area__items: Elements.TaxonomyElement
 	eligibility: Elements.RichTextElement
 	corequisites: Elements.LinkedItemsElement<IContentItem>

@@ -21,8 +21,8 @@ export const projectModel = {
 					codename: 'title',
 					name: '📜 Title',
 				},
-				_syllabus: {
-					codename: '_syllabus',
+				syllabus: {
+					codename: 'syllabus',
 					name: '🏷️ Syllabus',
 				},
 				stages__stages: {
@@ -43,8 +43,8 @@ export const projectModel = {
 			codename: 'accesscontentitem',
 			name: '📄 Syllabus Access Content Item',
 			elements: {
-				_syllabus: {
-					codename: '_syllabus',
+				syllabus: {
+					codename: 'syllabus',
 					name: '🏷️ Syllabus',
 				},
 				stages__stage_years: {
@@ -89,8 +89,8 @@ export const projectModel = {
 					codename: 'hsc_examinations',
 					name: '📜 HSC examinations',
 				},
-				_syllabus: {
-					codename: '_syllabus',
+				syllabus: {
+					codename: 'syllabus',
 					name: '🏷️ Syllabus',
 				},
 				pbd_3: {
@@ -473,41 +473,41 @@ export const projectModel = {
 			codename: 'outcome',
 			name: '📃 Syllabus Outcome',
 			elements: {
-				code: {
-					codename: 'code',
-					name: '📜 Code',
-				},
 				description: {
 					codename: 'description',
 					name: '📜 Description',
-				},
-				isoverarching: {
-					codename: 'isoverarching',
-					name: '📜 Is Overarching',
-				},
-				stages__stage_groups: {
-					codename: 'stages__stage_groups',
-					name: '🏷️ Stage Groups',
-				},
-				stages__stages: {
-					codename: 'stages__stages',
-					name: '🏷️ Stages',
-				},
-				stages__stage_years: {
-					codename: 'stages__stage_years',
-					name: '🏷️ Stage Years',
-				},
-				_syllabus: {
-					codename: '_syllabus',
-					name: '🏷️ Syllabus',
 				},
 				syllabus_type__items: {
 					codename: 'syllabus_type__items',
 					name: '🏷️ Syllabus Type',
 				},
+				stages__stage_years: {
+					codename: 'stages__stage_years',
+					name: '🏷️ Stage Years',
+				},
+				code: {
+					codename: 'code',
+					name: '📜 Code',
+				},
+				syllabus: {
+					codename: 'syllabus',
+					name: '🏷️ Syllabus',
+				},
 				relatedlifeskillsoutcomes: {
 					codename: 'relatedlifeskillsoutcomes',
 					name: '📃 Related Life Skills Outcomes',
+				},
+				stages__stages: {
+					codename: 'stages__stages',
+					name: '🏷️ Stages',
+				},
+				stages__stage_groups: {
+					codename: 'stages__stage_groups',
+					name: '🏷️ Stage Groups',
+				},
+				isoverarching: {
+					codename: 'isoverarching',
+					name: '📜 Is Overarching',
 				},
 			},
 		},
@@ -519,8 +519,8 @@ export const projectModel = {
 					codename: 'organisationofcontent',
 					name: '📜 Organisation of content',
 				},
-				_syllabus: {
-					codename: '_syllabus',
+				syllabus: {
+					codename: 'syllabus',
 					name: '🏷️ Syllabus',
 				},
 				coursenumbers: {
@@ -635,8 +635,8 @@ export const projectModel = {
 					codename: 'redirecturl',
 					name: '🔗 Redirect url',
 				},
-				_focus_area_continum_groups: {
-					codename: '_focus_area_continum_groups',
+				focus_area_continum_groups: {
+					codename: 'focus_area_continum_groups',
 					name: '📈 Focus area continum groups',
 				},
 				key_learning_area__items: {

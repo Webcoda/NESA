@@ -3,11 +3,10 @@ import RichText from '@/components/RichText'
 import UnknownComponent from '@/components/UnknownComponent'
 import { WpLearningareas as WpLearningareasModel } from '@/models/wp_learningareas'
 import { CommonPageProps } from '@/types'
-import { Box } from '@material-ui/core'
-import get from 'lodash.get'
 
 function WpLearningAreas(props: CommonPageProps<WpLearningareasModel>) {
-	const { page, pageResponse } = props.data
+	const { pageResponse } = props.data
+	const page = pageResponse.item
 
 	if (!page) {
 		return (
@@ -19,17 +18,12 @@ function WpLearningAreas(props: CommonPageProps<WpLearningareasModel>) {
 
 	return (
 		<Layout {...props}>
-			<Box>
-				<RichText
-					{...props}
-					linkedItems={pageResponse.linkedItems}
-					richTextElement={get(
-						page,
-						'elements.web_content_rtb__content',
-						null,
-					)}
-				/>
-			</Box>
+			<RichText
+				className="cms-content-formatting"
+				mappings={props.mappings}
+				linkedItems={pageResponse.linkedItems}
+				richTextElement={page.elements.web_content_rtb__content}
+			/>
 		</Layout>
 	)
 }

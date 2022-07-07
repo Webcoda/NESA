@@ -30,6 +30,10 @@ export interface SyllabusCardProps {
 	colour?: SyllabusCardColor
 
 	className?: string
+
+	// Kontent SmartLink
+	codenameHeadline?: string
+	codenameBody?: string
 }
 
 /**
@@ -38,7 +42,15 @@ export interface SyllabusCardProps {
  * @constructor
  */
 const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
-	const { headline, body, url, colour, className } = props
+	const {
+		headline,
+		body,
+		url,
+		colour,
+		className,
+		codenameHeadline = '',
+		codenameBody = '',
+	} = props
 
 	let shouldBeDisabled = false
 
@@ -88,8 +100,20 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 			<div className="syllabus-card section-card-disabled">
 				<div className="syllabus-card__content">
 					<div className="syllabus-card__content-wrapper">
-						<h2 className="syllabus-card__headline">{headline}</h2>
-						{body && <p className="syllabus-card__body">{body}</p>}
+						<h2
+							className="syllabus-card__headline"
+							data-kontent-element-codename={codenameHeadline}
+						>
+							{headline}
+						</h2>
+						{body && (
+							<p
+								className="syllabus-card__body"
+								data-kontent-element-codename={body}
+							>
+								{body}
+							</p>
+						)}
 					</div>
 					<span className="syllabus-card__link">
 						<i className="material-icons nsw-material-icons">
@@ -115,7 +139,10 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 				<CardContent className="syllabus-card__content">
 					<div className="syllabus-card__content-wrapper">
 						<h2 className="syllabus-card__headline">
-							<span style={{ verticalAlign: 'middle' }}>
+							<span
+								style={{ verticalAlign: 'middle' }}
+								data-kontent-element-codename={codenameHeadline}
+							>
 								{headline}
 							</span>
 							{url.external && (
@@ -129,7 +156,10 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 							)}
 						</h2>
 						{body && (
-							<SanitisedHTMLContainer className="syllabus-card__body">
+							<SanitisedHTMLContainer
+								className="syllabus-card__body"
+								data-kontent-element-codename={codenameBody}
+							>
 								{body}
 							</SanitisedHTMLContainer>
 						)}

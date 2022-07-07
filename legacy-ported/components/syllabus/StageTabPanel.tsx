@@ -18,11 +18,12 @@ export const StageTabPanel = (props: StageTabPanelProps) => {
 	const klaWithSyllabuses = learningAreas.map((kla) => {
 		return {
 			kla: kla.codename,
-			syllabuses: syllabuses.filter((syllabus) =>
-				syllabus.elements.key_learning_area__items.value.some(
-					(v) => v.codename === kla.codename,
-				),
-			),
+			syllabuses:
+				syllabuses?.filter((syllabus) =>
+					syllabus.elements.key_learning_area__items.value.some(
+						(v) => v.codename === kla.codename,
+					),
+				) || [],
 		}
 	})
 

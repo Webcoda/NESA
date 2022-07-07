@@ -20,13 +20,16 @@ const NewsletterSubscribeBox = (
 		buttonLabel,
 		formAction,
 		createSendId,
+		...rest
 	} = props
 	return (
-		<Paper className={`notice-list ${className}`} elevation={3}>
+		<Paper {...rest} className={`notice-list ${className}`} elevation={3}>
 			<div className="notice-list__footer">
 				<Grid container item direction="column">
-					<h3>{title}</h3>
-					<p>{inputLabel}</p>
+					<h3 data-kontent-element-codename="title">{title}</h3>
+					<p data-kontent-element-codename="input_label">
+						{inputLabel}
+					</p>
 					<form
 						className="js-cm-form"
 						id="subForm"
@@ -34,6 +37,7 @@ const NewsletterSubscribeBox = (
 						action={formAction}
 						method="post"
 						data-id={createSendId}
+						data-kontent-element-codename="createsend_id"
 					>
 						<div className="emailbox">
 							<input
@@ -46,6 +50,7 @@ const NewsletterSubscribeBox = (
 							<button
 								type="submit"
 								className="emailbox__submit button nsw-button nsw-button--primary"
+								data-kontent-element-codename="buttonLabel"
 							>
 								{buttonLabel}
 							</button>

@@ -6,10 +6,11 @@ export interface NewsletterSubscribeBoxProps {
 }
 
 export const NewsletterSubscribeBox = (props: NewsletterSubscribeBoxProps) => {
-	const { section } = props
+	const { section, ...rest } = props
 
 	return (
 		<LegacyNewsletterSubscribeBox
+			{...rest}
 			title={section.elements.title.value}
 			inputLabel={section.elements.input_label.value}
 			buttonLabel={section.elements.button_label.value}

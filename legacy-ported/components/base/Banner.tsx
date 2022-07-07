@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 export interface IBannerProps {
+	id: string
 	name: string
 	title: string
 	description?: string
@@ -11,12 +12,17 @@ export interface IBannerProps {
 }
 
 export default function Banner(props: IBannerProps) {
-	const { name, buttonLabel, title, description, onClick } = props
+	const { id, name, buttonLabel, title, description, onClick } = props
 
 	return (
-		<div className={`banner banner__${name}`}>
+		<div className={`banner banner__${name}`} data-kontent-item-id={id}>
 			<Grid className="banner__content" container item xs={12} md={6}>
-				<h3 className="banner__title">{title}</h3>
+				<h3
+					className="banner__title"
+					data-kontent-element-codename="title"
+				>
+					{title}
+				</h3>
 				{description && (
 					<p className="banner__description">{description}</p>
 				)}
@@ -24,6 +30,7 @@ export default function Banner(props: IBannerProps) {
 					type="button"
 					onClick={onClick}
 					className="banner__button nsw-button nsw-button--primary"
+					data-kontent-element-codename="more_info_link"
 				>
 					{buttonLabel}
 					<ChevronRightIcon />

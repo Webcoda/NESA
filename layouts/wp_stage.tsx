@@ -18,14 +18,13 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 	const router = useRouter()
 
 	const {
-		page,
 		pageResponse,
 		stageGroups: allStageGroups,
 		stages: allStages,
 		keyLearningAreas: allKeyLearningAreas,
 		syllabuses: allSyllabuses,
 	} = props.data
-
+	const page = pageResponse.item
 	const selectedStages = page.elements.stages__stages.value
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
@@ -145,7 +144,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={pageResponse.linkedItems}
+										linkedItems={allSyllabuses.linkedItems}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={
 											syl.elements
@@ -163,7 +162,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={pageResponse.linkedItems}
+										linkedItems={allSyllabuses.linkedItems}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={syl.elements.rationale}
 									/>
@@ -178,7 +177,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={pageResponse.linkedItems}
+										linkedItems={allSyllabuses.linkedItems}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={syl.elements.aim}
 									/>
