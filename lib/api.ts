@@ -273,7 +273,7 @@ export async function getPageStaticPropsForPath(
 		IContentItem<IContentItemElements>
 	> = await client
 		.item(navigationItemSystemInfo.system.codename)
-		.depthParameter(2)
+		.depthParameter(3)
 		.queryConfig({
 			usePreviewMode: preview,
 		})
@@ -322,7 +322,7 @@ export async function getPageStaticPropsForPath(
 
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
-			depth: 1,
+			depth: 2,
 			containsFilter: {
 				element: 'elements.stages__stages',
 				value: pageResponse.item.elements.stages__stages.value.map(

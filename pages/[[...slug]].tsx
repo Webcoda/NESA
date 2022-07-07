@@ -1,7 +1,6 @@
-import { limitDepth } from '@/utils'
+import { decycle } from 'cycle'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
-import safeJsonStringify from 'safe-json-stringify'
 import UnknownComponent from '../components/UnknownComponent'
 import pageLayouts from '../layouts'
 import { getPageStaticPropsForPath, getSitemapMappings } from '../lib/api'
@@ -74,7 +73,7 @@ export async function getStaticProps({ params, preview = false }) {
 			pageResponse,
 			stages,
 			stageGroups,
-			syllabuses: syllabuses,
+			syllabuses: syllabuses ? decycle(syllabuses) : null,
 			keyLearningAreas,
 		},
 		errorCode: !_props ? 404 : null,
@@ -83,7 +82,7 @@ export async function getStaticProps({ params, preview = false }) {
 	}
 
 	return {
-		props: JSON.parse(safeJsonStringify(props)),
+		props,
 		// Next.js will attempt to re-generate the page:
 		// https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
 		// - When a request comes in
