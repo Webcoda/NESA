@@ -20,7 +20,7 @@ export const StageTabPanel = (props: StageTabPanelProps) => {
 			kla: kla.codename,
 			syllabuses:
 				syllabuses?.filter((syllabus) =>
-					syllabus.elements.key_learning_area__items.value.some(
+					syllabus?.elements?.key_learning_area__items.value.some(
 						(v) => v.codename === kla.codename,
 					),
 				) || [],

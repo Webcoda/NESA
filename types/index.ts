@@ -1,3 +1,4 @@
+import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { UiMenu } from '@/models/ui_menu'
 import { Weblinkext } from '@/models/weblinkext'
@@ -7,6 +8,7 @@ import {
 	IContentItem,
 	IContentItemElements,
 	IContentItemSystemAttributes,
+	ITaxonomyTerms,
 	Responses,
 } from '@kentico/kontent-delivery'
 import { ReactNode } from 'react'
@@ -47,21 +49,11 @@ export interface KontentCurriculumResultData<
 	config: Responses.IViewContentItemResponse<WpHomepage>
 	pageResponse: Responses.IViewContentItemResponse<TKontentModel>
 	syllabuses?: Responses.IListContentItemsResponse<Syllabus>
-	// TODO: fix
-	// keyLearningAreas?: Responses.IListContentItemsResponse<KeyLearningArea>
-	keyLearningAreas?: any
-
-	// TODO: fix
-	// glossaries?: Responses.IListContentItemsResponse<Glossary>
-	glossaries?: any
-
-	// TODO: fix
-	stages?: any
-	// stages?: Responses.IListContentItemsResponse<StageWithAvailability>
-
-	// TODO: fix
-	stageGroups?: any
-	// stageGroups?: Responses.IListContentItemsResponse<StageGroup>
+	keyLearningAreas?: ITaxonomyTerms[]
+	glossaries?: Responses.IListContentItemsResponse<Glossary>
+	stages?: ITaxonomyTerms[]
+	stageGroups?: ITaxonomyTerms[]
+	allSyllabusesForTag?: Responses.IListContentItemsResponse<Syllabus>
 }
 
 export interface KontentCurriculumResult<

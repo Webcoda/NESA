@@ -1,9 +1,16 @@
-import { decycle } from 'cycle'
+import stringify from 'fast-safe-stringify'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import UnknownComponent from '../components/UnknownComponent'
 import pageLayouts from '../layouts'
 import { getPageStaticPropsForPath, getSitemapMappings } from '../lib/api'
+function replacer(key, value) {
+	// Remove the circular structure
+	if (value === '[Circular]') {
+		return
+	}
+	return value
+}
 
 function Page(props) {
 	const router = useRouter()
@@ -11,6 +18,8 @@ function Page(props) {
 	if (props.errorCode) {
 		return <Error statusCode={props.errorCode} />
 	}
+
+	// console.log(JSON.parse(props.data.syllabuses, replacer))
 
 	// If the page is not yet generated, this will be displayed
 	// initially until getStaticProps() finishes running
@@ -55,34 +64,13 @@ export async function getStaticPaths(ctx) {
 
 export async function getStaticProps({ params, preview = false }) {
 	const _props = await getPageStaticPropsForPath(params, preview)
-	const { seo, mappings, data } = _props || {}
-	const {
-		config,
-		pageResponse,
-		syllabuses = null,
-		stageGroups = null,
-		stages = null,
-		keyLearningAreas = null,
-	} = data || {}
-
-	const props = {
-		seo,
-		mappings,
-		data: {
-			config,
-			pageResponse,
-			stages,
-			stageGroups,
-			syllabuses: syllabuses ? decycle(syllabuses) : null,
-			keyLearningAreas,
-		},
-		errorCode: !_props ? 404 : null,
-		params,
-		preview,
-	}
-
 	return {
-		props,
+		props: JSON.parse(
+			stringify(_props, replacer, 0, {
+				edgesLimit: Number.MAX_SAFE_INTEGER,
+				depthLimit: Number.MAX_SAFE_INTEGER,
+			}),
+		),
 		// Next.js will attempt to re-generate the page:
 		// https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
 		// - When a request comes in

@@ -17,7 +17,12 @@ const CoursePerformance = (props: CoursePerformanceProps): JSX.Element => {
 	return (
 		<Grid className="syllabus-content-section">
 			{sections?.map((sec: Assessment) => (
-				<Grid key={sec.system.id} className="assessment__container">
+				<Grid
+					key={sec.system.id}
+					className="assessment__container"
+					data-kontent-item-id={sec.system.id}
+					data-konetent-element-codename="assesment"
+				>
 					<CustomAccordion
 						title={
 							'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'

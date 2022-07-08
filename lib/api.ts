@@ -1,6 +1,7 @@
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
+import { WpStage } from '@/models/wp_stage'
 import type { KontentCurriculumResult, Mapping, Seo } from '@/types/index'
 import {
 	DeliveryClient,
@@ -10,6 +11,7 @@ import {
 	SortOrder,
 } from '@kentico/kontent-delivery'
 import get from 'lodash.get'
+import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
@@ -173,6 +175,7 @@ function getAllItemsByType<T extends IContentItem>({
 	type,
 	depth = 2,
 	order = null,
+	elementParameter,
 	containsFilter = null,
 	allFilter = null,
 	anyFilter = null,
@@ -181,6 +184,7 @@ function getAllItemsByType<T extends IContentItem>({
 	type: string
 	depth?: number
 	order?: { element: string; sortOrder: SortOrder }
+	elementParameter?: string[]
 	containsFilter?: FilterParams
 	allFilter?: FilterParams
 	anyFilter?: FilterParams
@@ -189,6 +193,9 @@ function getAllItemsByType<T extends IContentItem>({
 	let temp = client.items<T>().type(type).depthParameter(depth)
 	if (order) {
 		temp = temp.orderParameter(order.element, order.sortOrder)
+	}
+	if (elementParameter) {
+		temp = temp.elementsParameter(elementParameter)
 	}
 	if (containsFilter) {
 		temp = temp.containsFilter(containsFilter.element, containsFilter.value)
@@ -268,12 +275,19 @@ export async function getPageStaticPropsForPath(
 			),
 		}))
 
+	const PAGE_RESPONSE_DEPTH = {
+		wp_stagegroup: 2,
+	}
+
+	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.system.type]
+	depth = depth == undefined ? 3 : depth
+
 	// Loading content data
 	const pageResponse: Responses.IViewContentItemResponse<
 		IContentItem<IContentItemElements>
 	> = await client
 		.item(navigationItemSystemInfo.system.codename)
-		.depthParameter(3)
+		.depthParameter(depth)
 		.queryConfig({
 			usePreviewMode: preview,
 		})
@@ -310,13 +324,13 @@ export async function getPageStaticPropsForPath(
 		const _result: KontentCurriculumResult<IContentItem> = {
 			...result,
 			data: {
-				config: result.data.config,
-				pageResponse,
+				...result.data,
 				syllabuses: null,
 				keyLearningAreas: null,
 				glossaries: null,
 				stages: null,
 				stageGroups: null,
+				allSyllabusesForTag: null,
 			},
 		}
 
@@ -337,27 +351,39 @@ export async function getPageStaticPropsForPath(
 			item.elements.syllabus.value.map((v) => v.codename),
 		)
 
-		const [glossaries, stages, stageGroups, keyLearningAreas] =
-			await Promise.all([
-				getAllItemsByType<Glossary>({
-					type: 'glossary',
-					anyFilter: {
-						element: 'elements.syllabus',
-						value: stageSyllabusTags,
-					},
-					preview,
-					depth: 0,
-				}),
-				getTaxonomy('stage'),
-				getTaxonomy('stage_group'),
-				getTaxonomy('key_learning_area'),
-			])
+		const [
+			glossaries,
+			stages,
+			stageGroups,
+			keyLearningAreas,
+			allSyllabusesForTag,
+		] = await Promise.all([
+			getAllItemsByType<Glossary>({
+				type: 'glossary',
+				anyFilter: {
+					element: 'elements.syllabus',
+					value: stageSyllabusTags,
+				},
+				preview,
+				depth: 0,
+			}),
+			getTaxonomy('stage'),
+			getTaxonomy('stage_group'),
+			getTaxonomy('key_learning_area'),
+			getAllItemsByType<Syllabus>({
+				type: 'syllabus',
+				elementParameter: ['title', 'syllabus'],
+				preview,
+				depth: 0,
+			}),
+		])
 
 		_result.data.syllabuses = syllabuses
 		_result.data.glossaries = glossaries
 		_result.data.stages = stages.taxonomy.terms
 		_result.data.stageGroups = stageGroups.taxonomy.terms
 		_result.data.keyLearningAreas = keyLearningAreas.taxonomy.terms
+		_result.data.allSyllabusesForTag = allSyllabusesForTag
 		return _result
 	}
 	// else if (isStagePage || isSyllabusPage || isGlossaryPage) {

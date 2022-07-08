@@ -1,3 +1,4 @@
+import { getDataAttributesFromProps } from '@/utils'
 import React, { ReactNode } from 'react'
 import SyllabusCard, { SyllabusCardProps } from './SyllabusCard'
 
@@ -14,8 +15,9 @@ export interface SyllabusGroupProps {
 const SyllabusGroup = (props: SyllabusGroupProps): JSX.Element => {
 	const { heading, items } = props
 
+	const dataAttributes = getDataAttributesFromProps(props)
 	return (
-		<div className="syllabus-group">
+		<div {...dataAttributes} className="syllabus-group">
 			{typeof heading === 'string' && heading && (
 				<h2
 					className="syllabus-group__heading"

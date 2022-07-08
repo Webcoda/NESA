@@ -44,7 +44,14 @@ export interface GlossaryHeaderProps {
  * @constructor
  */
 const GlossaryHeader = (props: GlossaryHeaderProps): JSX.Element => {
-	const { disabled, selected, onSelect, startSearchTerm = null, onSearch, hideExplanationText } = props
+	const {
+		disabled,
+		selected,
+		onSelect,
+		startSearchTerm = null,
+		onSearch,
+		hideExplanationText,
+	} = props
 
 	const [searchText, setSearchText] = useState(startSearchTerm)
 	const [clearSearch, setClearSearch] = useState(false)
@@ -91,7 +98,11 @@ const GlossaryHeader = (props: GlossaryHeaderProps): JSX.Element => {
 				}
 				endAdornment={
 					clearSearch ? (
-						<InputAdornment position="end" onClick={handleClearSearch} className="search-bar__clear">
+						<InputAdornment
+							position="end"
+							onClick={handleClearSearch}
+							className="search-bar__clear"
+						>
 							<ClearIcon />
 						</InputAdornment>
 					) : (
@@ -115,8 +126,9 @@ const GlossaryHeader = (props: GlossaryHeaderProps): JSX.Element => {
 			</div>
 			{!hideExplanationText && (
 				<p>
-					The glossary draws on the NSW syllabus glossaries and the English glossary developed by the
-					Australian Curriculum, Assessment and Reporting Authority.
+					The glossary draws on the NSW syllabus glossaries and the
+					English glossary developed by the Australian Curriculum,
+					Assessment and Reporting Authority.
 				</p>
 			)}
 		</div>

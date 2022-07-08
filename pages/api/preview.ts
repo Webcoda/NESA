@@ -2,7 +2,9 @@ import { getSitemapMappings } from '../../lib/api'
 import { getUrlFromMapping } from '../../utils'
 const setCookieSameSite = (res, value) => {
 	const cookies = res.getHeader('Set-Cookie')
-	const updatedCookies = cookies?.map((cookie) => cookie.replace('SameSite=Lax', `SameSite=${value}; Secure;`))
+	const updatedCookies = cookies?.map((cookie) =>
+		cookie.replace('SameSite=Lax', `SameSite=${value}; Secure;`),
+	)
 	res.setHeader('Set-Cookie', updatedCookies)
 }
 
@@ -20,8 +22,12 @@ export default async function preview(req, res) {
 
 	const redirectItemCodename = req.query.redirectItemCodename
 	if (redirectItemCodename) {
-		const mappings = await getSitemapMappings()
+		const mappings = await getSitemapMappings(true)
 		const redirectTo = getUrlFromMapping(mappings, redirectItemCodename)
+		console.log(
+			'🚀 ~ file: preview.ts ~ line 25 ~ preview ~ redirectTo',
+			redirectTo,
+		)
 		res.redirect(redirectTo)
 		return
 	}

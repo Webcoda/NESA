@@ -46,7 +46,7 @@ export interface RichTextProps {
 }
 
 function RichText(props: RichTextProps) {
-	const { richTextElement, mappings } = props
+	const { richTextElement, mappings, ...rest } = props
 	const linkedItems =
 		props.linkedItems || get(props, 'data.page.linkedItems', [])
 
@@ -55,12 +55,16 @@ function RichText(props: RichTextProps) {
 
 	return (
 		<RichTextComponent
+			{...rest}
 			className={classNames(classes.richText, props.className)}
 			richTextElement={richTextElement}
 			linkedItems={linkedItems}
 			mappings={mappings}
 			resolveLinkedItem={(linkedItem, domNode, domToReact) => {
-				console.log(linkedItem?.system?.type)
+				console.log(
+					'🚀 ~ file: RichText.tsx ~ line 63 ~ RichText ~ linkedItem',
+					linkedItem?.system?.type,
+				)
 				if (!linkedItem) return domToReact([domNode])
 				const RichtextSectionComponent =
 					rteSections[linkedItem.system.type]
@@ -68,6 +72,7 @@ function RichText(props: RichTextProps) {
 				if (RichtextSectionComponent) {
 					return (
 						<RichtextSectionComponent
+							data-kontent-item-id={linkedItem.system.id}
 							linkedItem={linkedItem}
 							mappings={mappings}
 							linkedItems={linkedItems}

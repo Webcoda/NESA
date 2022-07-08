@@ -5,30 +5,49 @@ import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerform
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
+import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
 import { Assessment } from '@/models/assessment'
 import { Syllabus } from '@/models/syllabus'
 import { WpStage as WpStageModel } from '@/models/wp_stage'
 import { CommonPageProps } from '@/types'
 import { getTagFromYears } from '@/utils'
+import { useTheme } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 function WpStage(props: CommonPageProps<WpStageModel>) {
 	const router = useRouter()
-
+	const { mappings } = props
 	const {
 		pageResponse,
 		stageGroups: allStageGroups,
 		stages: allStages,
 		keyLearningAreas: allKeyLearningAreas,
-		syllabuses: allSyllabuses,
+		syllabuses: syllabusesForThePage,
+		glossaries: allGlossaries,
+		allSyllabusesForTag,
 	} = props.data
-	const page = pageResponse.item
-	const selectedStages = page.elements.stages__stages.value
+	const page: WpStageModel = pageResponse.item
+
+	const title = page.elements.title.value
+
+	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
+	// const terms = convertGlossaryToIGlossary(allGlossaries.items)
+
+	const stageId = page.elements.stages__stages.value[0].codename
+
+	const theme = useTheme()
+	// const imageSizes = `${theme.breakpoints.values.md}px`
+	const selectedStages = [stageId]
+
 	const initialTab = null
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
+
+	// const [glossaryHeaderProps, glossaryFilter] = useGlossary({
+	// 	sections: terms,
+	// })
 
 	// Methods
 	const onStagesHeaderConfirm = (stageCodenames: string[]) => {
@@ -111,9 +130,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 						}
 						title={page.elements.title.value}
 						area=""
-						selectedStages={selectedStages.map(
-							(stage) => stage.codename,
-						)}
+						selectedStages={selectedStages}
 						stageGroups={allStageGroups}
 						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={() => {}}
@@ -140,11 +157,15 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								id={syllabusTabs[0].id}
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreas}
-								syllabuses={allSyllabuses.items}
+								syllabuses={syllabusesForThePage.items}
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={allSyllabuses.linkedItems}
+										data-kontent-item-id={syl.system.id}
+										data-kontent-element-codename="web_content_rtb__content"
+										linkedItems={
+											syllabusesForThePage.linkedItems
+										}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={
 											syl.elements
@@ -158,11 +179,15 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								id={syllabusTabs[1].id}
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreas}
-								syllabuses={allSyllabuses.items}
+								syllabuses={syllabusesForThePage.items}
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={allSyllabuses.linkedItems}
+										data-kontent-item-id={syl.system.id}
+										data-kontent-element-codename="rationale"
+										linkedItems={
+											syllabusesForThePage.linkedItems
+										}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={syl.elements.rationale}
 									/>
@@ -173,11 +198,15 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								id={syllabusTabs[2].id}
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreas}
-								syllabuses={allSyllabuses.items}
+								syllabuses={syllabusesForThePage.items}
 								body={(syl: Syllabus) => (
 									<RichText
 										{...props}
-										linkedItems={allSyllabuses.linkedItems}
+										data-kontent-item-id={syl.system.id}
+										data-kontent-element-codename="aim"
+										linkedItems={
+											syllabusesForThePage.linkedItems
+										}
 										className="syllabus-content-section cms-content-formatting"
 										richTextElement={syl.elements.aim}
 									/>
@@ -188,7 +217,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								id={syllabusTabs[5].id}
 								tabValue={tabValue}
 								learningAreas={allKeyLearningAreas}
-								syllabuses={allSyllabuses.items}
+								syllabuses={syllabusesForThePage.items}
 								body={(syl: Syllabus) => (
 									<CoursePerformance
 										sections={
@@ -198,6 +227,16 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 									/>
 								)}
 							/>
+							{/* glossary */}
+							<SyllabusTabPanel
+								id={syllabusTabs[6].id}
+								tabValue={tabValue}
+							>
+								{/* <GlossaryHeader {...glossaryHeaderProps} />
+								<GlossaryBody
+									sections={glossaryFilter(terms)}
+								/> */}
+							</SyllabusTabPanel>
 						</div>
 					</div>
 				</div>

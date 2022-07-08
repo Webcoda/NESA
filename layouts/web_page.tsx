@@ -22,7 +22,11 @@ function WebPage(props: CommonPageProps<WebPageModel>) {
 			className="nav-page__content syllabus-overview generic-content-page nsw-container"
 		>
 			{page.elements.title.value && (
-				<h1 className="syllabus-overview__title diversity-of-learners">
+				<h1
+					className="syllabus-overview__title diversity-of-learners"
+					data-kontent-item-id={page.system.id}
+					data-kontent-element-codename="title"
+				>
 					{page.elements.title.value}
 				</h1>
 			)}
@@ -37,6 +41,8 @@ function WebPage(props: CommonPageProps<WebPageModel>) {
 				mappings={props.mappings}
 				linkedItems={pageResponse.linkedItems}
 				richTextElement={page.elements.web_content_rtb__content}
+				data-kontent-item-id={page.system.id}
+				data-kontent-element-codename="web_content_rtb__content"
 			/>
 		</Layout>
 	)

@@ -4,16 +4,15 @@ import { alphabet, AlphabetChar } from '../../utilities/frontendTypes'
 import GlossaryBody from './GlossaryBody'
 import { IGlossary, IGlossaryRecord } from '../../utilities/backendTypes'
 import { Glossary as GlossaryType } from '@/models/glossary'
-import { KeyLearningArea } from '@/models/key_learning_area'
 import { Syllabus } from '@/models/syllabus'
 
 const matchesSearch = (text: string, record: GlossaryType) => {
-	const keyLearningTitles: string[] =
-		record.elements.syllabuses.linkedItems.flatMap((syllabus: Syllabus) => {
-			return syllabus.elements.key_learning_area.linkedItems
-				.map((item) => item as KeyLearningArea)
-				.map((item) => item.elements.title.value)
-		})
+	const keyLearningTitles: string[] = []
+	// record.elements.syllabus.flatMap((syllabus: Syllabus) => {
+	// 	return syllabus.elements.key_learning_area.linkedItems
+	// 		.map((item) => item as KeyLearningArea)
+	// 		.map((item) => item.elements.title.value)
+	// })
 	return [
 		record.elements.title.value,
 		record.elements.description.value,
@@ -61,13 +60,15 @@ const applySearchAndFilter = (
 				section,
 				records: records
 					.filter((r) => {
-						const keyLearningValues: string[] =
-							r.elements.syllabuses.linkedItems.flatMap(
-								(syllabus: Syllabus) => {
-									return syllabus.elements.key_learning_area
-										.value
-								},
-							)
+						const keyLearningValues: string[] = []
+
+						//TODO: fix to get KLAs
+						// r.elements.syllabuses.linkedItems.flatMap(
+						// 	(syllabus: Syllabus) => {
+						// 		return syllabus.elements.key_learning_area
+						// 			.value
+						// 	},
+						// )
 						return (
 							!klaFilter ||
 							keyLearningValues.includes(klaFilter) ||
@@ -76,11 +77,12 @@ const applySearchAndFilter = (
 					})
 					.filter((r) => {
 						const syllabuses: string[] =
-							r.elements.syllabuses.linkedItems.flatMap(
-								(syllabus: Syllabus) => {
-									return syllabus.system.codename
-								},
-							)
+							r.elements.syllabus.value.map((v) => v.codename)
+						// r.elements.syllabuses.linkedItems.flatMap(
+						// 	(syllabus: Syllabus) => {
+						// 		return syllabus.system.codename
+						// 	},
+						// )
 						return (
 							!syllabusFilter ||
 							syllabuses.includes(syllabusFilter) ||

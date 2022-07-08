@@ -19,13 +19,19 @@ function WpStageGroup(props: CommonPageProps<WpStageGroupModel>) {
 	return (
 		<Layout {...props} className={`syllabus-overview`}>
 			{page.elements.title.value && (
-				<h1 className="syllabus-overview__title">
+				<h1
+					className="syllabus-overview__title"
+					data-kontent-item-id={page.system.id}
+					data-kontent-element-codename="title"
+				>
 					{page.elements.title.value}
 				</h1>
 			)}
 			<RichText
 				mappings={props.mappings}
 				linkedItems={pageResponse.linkedItems}
+				data-kontent-item-id={page.system.id}
+				data-kontent-element-codename="web_content_rtb__content"
 				richTextElement={page.elements.web_content_rtb__content}
 			/>
 		</Layout>

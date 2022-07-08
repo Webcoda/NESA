@@ -181,30 +181,17 @@ export const getBreadcrumb = (
 	})
 }
 
-/**
- * Limit depth of any object by key name (ex: limitDepth(myObj, {foo: 3, bar: 5}) limits “foo” to 3 nested occurrences and “bar” to 5 nested occurrences)
- * @param  {any} obj
- * @param  {{[index:string]:number}} depth
- */
-export function limitDepth(obj, depth) {
-	const count = {}
-
-	return JSON.parse(
-		JSON.stringify(obj, (name, value) => {
-			if (typeof count[name] !== 'number') {
-				count[name] = 0
-			}
-			count[name] += 1
-			const max = depth[name] >= 0 ? depth[name] : Infinity
-			if (count[name] <= max) {
-				if (typeof value === 'object') {
-					return Array.isArray(value) ? [...value] : { ...value }
+export const getDataAttributesFromProps = (props) => {
+	return {
+		...Object.keys(props)
+			.filter((key) => key.includes('data-'))
+			.reduce((acc, key) => {
+				return {
+					...acc,
+					[key]: props[key],
 				}
-				return value
-			}
-			return undefined
-		}),
-	)
+			}, {}),
+	}
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

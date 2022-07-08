@@ -1,4 +1,5 @@
 import { Mapping } from '@/types'
+import { getDataAttributesFromProps } from '@/utils'
 import { Elements } from '@kentico/kontent-delivery'
 import parseHTML, {
 	domToReact,
@@ -123,7 +124,12 @@ export function getDomNode({
 
 function RichTextComponent(props: RichTextComponentProps) {
 	const result = getDomNode(props)
-	return <div className={props.className}>{result}</div>
+	const dataAttributes = getDataAttributesFromProps(props)
+	return (
+		<div {...dataAttributes} className={props.className}>
+			{result}
+		</div>
+	)
 }
 
 export default RichTextComponent
