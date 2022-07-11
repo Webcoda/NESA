@@ -28,7 +28,11 @@ export interface OutcomeCardProps {
 	/**
 	 * Callback fired when card is pressed
 	 */
-	onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => void
+	onClick?: (
+		event:
+			| React.MouseEvent<HTMLDivElement, MouseEvent>
+			| React.KeyboardEvent<HTMLDivElement>,
+	) => void
 
 	/**
 	 * Content code
@@ -37,7 +41,15 @@ export interface OutcomeCardProps {
 }
 
 export default function OutcomeCard(props: OutcomeCardProps) {
-	const { title, outcomes, selected, isSelectable, onClick, code, displayOutcome = true } = props
+	const {
+		title,
+		outcomes,
+		selected,
+		isSelectable,
+		onClick,
+		code,
+		displayOutcome = true,
+	} = props
 
 	return (
 		<Paper
@@ -51,7 +63,13 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 			role="button"
 			onKeyPress={onClick}
 		>
-			<Grid container className="outcome-card__title" alignItems="center" item xs={12}>
+			<Grid
+				container
+				className="outcome-card__title"
+				alignItems="center"
+				item
+				xs={12}
+			>
 				<h4>
 					{title} {onClick && <ChevronRightIcon />}
 				</h4>
@@ -59,16 +77,36 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 			{outcomes &&
 				outcomes.map((outcome, index) => (
 					// eslint-disable-next-line react/no-array-index-key
-					<Grid key={`outcome-${index}`} container item xs={12} className="outcome-card__outcome">
-						<Grid container item xs={12} sm={12} className="outcome-card__outcome-text">
+					<Grid
+						key={`outcome-${index}`}
+						container
+						item
+						xs={12}
+						className="outcome-card__outcome"
+					>
+						<Grid
+							container
+							item
+							xs={12}
+							sm={12}
+							className="outcome-card__outcome-text"
+						>
 							{code && !displayOutcome && (
-								<p className="strong nsw-p-top-sm nsw-p-bottom-sm">{code[index]}</p>
+								<p className="strong nsw-p-top-sm nsw-p-bottom-sm">
+									{code[index]}
+								</p>
 							)}
-							{displayOutcome && <p className="strong nsw-p-top-sm nsw-p-bottom-sm">Outcome</p>}
+							{displayOutcome && (
+								<p className="strong nsw-p-top-sm nsw-p-bottom-sm">
+									Outcome
+								</p>
+							)}
 						</Grid>
 						{!isMobile && <br />}
 						<Grid container item xs={12} sm={12}>
-							<SanitisedHTMLContainer>{outcome}</SanitisedHTMLContainer>
+							<SanitisedHTMLContainer>
+								{outcome}
+							</SanitisedHTMLContainer>
 						</Grid>
 					</Grid>
 				))}

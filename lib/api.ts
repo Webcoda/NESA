@@ -1,8 +1,13 @@
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
-import { WpStage } from '@/models/wp_stage'
-import type { KontentCurriculumResult, Mapping, Seo } from '@/types/index'
+import type {
+	AssetWithRawElements,
+	KontentCurriculumResult,
+	Mapping,
+	Seo,
+} from '@/types/index'
+import { setTaxonomiesForAssets } from '@/utils'
 import {
 	DeliveryClient,
 	IContentItem,
@@ -10,9 +15,17 @@ import {
 	Responses,
 	SortOrder,
 } from '@kentico/kontent-delivery'
+import {
+	AssetModels,
+	AssetResponses,
+	createManagementClient,
+	SharedModels,
+	TaxonomyModels,
+} from '@kentico/kontent-management'
 import get from 'lodash.get'
 import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
+import { WpStage } from './../models/wp_stage'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -28,6 +41,28 @@ const client = new DeliveryClient({
 		},
 	],
 })
+
+const managementClient = createManagementClient({
+	projectId: process.env.KONTENT_PROJECT_ID,
+	apiKey: process.env.KONTENT_MANAGEMENT_API_KEY,
+})
+
+async function getAllAssets(): Promise<{
+	items: AssetModels.Asset[]
+	responses: AssetResponses.AssetsListResponse[]
+}> {
+	return await managementClient.listAssets().toPromise().then(fnReturnData)
+}
+
+async function getAllTaxonomies(): Promise<{
+	items: TaxonomyModels.Taxonomy[]
+	pagination: SharedModels.Pagination
+}> {
+	return await managementClient
+		.listTaxonomies()
+		.toPromise()
+		.then(fnReturnData)
+}
 
 async function loadWebsiteConfig(
 	preview = false,
@@ -277,6 +312,7 @@ export async function getPageStaticPropsForPath(
 
 	const PAGE_RESPONSE_DEPTH = {
 		wp_stagegroup: 2,
+		wp_stage: 0,
 	}
 
 	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.system.type]
@@ -321,6 +357,8 @@ export async function getPageStaticPropsForPath(
 		}
 		return _result
 	} else if (isStagePage) {
+		const pageResponseItem = pageResponse.item as WpStage
+
 		const _result: KontentCurriculumResult<IContentItem> = {
 			...result,
 			data: {
@@ -330,13 +368,13 @@ export async function getPageStaticPropsForPath(
 				glossaries: null,
 				stages: null,
 				stageGroups: null,
-				allSyllabusesForTag: null,
+				assets: null,
 			},
 		}
 
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
-			depth: 2,
+			depth: 3,
 			containsFilter: {
 				element: 'elements.stages__stages',
 				value: pageResponse.item.elements.stages__stages.value.map(
@@ -356,7 +394,8 @@ export async function getPageStaticPropsForPath(
 			stages,
 			stageGroups,
 			keyLearningAreas,
-			allSyllabusesForTag,
+			assets,
+			taxonomies,
 		] = await Promise.all([
 			getAllItemsByType<Glossary>({
 				type: 'glossary',
@@ -370,20 +409,33 @@ export async function getPageStaticPropsForPath(
 			getTaxonomy('stage'),
 			getTaxonomy('stage_group'),
 			getTaxonomy('key_learning_area'),
-			getAllItemsByType<Syllabus>({
-				type: 'syllabus',
-				elementParameter: ['title', 'syllabus'],
-				preview,
-				depth: 0,
-			}),
+			getAllAssets(),
+			getAllTaxonomies(),
 		])
+
+		const assetsWithTaxonomies = setTaxonomiesForAssets(
+			assets.items,
+			taxonomies.items,
+		)
+		assets.items = assetsWithTaxonomies.filter((asset) => {
+			return (
+				asset.stages.length &&
+				intersection(
+					asset.stages.map((assetStage) => assetStage.codename),
+					pageResponseItem.elements.stages__stages.value.map(
+						(stagePageStage) => stagePageStage.codename,
+					),
+				).length
+			)
+		})
 
 		_result.data.syllabuses = syllabuses
 		_result.data.glossaries = glossaries
 		_result.data.stages = stages.taxonomy.terms
 		_result.data.stageGroups = stageGroups.taxonomy.terms
 		_result.data.keyLearningAreas = keyLearningAreas.taxonomy.terms
-		_result.data.allSyllabusesForTag = allSyllabusesForTag
+		_result.data.assets = assets.items as AssetWithRawElements[]
+
 		return _result
 	}
 	// else if (isStagePage || isSyllabusPage || isGlossaryPage) {

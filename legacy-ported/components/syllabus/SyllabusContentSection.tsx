@@ -1,20 +1,14 @@
-import React from 'react'
-import sanitizeHtml from 'sanitize-html'
+import RichText, { RichTextProps } from '@/components/RichText'
 
-export interface SyllabusContentSectionProps {
-	innerHtml: string
-}
-
-const SyllabusContentSection = (
-	props: SyllabusContentSectionProps,
-): JSX.Element => {
-	const { innerHtml } = props
+const SyllabusContentSection = (props: RichTextProps): JSX.Element => {
+	const { richTextElement, linkedItems, mappings } = props
 
 	return (
-		<div
+		<RichText
 			className="syllabus-content-section cms-content-formatting"
-			// eslint-disable-next-line react/no-danger
-			dangerouslySetInnerHTML={{ __html: sanitizeHtml(innerHtml) }}
+			linkedItems={linkedItems}
+			mappings={mappings}
+			richTextElement={richTextElement}
 		/>
 	)
 }

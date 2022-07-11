@@ -33,6 +33,10 @@ export interface StagesHeaderProps {
 	 */
 	stageGroups: ITaxonomyTerms[]
 	/**
+	 * Stages
+	 */
+	stages: ITaxonomyTerms[]
+	/**
 	 * Callback fired when version history is clicked
 	 */
 	onVersionHistoryClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -68,6 +72,7 @@ const StagesHeader = (props: StagesHeaderProps) => {
 		onEditViewClick,
 		selectedStages,
 		stageGroups,
+		stages,
 		area,
 		onStagesHeaderConfirm,
 	} = props
@@ -92,6 +97,7 @@ const StagesHeader = (props: StagesHeaderProps) => {
 							<SyllabusStagesHeader
 								title={title}
 								selectedStages={selectedStages}
+								stages={stages}
 								stageGroups={stageGroups}
 								area={area}
 								isMainHeader

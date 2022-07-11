@@ -13,6 +13,7 @@ export interface StageSelectOverlayProps
 	> {
 	selected: IStage['id'][]
 	stageGroups: ITaxonomyTerms[]
+	stages: ITaxonomyTerms[]
 	disabledStages?: ITaxonomyTerms[]
 	onConfirm: (selected: IStage['id'][]) => void
 }
@@ -22,6 +23,7 @@ const StageSelectOverlay = (props: StageSelectOverlayProps): JSX.Element => {
 		selected,
 		onConfirm,
 		stageGroups,
+		stages,
 		disabledStages = [],
 		...popoverProps
 	} = props
@@ -48,6 +50,7 @@ const StageSelectOverlay = (props: StageSelectOverlayProps): JSX.Element => {
 				<Grid container>
 					<StagePicker
 						stageGroups={stageGroups}
+						stages={stages}
 						disabledStages={disabledStages}
 						selected={stageIds}
 						onChange={handleStageSelect}

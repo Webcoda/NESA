@@ -1,8 +1,14 @@
 import Image from '@/components/Image'
 import Link from '@/components/Link'
 import rteSections from '@/components/sections'
+import { Syllabus } from '@/models/syllabus'
+import { Teachingadvice } from '@/models/teachingadvice'
 import { Mapping } from '@/types'
-import { Elements, IContentItemsContainer } from '@kentico/kontent-delivery'
+import {
+	Elements,
+	IContentItemsContainer,
+	ILink,
+} from '@kentico/kontent-delivery'
 import { makeStyles, useTheme } from '@material-ui/core'
 import classNames from 'classnames'
 import get from 'lodash.get'
@@ -93,13 +99,42 @@ function RichText(props: RichTextProps) {
 					</div>
 				)
 			}}
-			resolveLink={(link, mappings, domNode, domToReact) => {
+			resolveLink={(link: ILink, mappings, domNode, domToReact) => {
+				console.log(
+					'🚀 ~ file: RichText.tsx ~ line 97 ~ RichText ~ link',
+					link,
+					domNode,
+					domToReact,
+				)
 				const url = getUrlFromMapping(mappings, link.codename)
 				if (url) {
 					return (
 						<Link href={url}>{domToReact(domNode.children)}</Link>
 					)
 				} else {
+					if (link.type === 'teachingadvice') {
+						const teachingAdvice = linkedItems[
+							link.codename
+						] as Teachingadvice
+						const syllabusPath =
+							teachingAdvice?.elements.syllabus.value?.[0]?.codename.replace(
+								/_/gi,
+								'-',
+							)
+						const stagePath =
+							teachingAdvice?.elements.stages__stages.value?.[0]?.codename.replace(
+								/_/gi,
+								'-',
+							)
+						const contentOrganiser = link.codename
+						return (
+							<Link
+								href={`/learning-areas/english/${syllabusPath}?stage=${stagePath}&tab=content&options[contentOrganiser]=${contentOrganiser}&options[teachingSupport]=true`}
+							>
+								{domToReact(domNode.children)}
+							</Link>
+						)
+					}
 					return <del>{domToReact([domNode])}</del>
 				}
 			}}

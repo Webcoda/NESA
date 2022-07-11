@@ -27,9 +27,7 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 				(r) => r.key === currentGlosssary.elements.title.value,
 			)
 			const syllabussesOfCurrentGlossary =
-				currentGlosssary.elements.syllabuses.linkedItems.map(
-					(item) => item as Syllabus,
-				)
+				currentGlosssary.elements.syllabus.value
 			const description = currentGlosssary.elements.description.value
 
 			if (found) {
@@ -66,11 +64,8 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 									<>
 										{d.syllabuses.map((syllabus) => (
 											<Chip
-												key={syllabus.system.id}
-												text={
-													syllabus.elements.title
-														.value
-												}
+												key={syllabus.codename}
+												text={syllabus.name}
 												className="glossary-body__chip"
 											/>
 										))}

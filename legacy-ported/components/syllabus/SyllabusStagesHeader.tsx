@@ -29,6 +29,11 @@ export interface SyllabusStagesHeaderProps {
 	stageGroups: ITaxonomyTerms[]
 
 	/**
+	 * All Stages Categories
+	 */
+	stages: ITaxonomyTerms[]
+
+	/**
 	 * Fire when stages header popover confirm button clicked
 	 */
 	onStagesHeaderConfirm: (ids: string[]) => void
@@ -43,6 +48,7 @@ const SyllabusStagesHeader = (
 		area,
 		isMainHeader,
 		stageGroups,
+		stages,
 		onStagesHeaderConfirm,
 	} = props
 
@@ -93,6 +99,7 @@ const SyllabusStagesHeader = (
 				{/* <p className="syllabus-header__subtitle">Current Syllabus</p> */}
 				<StageSelectOverlay
 					title={title}
+					stages={stages}
 					stageGroups={stageGroups}
 					popoverStatus={displayStageModal}
 					popoverAnchor={popoverAnchor}

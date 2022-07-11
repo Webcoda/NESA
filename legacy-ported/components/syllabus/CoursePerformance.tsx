@@ -3,8 +3,10 @@ import { Grid } from '@material-ui/core'
 import { Assessment } from '@/models/assessment'
 import CustomAccordion from '../custom/CustomAccordion'
 import SyllabusContentSection from './SyllabusContentSection'
+import { RichTextProps } from '@/components/RichText'
 
-export interface CoursePerformanceProps {
+export interface CoursePerformanceProps
+	extends Omit<RichTextProps, 'richTextElement'> {
 	/**
 	 * CMS sections
 	 */
@@ -12,7 +14,7 @@ export interface CoursePerformanceProps {
 }
 
 const CoursePerformance = (props: CoursePerformanceProps): JSX.Element => {
-	const { sections } = props
+	const { sections, linkedItems, mappings } = props
 
 	return (
 		<Grid className="syllabus-content-section">
@@ -21,20 +23,15 @@ const CoursePerformance = (props: CoursePerformanceProps): JSX.Element => {
 					key={sec.system.id}
 					className="assessment__container"
 					data-kontent-item-id={sec.system.id}
-					data-konetent-element-codename="assesment"
+					data-kontent-element-codename="assesment"
 				>
-					<CustomAccordion
-						title={
-							'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'
-						}
-					>
-						{/* TODO: Syllabus Content */}
-						<SyllabusContentSection
-							innerHtml={
-								'TODO fix legacy-portedcomponentssyllabusCoursePerformance.tsx'
-							}
-						/>
-					</CustomAccordion>
+					{/* <CustomAccordion title="Introduction"> */}
+					<SyllabusContentSection
+						richTextElement={sec.elements.introduction}
+						linkedItems={linkedItems}
+						mappings={mappings}
+					/>
+					{/* </CustomAccordion> */}
 				</Grid>
 			))}
 		</Grid>

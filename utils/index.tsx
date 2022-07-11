@@ -1,10 +1,14 @@
 import sections from '@/components/sections'
 import UnknownComponent from '@/components/UnknownComponent'
-import { EMPTY_KONTENT_RICHTEXT } from '@/constants'
+import {
+	ASSET_TAXONOMIES,
+	EMPTY_KONTENT_RICHTEXT,
+	FILE_TYPES,
+} from '@/constants'
 import type { IGlossary } from '@/legacy-ported/utilities/backendTypes'
 import { UrlLink } from '@/legacy-ported/utilities/frontendTypes'
 import type { Glossary } from '@/models/glossary'
-import { Mapping } from '@/types'
+import { AssetRawElementInner, AssetWithRawElements, Mapping } from '@/types'
 import type {
 	ElementModels,
 	Elements,
@@ -20,6 +24,7 @@ import srcIsKontentAsset from './srcIsKontentAsset'
 import { Weblinkint } from '@/models/weblinkint'
 import { Weblinkext } from '@/models/weblinkext'
 import { UiMenu } from '@/models/ui_menu'
+import { AssetModels, TaxonomyModels } from '@kentico/kontent-management'
 
 export const isIntersect = (...arrays) => intersection(...arrays).length > 0
 
@@ -192,6 +197,44 @@ export const getDataAttributesFromProps = (props) => {
 				}
 			}, {}),
 	}
+}
+
+export const flattenTaxonomies = (
+	taxonomies: TaxonomyModels.Taxonomy[],
+): TaxonomyModels.Taxonomy[] => {
+	return taxonomies.flatMap((item) => {
+		if (item.terms?.length) {
+			return [item, ...flattenTaxonomies(item.terms)]
+		}
+		return item
+	})
+}
+
+export const setTaxonomiesForAssets = (
+	assets: AssetModels.Asset[],
+	taxonomies: TaxonomyModels.Taxonomy[],
+) => {
+	const taxonomiesFromMAPI = flattenTaxonomies(taxonomies)
+	const fnGetTaxonomy = (item: AssetRawElementInner) =>
+		taxonomiesFromMAPI.find((tax) => tax.id == item.id)
+	return assets.map((asset: AssetWithRawElements) => {
+		const taxonomies = ASSET_TAXONOMIES.reduce((acc, key, index) => {
+			return {
+				...acc,
+				[key]: asset._raw.elements[index].value.map(fnGetTaxonomy),
+			}
+		}, {})
+		return {
+			...asset,
+			...taxonomies,
+		}
+	})
+}
+
+export const getFileTypeClassification = (type) => {
+	if (type.includes('image/')) return 'Image'
+	if (type.includes('video/')) return 'Video'
+	return FILE_TYPES[type]
 }
 
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }

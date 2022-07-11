@@ -11,9 +11,35 @@ import {
 	ITaxonomyTerms,
 	Responses,
 } from '@kentico/kontent-delivery'
+import { AssetContracts, AssetModels } from '@kentico/kontent-management'
 import { ReactNode } from 'react'
 
 export type LinkType = UiMenu | Weblinkint | Weblinkext
+
+export interface AssetRawElementInner {
+	id: string
+}
+
+export interface AssetRawElement {
+	element: AssetRawElementInner
+	value: AssetRawElementInner[]
+}
+
+export interface AssetRaw extends AssetContracts.IAssetModelContract {
+	elements: AssetRawElement[]
+}
+
+export interface AssetWithRawElements extends AssetModels.Asset {
+	_raw: AssetRaw
+	resource_type: ITaxonomyTerms[]
+	stage_groups: ITaxonomyTerms[]
+	stages: ITaxonomyTerms[]
+	stage_years: ITaxonomyTerms[]
+	key_learning_area: ITaxonomyTerms[]
+	syllabuses: ITaxonomyTerms[]
+	assetpublishedyear: ITaxonomyTerms[]
+	assetpublishedmonth: ITaxonomyTerms[]
+}
 
 export interface MappingParams {
 	slug: string[]
@@ -53,7 +79,7 @@ export interface KontentCurriculumResultData<
 	glossaries?: Responses.IListContentItemsResponse<Glossary>
 	stages?: ITaxonomyTerms[]
 	stageGroups?: ITaxonomyTerms[]
-	allSyllabusesForTag?: Responses.IListContentItemsResponse<Syllabus>
+	assets?: AssetWithRawElements[]
 }
 
 export interface KontentCurriculumResult<

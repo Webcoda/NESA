@@ -1,8 +1,10 @@
-import React from 'react'
+import { RichTextProps } from '@/components/RichText'
+import { Elements } from '@kentico/kontent-delivery'
 import { Paper } from '@material-ui/core'
 import SyllabusContentSection from '../syllabus/SyllabusContentSection'
 
-export interface TeachingSupportCardProps {
+export interface TeachingSupportCardProps
+	extends Omit<RichTextProps, 'className' | 'richTextElement'> {
 	/**
 	 * Card title
 	 */
@@ -11,11 +13,11 @@ export interface TeachingSupportCardProps {
 	/**
 	 * Syllabus Content
 	 */
-	content: string
+	content: Elements.RichTextElement
 }
 
 export default function TeachingSupportCard(props: TeachingSupportCardProps) {
-	const { title, content } = props
+	const { title, content, linkedItems, mappings } = props
 
 	return (
 		<Paper className="teaching-support-card nsw-p-sm nsw-p-bottom-lg outcome-detail-card--default-background">
@@ -28,7 +30,11 @@ export default function TeachingSupportCard(props: TeachingSupportCardProps) {
 			<div className="teaching-support-card__detail">
 				<h2>Teaching advice</h2>
 				<hr />
-				<SyllabusContentSection innerHtml={content} />
+				<SyllabusContentSection
+					richTextElement={content}
+					linkedItems={linkedItems}
+					mappings={mappings}
+				/>
 			</div>
 		</Paper>
 	)

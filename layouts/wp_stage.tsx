@@ -1,18 +1,26 @@
 import Layout from '@/components/Layout'
 import RichText from '@/components/RichText'
 import UnknownComponent from '@/components/UnknownComponent'
+import { useGlossary } from '@/legacy-ported/components/base/Glossary'
+import GlossaryBody from '@/legacy-ported/components/base/GlossaryBody'
+import GlossaryHeader from '@/legacy-ported/components/base/GlossaryHeader'
+import Content from '@/legacy-ported/components/syllabus/Content'
 import CoursePerformance from '@/legacy-ported/components/syllabus/CoursePerformance'
+import DownloadList from '@/legacy-ported/components/syllabus/DownloadList'
+import Outcomes from '@/legacy-ported/components/syllabus/Outcomes'
 import StagesHeader from '@/legacy-ported/components/syllabus/StagesHeader'
 import { StageTabPanel } from '@/legacy-ported/components/syllabus/StageTabPanel'
 import TabBar from '@/legacy-ported/components/tabs/TabBar'
 import { SyllabusTabPanel } from '@/legacy-ported/components/tabs/TabPanel'
 import { syllabusTabs } from '@/legacy-ported/constants/index'
 import { Assessment } from '@/models/assessment'
+import { Focusarea } from '@/models/focusarea'
 import { Syllabus } from '@/models/syllabus'
 import { WpStage as WpStageModel } from '@/models/wp_stage'
 import { CommonPageProps } from '@/types'
-import { getTagFromYears } from '@/utils'
+import { convertGlossaryToIGlossary, getTagFromYears } from '@/utils'
 import { useTheme } from '@material-ui/core'
+import intersection from 'lodash.intersection'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -26,14 +34,14 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 		keyLearningAreas: allKeyLearningAreas,
 		syllabuses: syllabusesForThePage,
 		glossaries: allGlossaries,
-		allSyllabusesForTag,
+		assets,
 	} = props.data
 	const page: WpStageModel = pageResponse.item
 
 	const title = page.elements.title.value
 
 	// terms is basically Glossary set in Kentico Kontent converted to legacy IGlossary
-	// const terms = convertGlossaryToIGlossary(allGlossaries.items)
+	const terms = convertGlossaryToIGlossary(allGlossaries.items)
 
 	const stageId = page.elements.stages__stages.value[0].codename
 
@@ -45,9 +53,9 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 	const [tabValue, setTabValue] = useState(initialTab ?? syllabusTabs[0].id)
 	const [currentTabs, setCurrentTabs] = useState(syllabusTabs)
 
-	// const [glossaryHeaderProps, glossaryFilter] = useGlossary({
-	// 	sections: terms,
-	// })
+	const [glossaryHeaderProps, glossaryFilter] = useGlossary({
+		sections: terms,
+	})
 
 	// Methods
 	const onStagesHeaderConfirm = (stageCodenames: string[]) => {
@@ -131,6 +139,7 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 						title={page.elements.title.value}
 						area=""
 						selectedStages={selectedStages}
+						stages={allStages}
 						stageGroups={allStageGroups}
 						learningAreas={allKeyLearningAreas}
 						onStagesHeaderConfirm={() => {}}
@@ -212,6 +221,81 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 									/>
 								)}
 							/>
+							{/* outcomes */}
+							<StageTabPanel
+								id={syllabusTabs[3].id}
+								tabValue={tabValue}
+								learningAreas={allKeyLearningAreas}
+								syllabuses={syllabusesForThePage.items}
+								body={(syl: Syllabus) => {
+									// console.log(syl.elements.title.value, syl.elements.focus_areas)
+									const outcomes =
+										syl.elements.focus_areas.linkedItems.reduce(
+											(
+												outcomes,
+												focusArea: Focusarea,
+											) => {
+												return [
+													...outcomes,
+													...focusArea.elements
+														.outcomes.linkedItems,
+												]
+											},
+											[],
+										)
+									return (
+										<Outcomes
+											stages={allStages}
+											stageGroups={allStageGroups}
+											outcomes={outcomes}
+											// scrollOffset={SYLLABUS.COMPARE_OUTCOME_SCROLL_OFFSET.STAGES}
+										/>
+									)
+								}}
+							/>
+							{/* content-organisers */}
+							<StageTabPanel
+								id={syllabusTabs[4].id}
+								tabValue={tabValue}
+								learningAreas={allKeyLearningAreas}
+								syllabuses={syllabusesForThePage.items}
+								body={(syl: Syllabus) => (
+									<Content
+										stages={allStages}
+										// TODO: add defaultOffsetTop
+										// defaultOffsetTop={SYLLABUS.CONTENT_DEFAULT_OFFSET_TOP.STAGES}
+										defaultOffsetTop={0}
+										stageId={stageId}
+										supportElementId={syl.system.id}
+										mappings={mappings}
+										linkedItems={
+											syllabusesForThePage.linkedItems
+										}
+										content={
+											syl.elements.focus_areas
+												.linkedItems as Focusarea[]
+										}
+										files={
+											assets.filter(
+												(asset) =>
+													asset.resource_type.some(
+														(rt) =>
+															rt.codename ===
+															'advice',
+													) &&
+													intersection(
+														asset.syllabuses.map(
+															(s) => s.codename,
+														),
+														syl.elements.syllabus.value.map(
+															(s) => s.codename,
+														),
+													).length,
+											) ?? []
+										}
+									/>
+								)}
+							/>
 							{/* Assessment */}
 							<StageTabPanel
 								id={syllabusTabs[5].id}
@@ -220,6 +304,10 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								syllabuses={syllabusesForThePage.items}
 								body={(syl: Syllabus) => (
 									<CoursePerformance
+										mappings={mappings}
+										linkedItems={
+											syllabusesForThePage.linkedItems
+										}
 										sections={
 											syl.elements.assessments
 												.linkedItems as Assessment[]
@@ -232,11 +320,36 @@ function WpStage(props: CommonPageProps<WpStageModel>) {
 								id={syllabusTabs[6].id}
 								tabValue={tabValue}
 							>
-								{/* <GlossaryHeader {...glossaryHeaderProps} />
+								<GlossaryHeader {...glossaryHeaderProps} />
 								<GlossaryBody
 									sections={glossaryFilter(terms)}
-								/> */}
+								/>
 							</SyllabusTabPanel>
+							{/* teaching-and-learning */}
+							<StageTabPanel
+								id={syllabusTabs[7].id}
+								tabValue={tabValue}
+								learningAreas={allKeyLearningAreas}
+								syllabuses={syllabusesForThePage.items}
+								body={(syl: Syllabus) => (
+									<DownloadList
+										files={
+											assets.filter(
+												(asset) =>
+													intersection(
+														asset.syllabuses.map(
+															(s) => s.codename,
+														),
+														syl.elements.syllabus.value.map(
+															(s) => s.codename,
+														),
+													).length,
+											) ?? []
+										}
+										colour="secondary"
+									/>
+								)}
+							/>
 						</div>
 					</div>
 				</div>

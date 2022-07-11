@@ -1,7 +1,6 @@
 import OutcomeCard from '@/legacy-ported/components/card/OutcomeCard'
 import { Outcome } from '@/models/outcome'
-import { Stage } from '@/models/stage'
-import { StageGroup } from '@/models/stage_group'
+import { ITaxonomyTerms } from '@kentico/kontent-delivery'
 import { Grid, IconButton } from '@material-ui/core'
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons'
 import React, { useState } from 'react'
@@ -17,8 +16,8 @@ export interface OutcomesProps {
 	scrollOffset?: number
 	isLandscape?: boolean
 	outcomes?: Outcome[]
-	stages: Stage[]
-	stageGroups: StageGroup[]
+	stages: ITaxonomyTerms[]
+	stageGroups: ITaxonomyTerms[]
 }
 
 const Outcomes = (props: OutcomesProps) => {
@@ -29,6 +28,7 @@ const Outcomes = (props: OutcomesProps) => {
 		stages: AllStages,
 		stageGroups: allStagesGroups,
 	} = props
+	console.log('🚀 ~ file: Outcomes.tsx ~ line 31 ~ Outcomes ~ props', props)
 
 	/**
 	 * Stages that are supposed to show on the compare stage outcomes are stages that are intersection between:
@@ -37,12 +37,22 @@ const Outcomes = (props: OutcomesProps) => {
 	 */
 	const codenamesOfStagesThatAreUsedInOutcomes = [
 		...new Set(
-			outcomes.flatMap((outcome) => outcome.elements.stages.value),
+			outcomes.flatMap((outcome) =>
+				outcome.elements.stages__stages.value.map((s) => s.codename),
+			),
 		),
 	]
+	console.log(
+		'🚀 ~ file: Outcomes.tsx ~ line 44 ~ Outcomes ~ codenamesOfStagesThatAreUsedInOutcomes',
+		codenamesOfStagesThatAreUsedInOutcomes,
+	)
 
 	const stagesThatAreUsedInOutcomes = AllStages.filter((s) =>
-		codenamesOfStagesThatAreUsedInOutcomes.includes(s.system.codename),
+		codenamesOfStagesThatAreUsedInOutcomes.includes(s.codename),
+	)
+	console.log(
+		'🚀 ~ file: Outcomes.tsx ~ line 48 ~ Outcomes ~ stagesThatAreUsedInOutcomes',
+		stagesThatAreUsedInOutcomes,
 	)
 
 	const [displayModal, setDisplayModal] = useState(false)
@@ -57,15 +67,21 @@ const Outcomes = (props: OutcomesProps) => {
 	const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement>()
 
 	const [activeStageCodenames, setActiveStageCodenames] = useState(
-		stagesThatAreUsedInOutcomes.map((s) => s.system.codename),
+		stagesThatAreUsedInOutcomes.map((s) => s.codename),
 	)
 
 	// selected stages
 	let selectedStages = stagesThatAreUsedInOutcomes.filter((stage) =>
-		activeStageCodenames.includes(stage.system.codename),
+		activeStageCodenames.includes(stage.codename),
+	)
+	console.log(
+		'🚀 ~ file: Outcomes.tsx ~ line 68 ~ Outcomes ~ selectedStages',
+		selectedStages,
 	)
 
-	const [currentStage, setCurrentStage] = useState<Stage>(selectedStages[0])
+	const [currentStage, setCurrentStage] = useState<ITaxonomyTerms>(
+		selectedStages[0],
+	)
 
 	const handleBack = () => {
 		// console.log('handleBack');
@@ -85,27 +101,20 @@ const Outcomes = (props: OutcomesProps) => {
 				// find out the previous stage(hidden) so we can update the button label.
 				let previousStage = 0
 				selectedStages.forEach((current, index) => {
-					if (
-						current.elements.title.value === backButtonLabel &&
-						index > 0
-					) {
+					if (current.name === backButtonLabel && index > 0) {
 						previousStage = index - 1
 					}
 				})
 				// if there is a label still then we update, otherwise we disable the back button
 				if (tempCounter >= 0)
-					setBackButtonLabel(
-						selectedStages[previousStage].elements.title.value,
-					)
+					setBackButtonLabel(selectedStages[previousStage].name)
 				else setDisplayBack(false)
 
 				// since there are 3 elements showing everytime,
 				// we need to add to the click to display the next button
 				const elementsHidden = tempCounter + outcomeColumns
 				if (elementsHidden < selectedStages.length)
-					setNextButtonLabel(
-						selectedStages[elementsHidden].elements.title.value,
-					)
+					setNextButtonLabel(selectedStages[elementsHidden].name)
 				else setNextButtonLabel('')
 
 				if (tempCounter > 0) setDisplayBack(true)
@@ -140,9 +149,7 @@ const Outcomes = (props: OutcomesProps) => {
 				tempCounter < outcomeColumns
 			) {
 				// update the button label/name
-				setBackButtonLabel(
-					selectedStages[tempCounter].elements.title.value,
-				)
+				setBackButtonLabel(selectedStages[tempCounter].name)
 
 				tempCounter += 1
 				setNextCounter(tempCounter)
@@ -151,9 +158,7 @@ const Outcomes = (props: OutcomesProps) => {
 				// we need to add to the click to display the next button
 				const elementsHidden = tempCounter + outcomeColumns
 				if (elementsHidden < selectedStages.length)
-					setNextButtonLabel(
-						selectedStages[elementsHidden].elements.title.value,
-					)
+					setNextButtonLabel(selectedStages[elementsHidden].name)
 				else setNextButtonLabel('')
 
 				if (tempCounter > 0) setDisplayBack(true)
@@ -178,11 +183,11 @@ const Outcomes = (props: OutcomesProps) => {
 
 	const handleStageSelection = (ids: string[]) => {
 		const newOutcomes = AllStages.filter((stage) =>
-			ids.includes(stage.system.id),
+			ids.includes(stage.codename),
 		)
 
 		if (newOutcomes.length > outcomeColumns) {
-			setNextButtonLabel(newOutcomes[outcomeColumns].elements.title.value)
+			setNextButtonLabel(newOutcomes[outcomeColumns].name)
 		} else {
 			setNextButtonLabel('')
 		}
@@ -295,7 +300,7 @@ const Outcomes = (props: OutcomesProps) => {
 									: ''
 							}
 							`.trim()}
-							key={stage.system.id}
+							key={stage.codename}
 						>
 							<div
 								className={`${
@@ -304,16 +309,15 @@ const Outcomes = (props: OutcomesProps) => {
 										: 'outcomes__stages__row'
 								}`.trim()}
 							>
-								<h1>{stage.elements.title.value}</h1>
+								<h1>{stage.name}</h1>
 							</div>
 
 							<div className="outcomes__stages-outcome-card-wrapper">
 								{outcomes
 									?.filter((o) =>
-										o.elements.stages.value.some(
-											(_stageCodeNames) =>
-												_stageCodeNames ===
-												stage.system.codename,
+										o.elements.stages__stages.value.some(
+											(s) =>
+												s.codename === stage.codename,
 										),
 									)
 									.map((outcome) => {
@@ -337,7 +341,7 @@ const Outcomes = (props: OutcomesProps) => {
 				{isMobile && !isLandscape && currentStage && !isTablet && (
 					<div
 						className="outcomes__stages"
-						key={currentStage.system.id}
+						key={currentStage.codename}
 					>
 						<div className="outcomes__stages__row">
 							<IconButton
@@ -346,7 +350,7 @@ const Outcomes = (props: OutcomesProps) => {
 							>
 								<ArrowBackIos />
 							</IconButton>
-							<h1>{currentStage.elements.title.value}</h1>
+							<h1>{currentStage.name}</h1>
 							<IconButton
 								className="outcomes__stages__button"
 								onClick={handleForward}
@@ -357,9 +361,9 @@ const Outcomes = (props: OutcomesProps) => {
 						<div className="outcomes__stages-outcome-card-wrapper">
 							{outcomes
 								?.filter((o) =>
-									o.elements.stages.value.includes(
-										currentStage.system.codename,
-									),
+									o.elements.stages__stages.value
+										.map((s) => s.codename)
+										.includes(currentStage.codename),
 								)
 								.map((outcome) => (
 									<OutcomeCard
@@ -378,12 +382,13 @@ const Outcomes = (props: OutcomesProps) => {
 
 			{displayModal && (
 				<StageSelectOverlay
+					stages={AllStages}
 					stageGroups={allStagesGroups}
 					selected={activeStageCodenames}
 					disabledStages={AllStages.filter(
 						(stage) =>
 							!codenamesOfStagesThatAreUsedInOutcomes.includes(
-								stage.system.codename,
+								stage.codename,
 							),
 					)}
 					title="Include Stages"

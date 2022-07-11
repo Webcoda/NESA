@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import get from 'lodash.get'
 import Head from 'next/head'
 import React from 'react'
+import NextNProgress from 'nextjs-progressbar'
 
 // import "../styles/main.css";
 
@@ -149,6 +150,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 				/>
 			</Head>
 			<ThemeProvider theme={theme}>
+				<NextNProgress />
 				<Component {...pageProps} />
 			</ThemeProvider>
 		</>

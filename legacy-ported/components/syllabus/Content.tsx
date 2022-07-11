@@ -1,8 +1,7 @@
-import { FocusArea } from '@/models/focus_area'
-import { FocusAreaGroup } from '@/models/focus_area_group'
+import { Contentgroup } from '@/models/contentgroup'
+import { Focusarea } from '@/models/focusarea'
 import { Outcome } from '@/models/outcome'
-import { Stage } from '@/models/stage'
-import { TeachingAdvice } from '@/models/teaching_advice'
+import { Teachingadvice } from '@/models/teachingadvice'
 import { Grid, Popover } from '@material-ui/core'
 import React, { useEffect, useRef, useState } from 'react'
 // import { HashLink } from 'react-router-hash-link'
@@ -15,16 +14,24 @@ import {
 } from 'react-device-detect'
 import SYLLABUS from '../../constants/syllabusConstants'
 // import TagPicker from '../custom/TagPicker'
-import { IResource } from '../../utilities/backendTypes'
 // import DownloadList from './DownloadList'
 // import CustomModal from '../base/CustomModal'
 // import CustomPopover from '../base/CustomPopover'
 import { arrayToggleMultiple } from '../../utilities/functions'
 // import { Stages } from '../../store/mock/stages'
+import { Accesscontentgroup } from '@/models/accesscontentgroup'
+import { AssetWithRawElements, Mapping } from '@/types'
+import {
+	IContentItemsContainer,
+	ITaxonomyTerms,
+} from '@kentico/kontent-delivery'
 import useFocusTabIndex from '../../utilities/hooks/useFocusTabIndex'
+import CustomPopover from '../base/CustomPopover'
 import OutcomeCard from '../card/OutcomeCard'
 import OutcomeDetailCard from '../card/OutcomeDetailCard'
 import TeachingSupportCard from '../card/TeachingSupportCard'
+import TagPicker from '../custom/TagPicker'
+import DownloadList from './DownloadList'
 
 export const tagList = [
 	{
@@ -71,7 +78,7 @@ export interface ContentOrganizerProps {
 	/**
 	 * All stages
 	 */
-	stages: Stage[]
+	stages: ITaxonomyTerms[]
 
 	/**
 	 * Stage id
@@ -86,12 +93,12 @@ export interface ContentOrganizerProps {
 	/**
 	 * Syllabus content
 	 */
-	content?: FocusArea[]
+	content?: Focusarea[]
 
 	/**
 	 * Files content
 	 */
-	files?: IResource[]
+	files?: AssetWithRawElements[]
 
 	/**
 	 * Initial state config
@@ -103,6 +110,9 @@ export interface ContentOrganizerProps {
 		tags?: string[]
 		contentOrganiser?: string
 	}
+
+	mappings: Mapping[]
+	linkedItems: IContentItemsContainer
 }
 
 const Content = (props: ContentOrganizerProps): JSX.Element => {
@@ -114,12 +124,14 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		initialState,
 		files,
 		stages,
+		mappings,
+		linkedItems,
 	} = props
 
 	const mainBodyRef = useRef<HTMLDivElement>(null)
 
 	const [currentContentOrganiser, setCurrentContentOrganiser] =
-		useState<FocusArea>()
+		useState<Focusarea>()
 	const [initialContentSelect, setInitialContentSelect] = useState(false)
 	const activeContentBody = useRef<HTMLDivElement>(null)
 
@@ -157,10 +169,7 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 	// card detail
 	const [offsetTop, setOffsetTop] = useState(0)
 
-	const isEarlyStage1 =
-		stageId ===
-		stages.find((stage: Stage) => stage.elements.order.value === 1)?.system
-			.id
+	const isEarlyStage1 = stageId === 'early_stage_1'
 
 	const bodyRef = useRef<HTMLDivElement>(null)
 
@@ -276,7 +285,7 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 		event:
 			| React.MouseEvent<HTMLDivElement, MouseEvent>
 			| React.KeyboardEvent<HTMLDivElement>,
-		organiser: FocusArea,
+		organiser: Focusarea,
 	) => {
 		const cardOffsetTop = event.currentTarget.offsetTop - defaultOffsetTop
 		setOffsetTop(cardOffsetTop)
@@ -467,7 +476,6 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 					<Grid item xs={12} md={6} lg={4}>
 						{content?.map((organiser, index) => (
 							<div
-								// eslint-disable-next-line react/no-array-index-key
 								key={`outcome-card-${organiser.system.id}-${index}`}
 								className="content-organizer__outcome-card-wrapper"
 							>
@@ -507,13 +515,13 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 												}
 												groups={
 													organiser.elements
-														.focus_area_groups
-														.linkedItems as FocusAreaGroup[]
+														.contentgroups
+														.linkedItems as Contentgroup[]
 												}
 												accessPoints={
 													organiser.elements
-														.access_points
-														.linkedItems as FocusAreaGroup[]
+														.accesspointgroups
+														.linkedItems as Accesscontentgroup[]
 												}
 												showAccessPoints={
 													showAccessPoints
@@ -526,11 +534,11 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 													id={`m_${stageId}-${supportElementId}-support-${organiser.system.id}`}
 												>
 													{!!organiser.elements
-														.teaching_advice.value
+														.teachingadvice.value
 														?.length &&
-														organiser.elements.teaching_advice.linkedItems.map(
+														organiser.elements.teachingadvice.linkedItems.map(
 															(
-																teachingAdvice: TeachingAdvice,
+																teachingAdvice: Teachingadvice,
 															) => (
 																<TeachingSupportCard
 																	key={
@@ -538,17 +546,26 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 																			.system
 																			.id
 																	}
+																	linkedItems={
+																		linkedItems
+																	}
+																	mappings={
+																		mappings
+																	}
 																	content={
 																		teachingAdvice
 																			.elements
 																			.content
-																			.value
 																	}
 																/>
 															),
 														)}
-													{/*TODO: Fix DownloadList  */}
-													{/* {files && <DownloadList files={files} colour="secondary" />} */}
+													{!!files?.length && (
+														<DownloadList
+															files={files}
+															colour="secondary"
+														/>
+													)}
 												</Grid>
 											)}
 										</div>
@@ -656,13 +673,13 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 									}
 									groups={
 										currentContentOrganiser.elements
-											.focus_area_groups
-											.linkedItems as FocusAreaGroup[]
+											.contentgroups
+											.linkedItems as Contentgroup[]
 									}
 									accessPoints={
 										currentContentOrganiser.elements
-											.access_points
-											.linkedItems as FocusAreaGroup[]
+											.accesspointgroups
+											.linkedItems as Accesscontentgroup[]
 									}
 									showAccessPoints={showAccessPoints}
 									showTags={tagIds}
@@ -678,26 +695,32 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								{
 									// TODO: add TeachingSupportCard
 									!!currentContentOrganiser.elements
-										.teaching_advice.value?.length &&
+										.teachingadvice.value?.length &&
 										// TODO: addTeachingSupportCard
-										currentContentOrganiser.elements.teaching_advice.linkedItems.map(
+										currentContentOrganiser.elements.teachingadvice.linkedItems.map(
 											(
-												teachingAdvice: TeachingAdvice,
+												teachingAdvice: Teachingadvice,
 											) => (
 												<TeachingSupportCard
 													key={
 														teachingAdvice.system.id
 													}
+													mappings={mappings}
+													linkedItems={linkedItems}
 													content={
 														teachingAdvice.elements
-															.content.value
+															.content
 													}
 												/>
 											),
 										)
 								}
-								{/* TODO: fix */}
-								{/* {files && <DownloadList files={files} colour="secondary" />} */}
+								{!!files?.length && (
+									<DownloadList
+										files={files}
+										colour="secondary"
+									/>
+								)}
 							</Grid>
 						)}
 					</Grid>
@@ -815,7 +838,7 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 				// </CustomModal>
 				null}
 			{/* TODO: add custom popover */}
-			{/* <CustomPopover
+			<CustomPopover
 				title="Select tags to view"
 				popoverStatus={hoverPopover}
 				popoverAnchor={popoverAnchor}
@@ -823,9 +846,12 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 				onCancel={() => setHoverPopover(false)}
 			>
 				<div className="content-organizer__tags-overlay">
-					<TagPicker selected={tagIds ?? []} onChange={handleTagsChange} />
+					<TagPicker
+						selected={tagIds ?? []}
+						onChange={handleTagsChange}
+					/>
 				</div>
-			</CustomPopover> */}
+			</CustomPopover>
 			<Popover
 				className="navbar__menu-container"
 				open={showTerm}
