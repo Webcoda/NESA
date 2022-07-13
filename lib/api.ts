@@ -451,8 +451,9 @@ export async function getPageStaticPropsForPath(
 			item.elements.syllabus.value.map((v) => v.codename),
 		)
 
-		syllabuses.linkedItems = Object.keys(syllabuses.linkedItems).reduce(
-			(acc, key) => {
+		syllabuses.linkedItems = Object.keys(syllabuses.linkedItems)
+			.slice(0, 390)
+			.reduce((acc, key) => {
 				const currItem = syllabuses.linkedItems[key]
 				if (
 					currItem.elements.stages__stages &&
@@ -478,9 +479,7 @@ export async function getPageStaticPropsForPath(
 						}
 				}
 				return acc
-			},
-			{},
-		)
+			}, {})
 
 		const [glossaries, assets, taxonomies] = await Promise.all([
 			getAllItemsByType<Glossary>({
