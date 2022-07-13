@@ -1,5 +1,3 @@
-import { EMPTY_KONTENT_RICHTEXT } from './../constants/index'
-import { notEmpty } from '@/legacy-ported/utilities/functions'
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
@@ -13,6 +11,7 @@ import {
 	convertProjectModelTaxonomiesToITaxonomyTerms,
 	setTaxonomiesForAssets,
 } from '@/utils'
+import { cleanJson } from '@/utils/cleanJson'
 import {
 	DeliveryClient,
 	IContentItem,
@@ -29,6 +28,7 @@ import {
 } from '@kentico/kontent-management'
 import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
+import { EMPTY_KONTENT_RICHTEXT } from './../constants/index'
 import { WpStage } from './../models/wp_stage'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
@@ -451,35 +451,7 @@ export async function getPageStaticPropsForPath(
 			item.elements.syllabus.value.map((v) => v.codename),
 		)
 
-		syllabuses.linkedItems = Object.keys(syllabuses.linkedItems)
-			.slice(0, 390)
-			.reduce((acc, key) => {
-				const currItem = syllabuses.linkedItems[key]
-				if (
-					currItem.elements.stages__stages &&
-					currItem.elements.syllabus
-				) {
-					if (
-						intersection(
-							currItem.elements.stages__stages.value.map(
-								(item) => item.codename,
-							),
-							pageStageStages,
-						).length > 0 &&
-						intersection(
-							currItem.elements.syllabus.value.map(
-								(item) => item.codename,
-							),
-							stageSyllabusTags,
-						).length > 0
-					)
-						return {
-							...acc,
-							[key]: currItem,
-						}
-				}
-				return acc
-			}, {})
+		syllabuses.linkedItems = cleanJson(syllabuses.linkedItems, 6)
 
 		const [glossaries, assets, taxonomies] = await Promise.all([
 			getAllItemsByType<Glossary>({

@@ -1,16 +1,9 @@
-import stringify from 'fast-safe-stringify'
+import { cleanJson } from '@/utils/cleanJson'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import UnknownComponent from '../components/UnknownComponent'
 import pageLayouts from '../layouts'
 import { getPageStaticPropsForPath, getSitemapMappings } from '../lib/api'
-function replacer(key, value) {
-	// Remove the circular structure
-	if (value === '[Circular]') {
-		return
-	}
-	return value
-}
 
 function Page(props) {
 	const router = useRouter()
@@ -65,12 +58,7 @@ export async function getStaticPaths(ctx) {
 export async function getStaticProps({ params, preview = false }) {
 	const _props = await getPageStaticPropsForPath(params, preview)
 	return {
-		props: JSON.parse(
-			stringify(_props, replacer, 0, {
-				edgesLimit: Number.MAX_SAFE_INTEGER,
-				depthLimit: Number.MAX_SAFE_INTEGER,
-			}),
-		),
+		props: cleanJson(_props),
 		// Next.js will attempt to re-generate the page:
 		// https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
 		// - When a request comes in
