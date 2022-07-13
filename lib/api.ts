@@ -7,7 +7,10 @@ import type {
 	Mapping,
 	Seo,
 } from '@/types/index'
-import { setTaxonomiesForAssets } from '@/utils'
+import {
+	convertProjectModelTaxonomiesToITaxonomyTerms,
+	setTaxonomiesForAssets,
+} from '@/utils'
 import {
 	DeliveryClient,
 	Elements,
@@ -29,6 +32,7 @@ import get from 'lodash.get'
 import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
 import { WpStage } from './../models/wp_stage'
+import { projectModel } from '@/models/_project'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -427,14 +431,7 @@ export async function getPageStaticPropsForPath(
 			item.elements.syllabus.value.map((v) => v.codename),
 		)
 
-		const [
-			glossaries,
-			stages,
-			stageGroups,
-			keyLearningAreas,
-			assets,
-			taxonomies,
-		] = await Promise.all([
+		const [glossaries, assets, taxonomies] = await Promise.all([
 			getAllItemsByType<Glossary>({
 				type: 'glossary',
 				anyFilter: {
@@ -444,9 +441,6 @@ export async function getPageStaticPropsForPath(
 				preview,
 				depth: 0,
 			}),
-			getTaxonomy('stage'),
-			getTaxonomy('stage_group'),
-			getTaxonomy('key_learning_area'),
 			getAllAssets(),
 			getAllTaxonomies(),
 		])
@@ -482,9 +476,17 @@ export async function getPageStaticPropsForPath(
 
 		_result.data.syllabuses = syllabuses
 		_result.data.glossaries = glossaries
-		_result.data.stages = stages.taxonomy.terms
-		_result.data.stageGroups = stageGroups.taxonomy.terms
-		_result.data.keyLearningAreas = keyLearningAreas.taxonomy.terms
+		_result.data.stages = convertProjectModelTaxonomiesToITaxonomyTerms(
+			projectModel.taxonomies.stage,
+		)
+		_result.data.stageGroups =
+			convertProjectModelTaxonomiesToITaxonomyTerms(
+				projectModel.taxonomies.stage_group,
+			)
+		_result.data.keyLearningAreas =
+			convertProjectModelTaxonomiesToITaxonomyTerms(
+				projectModel.taxonomies.key_learning_area,
+			)
 		_result.data.assets = assets.items as AssetWithRawElements[]
 
 		return _result

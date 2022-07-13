@@ -13,6 +13,7 @@ import type {
 	ElementModels,
 	Elements,
 	IContentItem,
+	ITaxonomyTerms,
 } from '@kentico/kontent-delivery'
 import camelCase from 'lodash.camelcase'
 import intersection from 'lodash.intersection'
@@ -229,6 +230,24 @@ export const setTaxonomiesForAssets = (
 			...taxonomies,
 		}
 	})
+}
+
+export const convertProjectModelTaxonomiesToITaxonomyTerms = (
+	taxonomy,
+): ITaxonomyTerms[] => {
+	return Object.keys(taxonomy.terms).reduce((acc, key) => {
+		const currentTaxonomyTerm = taxonomy.terms[key]
+		return [
+			...acc,
+			{
+				name: currentTaxonomyTerm.name,
+				codename: currentTaxonomyTerm.codename,
+				terms: convertProjectModelTaxonomiesToITaxonomyTerms(
+					currentTaxonomyTerm,
+				),
+			},
+		]
+	}, [])
 }
 
 export const getFileTypeClassification = (type) => {
