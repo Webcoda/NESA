@@ -5,7 +5,7 @@ import { Accesscontentgroup } from '@/models/accesscontentgroup'
 import { Accesscontentitem } from '@/models/accesscontentitem'
 import { Contentgroup } from '@/models/contentgroup'
 import { Contentitem } from '@/models/contentitem'
-import { isRichtextEmpty } from '@/utils'
+import { getDataAttributesFromProps, isRichtextEmpty } from '@/utils'
 import { Paper } from '@material-ui/core'
 import React from 'react'
 // import { findTag } from '../../store/mock/tags';
@@ -53,18 +53,24 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 		showTags,
 		showExamples,
 		defaultBackgroundColor,
+		...rest
 	} = props
 
+	const dataAttributes = getDataAttributesFromProps(rest)
 	return (
 		<Paper
+			{...dataAttributes}
 			className={`outcome-detail-card nsw-p-sm nsw-p-bottom-lg ${
 				defaultBackgroundColor
 					? 'outcome-detail-card--default-background'
 					: ''
-			}`}
+			}`.trim()}
 		>
 			{title && (
-				<div className="content-organizer__outcome-title">
+				<div
+					className="content-organizer__outcome-title"
+					data-kontent-element-codename="title"
+				>
 					<h1>{title}</h1>
 					<hr />
 				</div>
@@ -77,18 +83,26 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 						{accessPoints?.map((a: Accesscontentgroup) => (
 							<div key={a.system.id}>
 								<span className="outcome-detail-card__subtitle">
-									<SanitisedHTMLContainer>
+									<SanitisedHTMLContainer
+										data-kontent-element-codename="title"
+										data-kontent-item-id={a.system.id}
+									>
 										{a.elements.title.value}
 									</SanitisedHTMLContainer>
 								</span>
 								<div>
 									{a.elements.access_content_items.linkedItems.map(
 										(row: Accesscontentitem) => (
-											<div key={row.system.id}>
+											<div
+												key={row.system.id}
+												data-kontent-element-id={
+													row.system.id
+												}
+											>
 												{row.elements.title.value !=
 													EMPTY_KONTENT_RICHTEXT && (
 													<ul>
-														<li>
+														<li data-kontent-element-codename="title">
 															<RichText
 																linkedItems={
 																	null
@@ -105,7 +119,10 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 												{row.elements.examples.value !=
 													EMPTY_KONTENT_RICHTEXT &&
 													showExamples && (
-														<span className="outcome-detail-card__example">
+														<span
+															className="outcome-detail-card__example"
+															data-kontent-element-codename="example"
+														>
 															<RichText
 																linkedItems={
 																	null
@@ -128,13 +145,21 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 				)}
 				{groups?.map((group) => (
 					<div key={group.system.id}>
-						<h2>{group.elements.title.value}</h2>
+						<h2
+							data-kontent-item-id={group.system.id}
+							data-kontent-element-codename="title"
+						>
+							{group.elements.title.value}
+						</h2>
 						{!!group.elements.content_items.linkedItems?.length && (
 							<ul>
 								{group.elements.content_items.linkedItems.map(
 									(row: Contentitem) => (
-										<li key={row.system.id}>
-											<SanitisedHTMLContainer>
+										<li
+											key={row.system.id}
+											data-kontent-item-id={row.system.id}
+										>
+											<SanitisedHTMLContainer data-kontent-element-codename="title">
 												{row.elements.title.value}
 											</SanitisedHTMLContainer>
 											{row.elements.examples.value &&
@@ -142,7 +167,10 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 													row.elements.examples.value,
 												) &&
 												showExamples && (
-													<SanitisedHTMLContainer className="example">
+													<SanitisedHTMLContainer
+														className="example"
+														data-kontent-element-codename="example"
+													>
 														{
 															row.elements
 																.examples.value
@@ -153,7 +181,10 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 												row.elements
 													.learningprogression_tags__literacy
 													.value.length > 0 && (
-													<div className="tags">
+													<div
+														className="tags"
+														data-kontent-element-codename="learningprogression_tags__literacy"
+													>
 														{row.elements.learningprogression_tags__literacy.value
 															.filter((t) =>
 																showTags.includes(

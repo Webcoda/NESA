@@ -3,6 +3,8 @@ import { Grid, Paper } from '@material-ui/core'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { isMobile } from 'react-device-detect'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
+import { getDataAttributesFromProps } from '@/utils'
+import { Outcome } from '@/models/outcome'
 
 export interface OutcomeCardProps {
 	/*
@@ -12,7 +14,7 @@ export interface OutcomeCardProps {
 	/*
 	 * List of the outcomes
 	 * */
-	outcomes?: string[]
+	outcomes?: Outcome[]
 	/**
 	 * Whether the card is currently selected
 	 */
@@ -49,7 +51,10 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 		onClick,
 		code,
 		displayOutcome = true,
+		...rest
 	} = props
+
+	const dataAttributes = getDataAttributesFromProps(rest)
 
 	return (
 		<Paper
@@ -57,6 +62,7 @@ export default function OutcomeCard(props: OutcomeCardProps) {
         ${isSelectable ? 'outcome-card--selectable ' : ''}
         ${!onClick ? 'nsw-p-bottom-lg' : ''}
         ${selected ? 'outcome-card--selected' : ''}
+
       `}
 			onClick={onClick}
 			tabIndex={0}
@@ -83,6 +89,7 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 						item
 						xs={12}
 						className="outcome-card__outcome"
+						data-kontent-item-id={outcome.system.id}
 					>
 						<Grid
 							container
@@ -90,10 +97,11 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 							xs={12}
 							sm={12}
 							className="outcome-card__outcome-text"
+							data-element-codename="code"
 						>
-							{code && !displayOutcome && (
+							{outcome.elements.code.value && !displayOutcome && (
 								<p className="strong nsw-p-top-sm nsw-p-bottom-sm">
-									{code[index]}
+									{outcome.elements.code.value}
 								</p>
 							)}
 							{displayOutcome && (
@@ -104,8 +112,8 @@ export default function OutcomeCard(props: OutcomeCardProps) {
 						</Grid>
 						{!isMobile && <br />}
 						<Grid container item xs={12} sm={12}>
-							<SanitisedHTMLContainer>
-								{outcome}
+							<SanitisedHTMLContainer data-kontent-element-codename="description">
+								{outcome.elements.description.value}
 							</SanitisedHTMLContainer>
 						</Grid>
 					</Grid>

@@ -58,7 +58,11 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 			{terms.map((t) => (
 				<CustomAccordion title={t.term} key={t.key} id={t.key}>
 					{t.definitions.map((d) => (
-						<div key={d.id} className="glossary-body__definition">
+						<div
+							key={d.id}
+							className="glossary-body__definition"
+							data-kontent-item-id={d.id}
+						>
 							{t.definitions.length >= 1 &&
 								d.syllabuses.length > 0 && (
 									<>
@@ -67,11 +71,12 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 												key={syllabus.codename}
 												text={syllabus.name}
 												className="glossary-body__chip"
+												data-kontent-element-codename="syllabus"
 											/>
 										))}
 									</>
 								)}
-							<SanitisedHTMLContainer>
+							<SanitisedHTMLContainer data-kontent-element-codename="description">
 								{d.description}
 							</SanitisedHTMLContainer>
 						</div>

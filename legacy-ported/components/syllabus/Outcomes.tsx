@@ -5,7 +5,6 @@ import { Grid, IconButton } from '@material-ui/core'
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons'
 import React, { useState } from 'react'
 import { isMobile, isTablet, withOrientationChange } from 'react-device-detect'
-// import OutcomeCard from '../card/OutcomeCard'
 import SYLLABUS from '../../constants/syllabusConstants'
 import StageSelectOverlay from './StageSelectOverlay'
 
@@ -315,14 +314,14 @@ const Outcomes = (props: OutcomesProps) => {
 										return (
 											<OutcomeCard
 												key={outcome.system.id}
+												data-kontent-item-id={
+													outcome.system.id
+												}
 												title={
 													outcome.elements.code.value
 												}
 												displayOutcome={false}
-												outcomes={[
-													outcome.elements.description
-														.value,
-												]}
+												outcomes={[outcome]}
 											/>
 										)
 									})}
@@ -359,11 +358,10 @@ const Outcomes = (props: OutcomesProps) => {
 								.map((outcome) => (
 									<OutcomeCard
 										key={outcome.system.id}
+										data-kontent-item-id={outcome.system.id}
 										title={outcome.elements.code.value}
 										displayOutcome={false}
-										outcomes={[
-											outcome.elements.description.value,
-										]}
+										outcomes={[outcome]}
 									/>
 								))}
 						</div>

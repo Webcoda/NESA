@@ -484,14 +484,15 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 								/>
 								{/* TODO: Content.tsx - fix OutcomeCard */}
 								<OutcomeCard
+									data-kontent-item-id={organiser.system.id}
 									title={organiser.elements.title.value}
 									code={organiser.elements.outcomes.linkedItems.map(
 										(o: Outcome) => o.elements.code.value,
 									)}
-									outcomes={organiser.elements.outcomes.linkedItems.map(
-										(o: Outcome) =>
-											o.elements.description.value,
-									)}
+									outcomes={
+										organiser.elements.outcomes
+											.linkedItems as Outcome[]
+									}
 									selected={
 										currentContentOrganiser === organiser
 									}
@@ -542,6 +543,11 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 															) => (
 																<TeachingSupportCard
 																	key={
+																		teachingAdvice
+																			.system
+																			.id
+																	}
+																	data-kontent-item-id={
 																		teachingAdvice
 																			.system
 																			.id
@@ -667,6 +673,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 							currentContentOrganiser && (
 								/* TODO: OutcomeDetailCard fix */
 								<OutcomeDetailCard
+									data-kontent-item-id={
+										currentContentOrganiser.system.id
+									}
 									title={
 										currentContentOrganiser.elements.title
 											.value
@@ -703,6 +712,9 @@ const Content = (props: ContentOrganizerProps): JSX.Element => {
 											) => (
 												<TeachingSupportCard
 													key={
+														teachingAdvice.system.id
+													}
+													data-kontent-item-id={
 														teachingAdvice.system.id
 													}
 													mappings={mappings}
