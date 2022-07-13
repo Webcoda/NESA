@@ -1,11 +1,11 @@
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
+import { projectModel } from '@/models/_project'
 import type {
 	AssetWithRawElements,
 	KontentCurriculumResult,
 	Mapping,
-	Seo,
 } from '@/types/index'
 import {
 	convertProjectModelTaxonomiesToITaxonomyTerms,
@@ -13,11 +13,8 @@ import {
 } from '@/utils'
 import {
 	DeliveryClient,
-	Elements,
 	IContentItem,
 	IContentItemElements,
-	IContentItemsContainer,
-	ITaxonomyTerms,
 	Responses,
 	SortOrder,
 } from '@kentico/kontent-delivery'
@@ -28,12 +25,9 @@ import {
 	SharedModels,
 	TaxonomyModels,
 } from '@kentico/kontent-management'
-import get from 'lodash.get'
 import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
 import { WpStage } from './../models/wp_stage'
-import { projectModel } from '@/models/_project'
-import { title } from 'process'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -417,6 +411,7 @@ export async function getPageStaticPropsForPath(
 				'access_content_items',
 
 				/** contentitem */
+				'examples',
 				'learningprogression_tags__literacy',
 				'learningprogression_tags__numeracy',
 			],
@@ -430,6 +425,37 @@ export async function getPageStaticPropsForPath(
 		// all syllabus tags for selected stage (coming from each syllabus in syllabuses)
 		const stageSyllabusTags = syllabuses.items.flatMap((item) =>
 			item.elements.syllabus.value.map((v) => v.codename),
+		)
+
+		syllabuses.linkedItems = Object.keys(syllabuses.linkedItems).reduce(
+			(acc, key) => {
+				const currItem = syllabuses.linkedItems[key]
+				if (
+					currItem.elements.stages__stages &&
+					currItem.elements.syllabus
+				) {
+					if (
+						intersection(
+							currItem.elements.stages__stages.value.map(
+								(item) => item.codename,
+							),
+							pageStageStages,
+						).length > 0 &&
+						intersection(
+							currItem.elements.syllabus.value.map(
+								(item) => item.codename,
+							),
+							stageSyllabusTags,
+						).length > 0
+					)
+						return {
+							...acc,
+							[key]: currItem,
+						}
+				}
+				return acc
+			},
+			{},
 		)
 
 		const [glossaries, assets, taxonomies] = await Promise.all([
