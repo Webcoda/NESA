@@ -10,8 +10,11 @@ import type {
 import { setTaxonomiesForAssets } from '@/utils'
 import {
 	DeliveryClient,
+	Elements,
 	IContentItem,
 	IContentItemElements,
+	IContentItemsContainer,
+	ITaxonomyTerms,
 	Responses,
 	SortOrder,
 } from '@kentico/kontent-delivery'
@@ -69,7 +72,7 @@ async function loadWebsiteConfig(
 ): Promise<Responses.IViewContentItemResponse<WpHomepage>> {
 	const config = await client
 		.item('homepage')
-		.depthParameter(10)
+		.depthParameter(4)
 		// This overfetching by ignoring `subpages` element
 		// https://docs.kontent.ai/reference/delivery-api#tag/Projection
 		.elementsParameter([
@@ -167,7 +170,7 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	const data = await client
 		.item('homepage')
-		.depthParameter(10) // depends on the sitemap level (+1 for content type to download)
+		.depthParameter(3 + 1) // depends on the sitemap level (+1 for content type to download)
 		.elementsParameter([
 			'subpages',
 			'slug',
@@ -208,7 +211,7 @@ interface FilterParams {
 
 function getAllItemsByType<T extends IContentItem>({
 	type,
-	depth = 2,
+	depth = 1,
 	order = null,
 	elementParameter,
 	containsFilter = null,
@@ -258,8 +261,10 @@ export async function getPageStaticPropsForPath(
 	params,
 	preview = false,
 ): Promise<KontentCurriculumResult<IContentItem<IContentItemElements>>> {
-	const config = await loadWebsiteConfig(preview) // TODO could be cached
-	const mappings = await getSitemapMappings(preview) // TODO could be cached
+	const [config, mappings] = await Promise.all([
+		loadWebsiteConfig(preview), // TODO could be cached
+		getSitemapMappings(preview), // TODO could be cached
+	])
 
 	const slugValue = params && params.slug ? params.slug : []
 
@@ -274,49 +279,14 @@ export async function getPageStaticPropsForPath(
 		return undefined
 	}
 
-	// TODO could be loaded right in getSitemapMappings
-	const seoData: Seo = await client
-		.item(navigationItemSystemInfo.system.codename)
-		.elementsParameter([
-			'seo__title',
-			'label',
-			'seo__description',
-			'seo__keywords',
-			'seo__canonical_url',
-			'seo__options',
-		])
-		.queryConfig({
-			usePreviewMode: preview,
-		})
-		.toPromise()
-		.then(fnReturnData)
-		.then((response) => ({
-			title:
-				get(response, 'item.elements.seo__title.value', null) ||
-				get(response, 'item.elements.label.value', null),
-			description: get(
-				response,
-				'item.elements.seo__description.value',
-				null,
-			),
-			keywords: get(response, 'item.elements.seo__keywords.value', null),
-			canonicalUrl: get(
-				response,
-				'item.elements.seo__canonical_url.value',
-				null,
-			),
-			noIndex: get(response, 'item.elements.seo__options.value', []).some(
-				(item) => item.codename == 'no_index',
-			),
-		}))
-
 	const PAGE_RESPONSE_DEPTH = {
+		wp_homepage: 3,
 		wp_stagegroup: 2,
 		wp_stage: 0,
 	}
 
 	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.system.type]
-	depth = depth == undefined ? 3 : depth
+	depth = depth == undefined ? 1 : depth
 
 	// Loading content data
 	const pageResponse: Responses.IViewContentItemResponse<
@@ -331,7 +301,6 @@ export async function getPageStaticPropsForPath(
 		.then(fnReturnData)
 
 	const result = {
-		seo: seoData,
 		mappings: mappings,
 		data: {
 			config: config,
@@ -372,14 +341,83 @@ export async function getPageStaticPropsForPath(
 			},
 		}
 
+		const pageStageStages =
+			pageResponse.item.elements.stages__stages.value.map(
+				(item) => item.codename,
+			)
+
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
 			depth: 3,
+			elementParameter: [
+				// 'organisationofcontent',
+				'syllabus',
+				// 'coursenumbers',
+				'doredirect',
+				'web_content_rtb__content',
+				// 'syllabus_type__items',
+				'stages__stage_years',
+				// 'enrolment_type__items',
+				// 'learning_k10',
+				'introduction',
+				// 'from_date',
+				'aim',
+				// 'rosa_hsc',
+				// 'prerequisits',
+				'rationale',
+				'assessments',
+				// 'learning_y11',
+				// 'related_life_skills_syllabus',
+				// 'learning_y12',
+				// 'selftuition',
+				// 'overview_200hourrules',
+				'outcomes',
+				'code',
+				'stages__stages',
+				'stages__stage_groups',
+				// 'exclusions',
+				// 'rosa_stage4_5',
+				// 'to_date',
+				'title',
+				'redirecturl',
+				// 'focus_area_continum_groups',
+				'key_learning_area__items',
+				// 'eligibility',
+				// 'corequisites',
+				// 'overview100hourrules',
+				// 'requirements',
+				// 'otherinfo',
+				'focus_areas',
+
+				/** Focus area elements */
+				// 'syllabus_type__items',
+				'stages__stage_years',
+				'outcomes',
+				// 'continuumgroups',
+				'resources',
+				// 'addressedinparallel',
+				'accesspointgroups',
+				'teachingadvice',
+				'content',
+				'contentgroups',
+
+				/** Outcome elements */
+				'code',
+				'description',
+
+				/** Content group */
+				'content_items',
+
+				/** Access content group */
+				'access_content_items',
+
+				/** contentitem */
+				'learningprogression_tags__literacy',
+				'learningprogression_tags__numeracy',
+			],
 			containsFilter: {
 				element: 'elements.stages__stages',
-				value: pageResponse.item.elements.stages__stages.value.map(
-					(item) => item.codename,
-				),
+				value: pageStageStages,
 			},
 			preview,
 		})
@@ -417,17 +455,30 @@ export async function getPageStaticPropsForPath(
 			assets.items,
 			taxonomies.items,
 		)
-		assets.items = assetsWithTaxonomies.filter((asset) => {
-			return (
-				asset.stages.length &&
-				intersection(
-					asset.stages.map((assetStage) => assetStage.codename),
-					pageResponseItem.elements.stages__stages.value.map(
-						(stagePageStage) => stagePageStage.codename,
-					),
-				).length
-			)
-		})
+		assets.items = assetsWithTaxonomies
+			.filter((asset) => {
+				return (
+					asset.stages.length &&
+					intersection(
+						asset.stages.map((assetStage) => assetStage.codename),
+						pageResponseItem.elements.stages__stages.value.map(
+							(stagePageStage) => stagePageStage.codename,
+						),
+					).length
+				)
+			})
+			.map((item) => {
+				const {
+					fileReference,
+					imageHeight,
+					imageWidth,
+					lastModified,
+					folder,
+					_raw,
+					...rest
+				} = item
+				return rest as AssetWithRawElements
+			})
 
 		_result.data.syllabuses = syllabuses
 		_result.data.glossaries = glossaries

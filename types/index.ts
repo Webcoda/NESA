@@ -85,7 +85,6 @@ export interface KontentCurriculumResultData<
 export interface KontentCurriculumResult<
 	TKontentModel extends IContentItem<IContentItemElements>,
 > {
-	seo: Seo
 	mappings: Mapping[]
 	data: KontentCurriculumResultData<TKontentModel>
 }

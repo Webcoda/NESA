@@ -1,4 +1,6 @@
+import RichText from '@/components/RichText'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
+import { EMPTY_KONTENT_RICHTEXT } from '@/constants'
 import { Accesscontentgroup } from '@/models/accesscontentgroup'
 import { Accesscontentitem } from '@/models/accesscontentitem'
 import { Contentgroup } from '@/models/contentgroup'
@@ -83,27 +85,37 @@ export default function OutcomeDetailCard(props: OutcomeDetailCardProps) {
 									{a.elements.access_content_items.linkedItems.map(
 										(row: Accesscontentitem) => (
 											<div key={row.system.id}>
-												<ul>
-													<li>
-														<SanitisedHTMLContainer>
-															{
-																row.elements
-																	.title.value
-															}
-														</SanitisedHTMLContainer>
-													</li>
-												</ul>
-												{!!row.elements.examples.value
-													?.length &&
+												{row.elements.title.value !=
+													EMPTY_KONTENT_RICHTEXT && (
+													<ul>
+														<li>
+															<RichText
+																linkedItems={
+																	null
+																}
+																mappings={[]}
+																richTextElement={
+																	row.elements
+																		.title
+																}
+															/>
+														</li>
+													</ul>
+												)}
+												{row.elements.examples.value !=
+													EMPTY_KONTENT_RICHTEXT &&
 													showExamples && (
 														<span className="outcome-detail-card__example">
-															<SanitisedHTMLContainer>
-																{
+															<RichText
+																linkedItems={
+																	null
+																}
+																mappings={[]}
+																richTextElement={
 																	row.elements
 																		.examples
-																		.value
 																}
-															</SanitisedHTMLContainer>
+															/>
 														</span>
 													)}
 											</div>

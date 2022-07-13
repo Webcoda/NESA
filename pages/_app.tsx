@@ -16,25 +16,45 @@ interface MyAppProps {
 }
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-	const configObject = pageProps?.data?.config
+	const { config, pageResponse } = pageProps?.data || {}
 
 	const fontName = 'Montserrat'
 
+	const seo = {
+		title:
+			get(pageResponse, 'item.elements.seo__title.value', null) ||
+			get(pageResponse, 'item.elements.label.value', null),
+		description: get(
+			pageResponse,
+			'item.elements.seo__description.value',
+			null,
+		),
+		keywords: get(pageResponse, 'item.elements.seo__keywords.value', null),
+		canonicalUrl: get(
+			pageResponse,
+			'item.elements.seo__canonical_url.value',
+			null,
+		),
+		noIndex: get(pageResponse, 'item.elements.seo__options.value', []).some(
+			(item) => item.codename == 'no_index',
+		),
+	}
+
 	let title =
-		pageProps?.seo?.title ||
+		seo?.title ||
 		pageProps?.data?.pageResponse?.item?.elements?.title?.value ||
 		''
-	let siteDescriptor = configObject?.item?.elements?.descriptor?.value || ''
+	let siteDescriptor = config?.item?.elements?.descriptor?.value || ''
 	if (title) {
 		title += ' | '
 	}
-	title += configObject?.item?.elements?.site_prefix?.value || ''
+	title += config?.item?.elements?.site_prefix?.value || ''
 	if (siteDescriptor) {
 		title = title + ' | ' + siteDescriptor
 	}
 
 	const palette =
-		configObject?.item?.elements?.palette?.value?.[0]?.codename || null
+		config?.item?.elements?.palette?.value?.[0]?.codename || null
 	const colors = {
 		primary: '#F05A22',
 		secondary: '#B72929',
@@ -115,33 +135,24 @@ function MyApp({ Component, pageProps }: MyAppProps) {
 					content="width=device-width, initial-scale=1.0"
 				/>
 				<meta name="google" content="notranslate" />
-				{get(configObject, 'item.elements.favicon.value[0]', null) && (
+				{get(config, 'item.elements.favicon.value[0]', null) && (
 					<link
 						rel="icon"
 						href={get(
-							configObject,
+							config,
 							'item.elements.favicon.value[0].url',
 							null,
 						)}
 					/>
 				)}
-				<meta
-					name="description"
-					content={get(pageProps, 'seo.description', null)}
-				/>
-				{get(pageProps, 'seo.keywords', null) && (
-					<meta
-						name="keywords"
-						content={get(pageProps, 'seo.keywords', null)}
-					/>
+				<meta name="description" content={seo?.description} />
+				{seo?.keywords && (
+					<meta name="keywords" content={seo?.keywords} />
 				)}
-				{get(pageProps, 'seo.canonicalUrl', null) ?? (
-					<link
-						rel="canonical"
-						href={get(pageProps, 'seo.canonicalUrl', null)}
-					/>
+				{seo?.canonicalUrl ?? (
+					<link rel="canonical" href={seo?.canonicalUrl} />
 				)}
-				{get(pageProps, 'seo.noIndex', null) && (
+				{seo?.noIndex && (
 					<meta name="robots" content="noindex,follow" />
 				)}
 				<link
