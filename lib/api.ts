@@ -352,7 +352,7 @@ export async function getPageStaticPropsForPath(
 
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
-			depth: 3,
+			depth: 2,
 			elementParameter: [
 				// 'organisationofcontent',
 				'syllabus',
