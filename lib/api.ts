@@ -1,3 +1,5 @@
+import { EMPTY_KONTENT_RICHTEXT } from './../constants/index'
+import { notEmpty } from '@/legacy-ported/utilities/functions'
 import { Glossary } from '@/models/glossary'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
@@ -218,6 +220,9 @@ function getAllItemsByType<T extends IContentItem>({
 	containsFilter = null,
 	allFilter = null,
 	anyFilter = null,
+	equalsFilter = null,
+	notEmptyFilter = null,
+	notEqualsFilter = null,
 	preview,
 }: {
 	type: string
@@ -227,6 +232,9 @@ function getAllItemsByType<T extends IContentItem>({
 	containsFilter?: FilterParams
 	allFilter?: FilterParams
 	anyFilter?: FilterParams
+	equalsFilter?: { element: string; value: string }
+	notEmptyFilter?: { element: string }
+	notEqualsFilter?: { element: string; value: string }
 	preview: boolean
 }): Promise<Responses.IListContentItemsResponse<T>> {
 	let temp = client.items<T>().type(type).depthParameter(depth)
@@ -245,7 +253,15 @@ function getAllItemsByType<T extends IContentItem>({
 	if (anyFilter) {
 		temp = temp.anyFilter(anyFilter.element, anyFilter.value)
 	}
-
+	if (equalsFilter) {
+		temp.equalsFilter(equalsFilter.element, equalsFilter.value)
+	}
+	if (notEmptyFilter) {
+		temp.notEmptyFilter(notEmptyFilter.element)
+	}
+	if (notEqualsFilter) {
+		temp.notEqualsFilter(notEqualsFilter.element, notEqualsFilter.value)
+	}
 	return temp
 		.queryConfig({ usePreviewMode: preview })
 		.toPromise()
@@ -378,7 +394,7 @@ export async function getPageStaticPropsForPath(
 				// 'rosa_stage4_5',
 				// 'to_date',
 				'title',
-				'redirecturl',
+				// 'redirecturl',
 				// 'focus_area_continum_groups',
 				'key_learning_area__items',
 				// 'eligibility',
@@ -393,7 +409,7 @@ export async function getPageStaticPropsForPath(
 				'stages__stage_years',
 				'outcomes',
 				// 'continuumgroups',
-				'resources',
+				// 'resources',
 				// 'addressedinparallel',
 				'accesspointgroups',
 				'teachingadvice',
@@ -418,6 +434,14 @@ export async function getPageStaticPropsForPath(
 			containsFilter: {
 				element: 'elements.stages__stages',
 				value: pageStageStages,
+			},
+			allFilter: {
+				element: 'elements.doredirect',
+				value: ['yes'],
+			},
+			notEqualsFilter: {
+				element: 'elements.introduction',
+				value: EMPTY_KONTENT_RICHTEXT,
 			},
 			preview,
 		})
