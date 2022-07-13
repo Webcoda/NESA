@@ -1,7 +1,6 @@
 import Image from '@/components/Image'
 import Link from '@/components/Link'
 import rteSections from '@/components/sections'
-import { Syllabus } from '@/models/syllabus'
 import { Teachingadvice } from '@/models/teachingadvice'
 import { Mapping } from '@/types'
 import {
@@ -15,7 +14,7 @@ import get from 'lodash.get'
 import { getUrlFromMapping } from '../utils'
 import RichTextComponent from './RichTextComponent'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	richText: {
 		// '& table': {
 		// 	borderCollapse: 'collapse',

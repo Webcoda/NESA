@@ -2,7 +2,7 @@ import { UiMenu } from '@/models/ui_menu'
 import { RichtextSectionProps } from '.'
 
 export default function ui_menu(props: RichtextSectionProps<UiMenu>) {
-	const { linkedItem, mappings } = props
+	const { linkedItem } = props
 
 	return (
 		<div className="ui_menu">

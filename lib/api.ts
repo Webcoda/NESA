@@ -1,17 +1,11 @@
-import { Glossary } from '@/models/glossary'
+import {
+	DataBuilder,
+	dataBuilders,
+	getDefaultPageResponse,
+} from '@/databuilders/index'
 import { Syllabus } from '@/models/syllabus'
 import { WpHomepage } from '@/models/wp_homepage'
-import { projectModel } from '@/models/_project'
-import type {
-	AssetWithRawElements,
-	KontentCurriculumResult,
-	Mapping,
-} from '@/types/index'
-import {
-	convertProjectModelTaxonomiesToITaxonomyTerms,
-	setTaxonomiesForAssets,
-} from '@/utils'
-import { cleanJson } from '@/utils/cleanJson'
+import type { KontentCurriculumResult, Mapping } from '@/types/index'
 import {
 	DeliveryClient,
 	IContentItem,
@@ -26,10 +20,17 @@ import {
 	SharedModels,
 	TaxonomyModels,
 } from '@kentico/kontent-management'
-import intersection from 'lodash.intersection'
+import slugify from 'slugify'
 import packageInfo from '../package.json'
-import { EMPTY_KONTENT_RICHTEXT } from './../constants/index'
-import { WpStage } from './../models/wp_stage'
+
+/**
+ * Notes
+ * loadWebsiteConfig and getSiteMappings calls can't be combined
+ * since there will depth parameters might be different
+ *
+ * loadWebsiteConfig depth is determined by how deep is the content that you want to get
+ * getSiteMappings is determined by how deep is the the paths /a/b/c + 1 level for the content
+ */
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -51,14 +52,14 @@ const managementClient = createManagementClient({
 	apiKey: process.env.KONTENT_MANAGEMENT_API_KEY,
 })
 
-async function getAllAssets(): Promise<{
+export async function getAllAssets(): Promise<{
 	items: AssetModels.Asset[]
 	responses: AssetResponses.AssetsListResponse[]
 }> {
 	return await managementClient.listAssets().toPromise().then(fnReturnData)
 }
 
-async function getAllTaxonomies(): Promise<{
+export async function getAllTaxonomies(): Promise<{
 	items: TaxonomyModels.Taxonomy[]
 	pagination: SharedModels.Pagination
 }> {
@@ -71,12 +72,10 @@ async function getAllTaxonomies(): Promise<{
 async function loadWebsiteConfig(
 	preview = false,
 ): Promise<Responses.IViewContentItemResponse<WpHomepage>> {
-	const config = await client
-		.item('homepage')
-		.depthParameter(4)
-		// This overfetching by ignoring `subpages` element
-		// https://docs.kontent.ai/reference/delivery-api#tag/Projection
-		.elementsParameter([
+	const config = await getItemByCodename<WpHomepage>({
+		codename: 'homepage',
+		depth: 4,
+		elementsParameter: [
 			'title',
 			'site_prefix',
 			'descriptor',
@@ -126,12 +125,9 @@ async function loadWebsiteConfig(
 
 			// Web External
 			'link_url',
-		])
-		.queryConfig({
-			usePreviewMode: preview,
-		})
-		.toPromise()
-		.then(fnReturnData)
+		],
+		preview,
+	})
 
 	return config
 }
@@ -170,20 +166,23 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 }
 
 export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
-	const data = await client
-		.item('homepage')
-		.depthParameter(3 + 1) // depends on the sitemap level (+1 for content type to download)
-		.elementsParameter([
-			'subpages',
-			'slug',
-			'title',
-			'web_content_rtb__content',
-		])
-		.queryConfig({
-			usePreviewMode: preview,
-		})
-		.toPromise()
-		.then(fnReturnData)
+	const [data, syllabusMappings] = await Promise.all([
+		getItemByCodename<WpHomepage>({
+			codename: 'homepage',
+			depth: 3 + 1,
+			elementsParameter: [
+				'subpages',
+				'slug',
+				'title',
+				'web_content_rtb__content',
+			],
+			preview,
+		}),
+
+		// there's no subpages specified for syllabus, that's why we created the paths
+		// based on the syllabus list
+		getAllSyllabusMappings(preview),
+	])
 
 	const rootSlug = []
 	const pathsFromKontent: Mapping[] = [
@@ -204,7 +203,7 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 		preview,
 	)
 
-	return pathsFromKontent.concat(...subPaths)
+	return pathsFromKontent.concat(...subPaths, ...syllabusMappings)
 }
 
 interface FilterParams {
@@ -212,11 +211,32 @@ interface FilterParams {
 	value: string[]
 }
 
-function getAllItemsByType<T extends IContentItem>({
+export function getItemByCodename<T extends IContentItem>({
+	codename,
+	depth = 1,
+	elementsParameter,
+	preview,
+}: {
+	codename: string
+	depth?: number
+	elementsParameter?: string[]
+	preview: boolean
+}): Promise<Responses.IViewContentItemResponse<T>> {
+	let temp = client.item<T>(codename).depthParameter(depth)
+	if (elementsParameter) {
+		temp = temp.elementsParameter(elementsParameter)
+	}
+	return temp
+		.queryConfig({ usePreviewMode: preview })
+		.toPromise()
+		.then(fnReturnData)
+}
+
+export function getAllItemsByType<T extends IContentItem>({
 	type,
 	depth = 1,
 	order = null,
-	elementParameter,
+	elementsParameter,
 	containsFilter = null,
 	allFilter = null,
 	anyFilter = null,
@@ -228,7 +248,7 @@ function getAllItemsByType<T extends IContentItem>({
 	type: string
 	depth?: number
 	order?: { element: string; sortOrder: SortOrder }
-	elementParameter?: string[]
+	elementsParameter?: string[]
 	containsFilter?: FilterParams
 	allFilter?: FilterParams
 	anyFilter?: FilterParams
@@ -241,8 +261,8 @@ function getAllItemsByType<T extends IContentItem>({
 	if (order) {
 		temp = temp.orderParameter(order.element, order.sortOrder)
 	}
-	if (elementParameter) {
-		temp = temp.elementsParameter(elementParameter)
+	if (elementsParameter) {
+		temp = temp.elementsParameter(elementsParameter)
 	}
 	if (containsFilter) {
 		temp = temp.containsFilter(containsFilter.element, containsFilter.value)
@@ -268,21 +288,52 @@ function getAllItemsByType<T extends IContentItem>({
 		.then(fnReturnData)
 }
 
-function getTaxonomy(
+export function getTaxonomy(
 	taxonomyGroup: string,
 ): Promise<Responses.IViewTaxonomyResponse> {
 	return client.taxonomy(taxonomyGroup).toPromise().then(fnReturnData)
+}
+
+async function getAllSyllabusMappings(preview): Promise<Mapping[]> {
+	// This should be filtered by whether it's doing redirect or not
+	const data = await getAllItemsByType<Syllabus>({
+		type: 'syllabus',
+		depth: 0,
+		preview,
+		elementsParameter: ['title', 'syllabus', 'key_learning_area__items'],
+	})
+	return data.items.map((_syllabus) => {
+		const { title, key_learning_area__items, syllabus } = _syllabus.elements
+		return {
+			params: {
+				pageTitle: title.value,
+				slug: [
+					'learning-areas',
+					slugify(
+						key_learning_area__items?.value?.[0]?.codename.replace(
+							/_/g,
+							'-',
+						) || '',
+					),
+					slugify(
+						syllabus?.value?.[0]?.codename.replace(/_/g, '-') || '',
+					),
+				].filter((item) => !!item),
+				navigationItem: _syllabus.system,
+				contentItem: null,
+			},
+		} as Mapping
+	})
 }
 
 export async function getPageStaticPropsForPath(
 	params,
 	preview = false,
 ): Promise<KontentCurriculumResult<IContentItem<IContentItemElements>>> {
-	const [config, mappings] = await Promise.all([
+	let [config, mappings] = await Promise.all([
 		loadWebsiteConfig(preview), // TODO could be cached
 		getSitemapMappings(preview), // TODO could be cached
 	])
-
 	const slugValue = params && params.slug ? params.slug : []
 
 	const pathMapping = mappings.find(
@@ -296,340 +347,35 @@ export async function getPageStaticPropsForPath(
 		return undefined
 	}
 
-	const PAGE_RESPONSE_DEPTH = {
-		wp_homepage: 3,
-		wp_stagegroup: 2,
-		wp_stage: 0,
-	}
-
-	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.type]
-	depth = depth == undefined ? 1 : depth
-
 	// Loading content data
-	const pageResponse: Responses.IViewContentItemResponse<
-		IContentItem<IContentItemElements>
-	> = await client
-		.item(navigationItemSystemInfo.codename)
-		.depthParameter(depth)
-		.queryConfig({
-			usePreviewMode: preview,
-		})
-		.toPromise()
-		.then(fnReturnData)
+	const { getPageResponse, buildData } = (dataBuilders[
+		navigationItemSystemInfo.type
+	] || {}) as DataBuilder
+
+	const { type, codename } = navigationItemSystemInfo
+
+	const pageResponse = await (getPageResponse
+		? getPageResponse({ codename, preview })
+		: getDefaultPageResponse({
+				codename,
+				type,
+				preview,
+		  }))
 
 	const result = {
-		mappings: mappings,
+		mappings,
 		data: {
-			config: config,
+			config,
 			pageResponse,
 		},
 	}
 
-	const isHomePage = navigationItemSystemInfo.type === 'wp_homepage'
-	const isStagePage = navigationItemSystemInfo.type === 'wp_stage'
-	const isSyllabusPage = navigationItemSystemInfo.type === 'page_kla_syllabus'
-	const isGlossaryPage = navigationItemSystemInfo.type === 'page_glossary'
-	const isTeachingAdvicePage =
-		navigationItemSystemInfo.type === 'page_teaching_advice'
-
-	if (isHomePage) {
-		const _result = {
-			...result,
-			data: {
-				...result.data,
-			},
-		}
-		return _result
-	} else if (isStagePage) {
-		const pageResponseItem = pageResponse.item as WpStage
-
-		const _result: KontentCurriculumResult<IContentItem> = {
-			...result,
-			data: {
-				...result.data,
-				syllabuses: null,
-				keyLearningAreas: null,
-				glossaries: null,
-				stages: null,
-				stageGroups: null,
-				assets: null,
-			},
-		}
-
-		const pageStageStages =
-			pageResponse.item.elements.stages__stages.value.map(
-				(item) => item.codename,
-			)
-
-		const syllabuses = await getAllItemsByType<Syllabus>({
-			type: 'syllabus',
-			depth: 3,
-			elementParameter: [
-				// 'organisationofcontent',
-				'syllabus',
-				// 'coursenumbers',
-				'doredirect',
-				'web_content_rtb__content',
-				// 'syllabus_type__items',
-				'stages__stage_years',
-				// 'enrolment_type__items',
-				// 'learning_k10',
-				'introduction',
-				// 'from_date',
-				'aim',
-				// 'rosa_hsc',
-				// 'prerequisits',
-				'rationale',
-				'assessments',
-				// 'learning_y11',
-				// 'related_life_skills_syllabus',
-				// 'learning_y12',
-				// 'selftuition',
-				// 'overview_200hourrules',
-				'outcomes',
-				'code',
-				'stages__stages',
-				'stages__stage_groups',
-				// 'exclusions',
-				// 'rosa_stage4_5',
-				// 'to_date',
-				'title',
-				// 'redirecturl',
-				// 'focus_area_continum_groups',
-				'key_learning_area__items',
-				// 'eligibility',
-				// 'corequisites',
-				// 'overview100hourrules',
-				// 'requirements',
-				// 'otherinfo',
-				'focus_areas',
-
-				/** Focus area elements */
-				// 'syllabus_type__items',
-				'stages__stage_years',
-				'outcomes',
-				// 'continuumgroups',
-				// 'resources',
-				// 'addressedinparallel',
-				'accesspointgroups',
-				'teachingadvice',
-				'content',
-				'contentgroups',
-
-				/** Outcome elements */
-				'code',
-				'description',
-
-				/** Content group */
-				'content_items',
-
-				/** Access content group */
-				'access_content_items',
-
-				/** contentitem */
-				'examples',
-				'learningprogression_tags__literacy',
-				'learningprogression_tags__numeracy',
-			],
-			containsFilter: {
-				element: 'elements.stages__stages',
-				value: pageStageStages,
-			},
-			allFilter: {
-				element: 'elements.doredirect',
-				value: ['yes'],
-			},
-			notEqualsFilter: {
-				element: 'elements.introduction',
-				value: EMPTY_KONTENT_RICHTEXT,
-			},
+	if (buildData) {
+		return buildData({
+			result,
 			preview,
+			pageResponse,
 		})
-
-		// all syllabus tags for selected stage (coming from each syllabus in syllabuses)
-		const stageSyllabusTags = syllabuses.items.flatMap((item) =>
-			item.elements.syllabus.value.map((v) => v.codename),
-		)
-
-		syllabuses.linkedItems = cleanJson(syllabuses.linkedItems, 6)
-
-		const [glossaries, assets, taxonomies] = await Promise.all([
-			getAllItemsByType<Glossary>({
-				type: 'glossary',
-				anyFilter: {
-					element: 'elements.syllabus',
-					value: stageSyllabusTags,
-				},
-				preview,
-				depth: 0,
-			}),
-			getAllAssets(),
-			getAllTaxonomies(),
-		])
-
-		const assetsWithTaxonomies = setTaxonomiesForAssets(
-			assets.items,
-			taxonomies.items,
-		)
-		assets.items = assetsWithTaxonomies
-			.filter((asset) => {
-				return (
-					asset.stages.length &&
-					intersection(
-						asset.stages.map((assetStage) => assetStage.codename),
-						pageResponseItem.elements.stages__stages.value.map(
-							(stagePageStage) => stagePageStage.codename,
-						),
-					).length
-				)
-			})
-			.map((item) => {
-				const {
-					fileReference,
-					imageHeight,
-					imageWidth,
-					lastModified,
-					folder,
-					_raw,
-					...rest
-				} = item
-				return rest as AssetWithRawElements
-			})
-
-		_result.data.syllabuses = syllabuses
-		_result.data.glossaries = glossaries
-		_result.data.stages = convertProjectModelTaxonomiesToITaxonomyTerms(
-			projectModel.taxonomies.stage,
-		)
-		_result.data.stageGroups =
-			convertProjectModelTaxonomiesToITaxonomyTerms(
-				projectModel.taxonomies.stage_group,
-			)
-		_result.data.keyLearningAreas =
-			convertProjectModelTaxonomiesToITaxonomyTerms(
-				projectModel.taxonomies.key_learning_area,
-			)
-		_result.data.assets = assets.items as AssetWithRawElements[]
-
-		return _result
 	}
-	// else if (isStagePage || isSyllabusPage || isGlossaryPage) {
-	// 	const _result: KontentCurriculumResult<IContentItem> = {
-	// 		...result,
-	// 		data: {
-	// 			config: result.data.config,
-	// 			page: result.data.page,
-	// 			syllabuses: null,
-	// 			keyLearningAreas: null,
-	// 			glossaries: null,
-	// 			stages: null,
-	// 			stageGroups: null,
-	// 		},
-	// 	}
-
-	// 	const [syllabuses, keyLearningAreas, glossaries, stages, stageGroups] =
-	// 		await Promise.all([
-	// 			getAllItemsByType<Syllabus>({
-	// 				type: 'syllabus',
-	// 				depth: 6,
-	// 				preview,
-	// 			}),
-	// 			getAllItemsByType<Glossary>({
-	// 				type: 'glossary',
-	// 				preview,
-	// 				order: {
-	// 					element: 'elements.title',
-	// 					sortOrder: 'asc',
-	// 				},
-	// 			}),
-	// 			getAllItemsByType<Stage>({
-	// 				type: 'stage',
-	// 				preview,
-	// 				order: {
-	// 					element: 'elements.order',
-	// 					sortOrder: 'asc',
-	// 				},
-	// 			}),
-	// 			getAllItemsByType<StageGroup>({
-	// 				type: 'stage_group',
-	// 				preview,
-	// 				order: {
-	// 					element: 'elements.order',
-	// 					sortOrder: 'asc',
-	// 				},
-	// 			}),
-	// 		])
-
-	// 	_result.data.syllabuses = syllabuses
-	// 	_result.data.keyLearningAreas = keyLearningAreas
-	// 	_result.data.glossaries = glossaries
-	// 	_result.data.stages = stages
-	// 	_result.data.stageGroups = stageGroups
-
-	// 	const allYearsAssignedToSyllabus =
-	// 		_result.data.syllabuses.items.flatMap((syllabus) =>
-	// 			syllabus.elements.stagesyears__years.value.flatMap(
-	// 				(item) => item.name,
-	// 			),
-	// 		)
-
-	// 	_result.data.stageGroups.items = _result.data.stageGroups.items.filter(
-	// 		(stageGroup) => {
-	// 			return (
-	// 				intersection(
-	// 					stageGroup.elements.years.value.flatMap(
-	// 						(item) => item.name,
-	// 					),
-	// 					allYearsAssignedToSyllabus,
-	// 				).length > 0
-	// 			)
-	// 		},
-	// 	)
-
-	// 	return _result
-	// }
-	// else if (isTeachingAdvicePage) {
-	// 	const _result: KontentCurriculumResult<IContentItem> = {
-	// 		...result,
-	// 		data: {
-	// 			config: result.data.config,
-	// 			page: result.data.page,
-	// 			syllabuses: null,
-	// 			keyLearningAreas: null,
-	// 			stages: null,
-	// 		},
-	// 	}
-
-	// 	const [syllabuses, keyLearningAreas, stages] = await Promise.all([
-	// 		getAllItemsByType<Syllabus>({
-	// 			type: 'syllabus',
-	// 			depth: 6,
-	// 			preview,
-	// 		}),
-	// 		getAllItemsByType<IContentItem>({
-	// 			type: 'key_learning_area',
-	// 			preview,
-	// 			order: {
-	// 				element: 'elements.order',
-	// 				sortOrder: 'asc',
-	// 			},
-	// 		}),
-	// 		getAllItemsByType<IContentItem>({
-	// 			type: 'stage',
-	// 			preview,
-	// 			order: {
-	// 				element: 'elements.order',
-	// 				sortOrder: 'asc',
-	// 			},
-	// 		}),
-	// 	])
-
-	// 	_result.data.syllabuses = syllabuses
-	// 	_result.data.keyLearningAreas = keyLearningAreas
-	// 	_result.data.stages = stages
-
-	// 	return _result
-	// }
-
 	return result
 }

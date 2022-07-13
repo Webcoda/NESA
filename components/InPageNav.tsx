@@ -1,8 +1,7 @@
+import { getDomNode } from '@/components/RichTextComponent'
 import InPageNavLinks from '@/lib/nsw-ds-react/src/component/in-page-navigation/inPageNavLinks'
 import { Elements } from '@kentico/kontent-delivery'
 import { Grid } from '@material-ui/core'
-import { getDomNode, replaceNode } from '@/components/RichTextComponent'
-import parseHtml from 'html-react-parser'
 
 export interface InPageNavProps {
 	/**

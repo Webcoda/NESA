@@ -18,7 +18,7 @@ export default function ui_collection_syllabus(
 		<div className="syllabus-group">
 			<div className="syllabus-group__card-grid">
 				{collection.elements.items.linkedItems.map(
-					(syllabus: Syllabus, index) => {
+					(syllabus: Syllabus) => {
 						const { url = '#', isExternal } = getLinkFromLinkUI(
 							syllabus,
 							mappings,

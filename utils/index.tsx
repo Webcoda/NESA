@@ -260,6 +260,10 @@ export const getFileTypeClassification = (type) => {
 	return FILE_TYPES[type]
 }
 
+export function isYes(multipleChoiceElement: Elements.MultipleChoiceElement) {
+	return multipleChoiceElement.value?.[0]?.codename === 'yes'
+}
+
 export { getUrlFromMapping, kontentImageLoader, srcIsKontentAsset }
 
 export default {

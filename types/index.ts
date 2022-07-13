@@ -5,6 +5,7 @@ import { Weblinkext } from '@/models/weblinkext'
 import { Weblinkint } from '@/models/weblinkint'
 import { WpHomepage } from '@/models/wp_homepage'
 import {
+	Elements,
 	IContentItem,
 	IContentItemElements,
 	IContentItemSystemAttributes,
@@ -45,7 +46,7 @@ export interface MappingParams {
 	pageTitle: string
 	slug: string[]
 	navigationItem?: IContentItemSystemAttributes
-	contentItem?: IContentItemSystemAttributes
+	contentItem?: Elements.RichTextElement
 }
 
 export interface Mapping {

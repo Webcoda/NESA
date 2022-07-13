@@ -1267,6 +1267,10 @@ export const projectModel = {
 					codename: 'slug',
 					name: '🔗 Slug',
 				},
+				key_learning_area__items: {
+					codename: 'key_learning_area__items',
+					name: 'Key Learning Area',
+				},
 			},
 		},
 		wp_learningareas: {

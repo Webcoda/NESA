@@ -8,6 +8,7 @@ import wp_stage from './wp_stage'
 import wp_stages from './wp_stages'
 import wp_stagegroup from './wp_stagegroup'
 import wp_teachingadvice from './wp_teachingadvice'
+import syllabus from './syllabus'
 
 const _ = {
 	web_page,
@@ -20,6 +21,7 @@ const _ = {
 	wp_stages,
 	wp_stagegroup,
 	wp_teachingadvice,
+	syllabus,
 }
 
 export default _

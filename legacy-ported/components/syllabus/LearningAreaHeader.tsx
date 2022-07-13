@@ -2,8 +2,7 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import SyllabusLearningAreaHeader from './SyllabusLearningAreaHeader'
 import SyllabusStagesHeader from './SyllabusStagesHeader'
-import { Stage } from '@/models/stage'
-import { StageGroup } from '@/models/stage_group'
+import { ITaxonomyTerms } from '@kentico/kontent-delivery'
 
 export interface LearningAreaHeaderProps {
 	/**
@@ -35,7 +34,8 @@ export interface LearningAreaHeaderProps {
 	 */
 	selectedStages: string[]
 
-	stageGroups: StageGroup[]
+	stages: ITaxonomyTerms[]
+	stageGroups: ITaxonomyTerms[]
 
 	/**
 	 * Learning area
@@ -65,6 +65,7 @@ const LearningAreaHeader = (props: LearningAreaHeaderProps): JSX.Element => {
 		onEditViewClick,
 		selectedAreas,
 		selectedStages,
+		stages,
 		stageGroups,
 		area,
 		onLearningAreaHeaderConfirm,
@@ -85,6 +86,7 @@ const LearningAreaHeader = (props: LearningAreaHeaderProps): JSX.Element => {
 					<SyllabusStagesHeader
 						title={stageName}
 						selectedStages={selectedStages}
+						stages={stages}
 						stageGroups={stageGroups}
 						area={area}
 						onStagesHeaderConfirm={onStagesHeaderConfirm}
@@ -123,6 +125,7 @@ const LearningAreaHeader = (props: LearningAreaHeaderProps): JSX.Element => {
 						<SyllabusStagesHeader
 							title={stageName}
 							selectedStages={selectedStages}
+							stages={stages}
 							stageGroups={stageGroups}
 							area={area}
 							onStagesHeaderConfirm={onStagesHeaderConfirm}

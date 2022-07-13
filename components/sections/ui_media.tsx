@@ -1,11 +1,10 @@
+import Image from '@/components/Image'
+import Media from '@/lib/nsw-ds-react/src/component/media/media'
 import { UiMedia } from '@/models/ui_media'
 import { RichtextSectionProps } from '.'
-import Media from '@/lib/nsw-ds-react/src/component/media/media'
-import Image from '@/components/Image'
 
 export default function ui_media({
 	linkedItem,
-	mappings,
 }: RichtextSectionProps<UiMedia>) {
 	const { align, image, theme, video, type, width } = linkedItem.elements
 
@@ -25,6 +24,7 @@ export default function ui_media({
 			right={alignStr === 'right' ? widthNumber : 'none'}
 			style={style}
 		>
+			{/* eslint-disable jsx-a11y/alt-text */}
 			{isImage && image ? (
 				<Image
 					asset={image.value[0]}

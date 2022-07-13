@@ -42,7 +42,7 @@ function Page(props) {
 	return <PageLayout {...props} />
 }
 
-export async function getStaticPaths(ctx) {
+export async function getStaticPaths() {
 	const paths = await getSitemapMappings()
 
 	// https://nextjs.org/docs/messages/ssg-fallback-true-export

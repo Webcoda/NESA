@@ -5,7 +5,7 @@ import { CollectionWeblink } from '@/models/collection_weblink'
 import { Syllabus } from '@/models/syllabus'
 import { UiCollection } from '@/models/ui_collection'
 import { LinkType } from '@/types'
-import { getLinkFromLinkUI, getTagFromYears } from '@/utils'
+import { getLinkFromLinkUI, getTagFromYears, isYes } from '@/utils'
 import { RichtextSectionProps } from '.'
 
 export type UiCollectionCollectionTypes = CollectionSyllabus | CollectionWeblink
@@ -21,11 +21,9 @@ export default function ui_collection(
 
 	const renderCollectionSyllabus = (collection: CollectionSyllabus) => {
 		return collection.elements.items.linkedItems.map(
-			(syllabus: Syllabus, index) => {
-				const { url, isExternal } = getLinkFromLinkUI(
-					syllabus,
-					mappings,
-				)
+			(syllabus: Syllabus) => {
+				const isRedirect = isYes(syllabus.elements.doredirect)
+				const { url } = getLinkFromLinkUI(syllabus, mappings)
 				const year = getTagFromYears(
 					syllabus.elements.stages__stage_years.value,
 				)
@@ -34,8 +32,10 @@ export default function ui_collection(
 					body: `${year} Syllabus`,
 					url: {
 						title: syllabus.elements.title.value,
-						external: isExternal,
-						url: url || '#',
+						external: isRedirect,
+						url: isRedirect
+							? syllabus.elements.redirecturl.value
+							: url || '#',
 					},
 					colour: tileColor,
 					codenameHeadline: 'title',
@@ -45,23 +45,21 @@ export default function ui_collection(
 	}
 
 	const renderCollectionWebLink = (collection: CollectionWeblink) => {
-		return collection.elements.items.linkedItems.map(
-			(menu: LinkType, index) => {
-				const { url, isExternal } = getLinkFromLinkUI(menu, mappings)
-				return {
-					headline: menu.elements.title.value,
-					body: menu.elements.subtitle.value,
-					url: {
-						title: menu.elements.title.value,
-						external: isExternal,
-						url: url || '#',
-					},
-					colour: tileColor,
-					codenameTitle: 'title',
-					codenameBody: 'subtitle',
-				}
-			},
-		)
+		return collection.elements.items.linkedItems.map((menu: LinkType) => {
+			const { url, isExternal } = getLinkFromLinkUI(menu, mappings)
+			return {
+				headline: menu.elements.title.value,
+				body: menu.elements.subtitle.value,
+				url: {
+					title: menu.elements.title.value,
+					external: isExternal,
+					url: url || '#',
+				},
+				colour: tileColor,
+				codenameTitle: 'title',
+				codenameBody: 'subtitle',
+			}
+		})
 	}
 
 	const renderCollection = (collection: UiCollectionCollectionTypes) => {

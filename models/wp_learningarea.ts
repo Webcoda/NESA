@@ -13,4 +13,5 @@ export type WpLearningarea = IContentItem<{
 	title: Elements.TextElement
 	subpages: Elements.LinkedItemsElement<IContentItem>
 	slug: Elements.UrlSlugElement
+	key_learning_area__items: Elements.TaxonomyElement
 }>
