@@ -5,7 +5,7 @@ export default function getUrlFromMapping(
 	codename: string,
 ) {
 	const mapping = mappings.find((_mapping) => {
-		return _mapping.params.navigationItem.system.codename === codename
+		return _mapping.params.navigationItem.codename === codename
 	})
 
 	if (!mapping) {

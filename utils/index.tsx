@@ -178,10 +178,10 @@ export const getBreadcrumb = (
 		if (!_mapping) return
 
 		return {
-			title: _mapping.params.navigationItem.elements['title'].value,
+			title: _mapping.params.pageTitle,
 			url: getUrlFromMapping(
 				mappings,
-				_mapping.params.navigationItem.system.codename,
+				_mapping.params.navigationItem.codename,
 			),
 		}
 	})
@@ -204,10 +204,14 @@ export const flattenTaxonomies = (
 	taxonomies: TaxonomyModels.Taxonomy[],
 ): TaxonomyModels.Taxonomy[] => {
 	return taxonomies.flatMap((item) => {
+		const { _raw, ...props } = item
 		if (item.terms?.length) {
-			return [item, ...flattenTaxonomies(item.terms)]
+			return [
+				props,
+				...flattenTaxonomies(item.terms),
+			] as TaxonomyModels.Taxonomy[]
 		}
-		return item
+		return props as TaxonomyModels.Taxonomy
 	})
 }
 

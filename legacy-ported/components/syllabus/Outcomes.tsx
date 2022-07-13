@@ -28,7 +28,6 @@ const Outcomes = (props: OutcomesProps) => {
 		stages: AllStages,
 		stageGroups: allStagesGroups,
 	} = props
-	console.log('🚀 ~ file: Outcomes.tsx ~ line 31 ~ Outcomes ~ props', props)
 
 	/**
 	 * Stages that are supposed to show on the compare stage outcomes are stages that are intersection between:
@@ -42,17 +41,9 @@ const Outcomes = (props: OutcomesProps) => {
 			),
 		),
 	]
-	console.log(
-		'🚀 ~ file: Outcomes.tsx ~ line 44 ~ Outcomes ~ codenamesOfStagesThatAreUsedInOutcomes',
-		codenamesOfStagesThatAreUsedInOutcomes,
-	)
 
 	const stagesThatAreUsedInOutcomes = AllStages.filter((s) =>
 		codenamesOfStagesThatAreUsedInOutcomes.includes(s.codename),
-	)
-	console.log(
-		'🚀 ~ file: Outcomes.tsx ~ line 48 ~ Outcomes ~ stagesThatAreUsedInOutcomes',
-		stagesThatAreUsedInOutcomes,
 	)
 
 	const [displayModal, setDisplayModal] = useState(false)

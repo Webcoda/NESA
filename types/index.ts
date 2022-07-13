@@ -42,8 +42,9 @@ export interface AssetWithRawElements extends AssetModels.Asset {
 }
 
 export interface MappingParams {
+	pageTitle: string
 	slug: string[]
-	navigationItem?: IContentItem
+	navigationItem?: IContentItemSystemAttributes
 	contentItem?: IContentItemSystemAttributes
 }
 

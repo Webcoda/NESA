@@ -33,6 +33,7 @@ import intersection from 'lodash.intersection'
 import packageInfo from '../package.json'
 import { WpStage } from './../models/wp_stage'
 import { projectModel } from '@/models/_project'
+import { title } from 'process'
 
 const sourceTrackingHeaderName = 'X-KC-SOURCE'
 
@@ -151,8 +152,9 @@ async function getSubPaths(data, pagesCodenames, parentSlug, preview = false) {
 
 		paths.push({
 			params: {
+				pageTitle: currentItem.elements.title.value,
 				slug: pageSlug,
-				navigationItem: currentItem, // will be ignored by next in getContentPaths
+				navigationItem: currentItem.system, // will be ignored by next in getContentPaths
 				contentItem: currentItemContentWrapper, // will be ignored by next in getContentPaths
 			},
 		})
@@ -191,8 +193,9 @@ export async function getSitemapMappings(preview = false): Promise<Mapping[]> {
 	const pathsFromKontent: Mapping[] = [
 		{
 			params: {
+				pageTitle: data.item.elements.title.value,
 				slug: rootSlug,
-				navigationItem: data.item, // will be ignored by next in getContentPaths
+				navigationItem: data.item.system, // will be ignored by next in getContentPaths
 				contentItem: data.item.elements.web_content_rtb__content,
 			},
 		},
@@ -279,7 +282,7 @@ export async function getPageStaticPropsForPath(
 	const navigationItemSystemInfo =
 		pathMapping && pathMapping.params.navigationItem
 
-	if (!navigationItemSystemInfo?.system.codename) {
+	if (!navigationItemSystemInfo?.codename) {
 		return undefined
 	}
 
@@ -289,14 +292,14 @@ export async function getPageStaticPropsForPath(
 		wp_stage: 0,
 	}
 
-	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.system.type]
+	let depth = PAGE_RESPONSE_DEPTH[navigationItemSystemInfo.type]
 	depth = depth == undefined ? 1 : depth
 
 	// Loading content data
 	const pageResponse: Responses.IViewContentItemResponse<
 		IContentItem<IContentItemElements>
 	> = await client
-		.item(navigationItemSystemInfo.system.codename)
+		.item(navigationItemSystemInfo.codename)
 		.depthParameter(depth)
 		.queryConfig({
 			usePreviewMode: preview,
@@ -312,14 +315,12 @@ export async function getPageStaticPropsForPath(
 		},
 	}
 
-	const isHomePage = navigationItemSystemInfo.system.type === 'wp_homepage'
-	const isStagePage = navigationItemSystemInfo.system.type === 'wp_stage'
-	const isSyllabusPage =
-		navigationItemSystemInfo.system.type === 'page_kla_syllabus'
-	const isGlossaryPage =
-		navigationItemSystemInfo.system.type === 'page_glossary'
+	const isHomePage = navigationItemSystemInfo.type === 'wp_homepage'
+	const isStagePage = navigationItemSystemInfo.type === 'wp_stage'
+	const isSyllabusPage = navigationItemSystemInfo.type === 'page_kla_syllabus'
+	const isGlossaryPage = navigationItemSystemInfo.type === 'page_glossary'
 	const isTeachingAdvicePage =
-		navigationItemSystemInfo.system.type === 'page_teaching_advice'
+		navigationItemSystemInfo.type === 'page_teaching_advice'
 
 	if (isHomePage) {
 		const _result = {
@@ -352,7 +353,7 @@ export async function getPageStaticPropsForPath(
 
 		const syllabuses = await getAllItemsByType<Syllabus>({
 			type: 'syllabus',
-			depth: 2,
+			depth: 3,
 			elementParameter: [
 				// 'organisationofcontent',
 				'syllabus',
