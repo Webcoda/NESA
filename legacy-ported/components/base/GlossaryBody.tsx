@@ -53,6 +53,7 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 			return acc
 		}, [])
 
+	console.log(sections.flatMap((s) => s.records))
 	return (
 		<div className="glossary-body">
 			{terms.map((t) => (
@@ -65,7 +66,7 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 						>
 							{t.definitions.length >= 1 &&
 								d.syllabuses.length > 0 && (
-									<>
+									<div className="flex flex-wrap gap-4">
 										{d.syllabuses.map((syllabus) => (
 											<Chip
 												key={syllabus.codename}
@@ -74,7 +75,7 @@ const GlossaryBody = ({ sections }: GlossaryBodyProps): JSX.Element => {
 												data-kontent-element-codename="syllabus"
 											/>
 										))}
-									</>
+									</div>
 								)}
 							<SanitisedHTMLContainer data-kontent-element-codename="description">
 								{d.description}

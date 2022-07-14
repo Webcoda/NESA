@@ -16,6 +16,7 @@ import Header, { HeaderProps } from '../components/navigation/Header'
 import MobileHeader from '../components/navigation/MobileHeader'
 import NavFooter from '../components/navigation/NavFooter'
 import SiteFooter from '../components/navigation/SiteFooter'
+import { Masthead } from '@/lib/nsw-ds-react/src/component/header/masthead'
 
 export interface NavPageProps
 	extends KontentCurriculumResult<IContentItem>,
@@ -107,6 +108,21 @@ const NavPage = (props: NavPageProps) => {
 
 	return (
 		<div className="nav-page">
+			{props.preview && (
+				<div className="sticky top-0 text-right bg-black">
+					<div className="flex items-center justify-between nsw-container">
+						<div className="site-footer__link font-bold">
+							Preview mode
+						</div>
+						<a
+							href="/api/exit-preview"
+							className="site-footer__link font-bold"
+						>
+							Exit preview
+						</a>
+					</div>
+				</div>
+			)}
 			{!hidden && (
 				<Button
 					onClick={handleScrollToTop}
@@ -153,6 +169,7 @@ const NavPage = (props: NavPageProps) => {
 						.linkedItems[0]?.system.id
 				}
 			/>
+
 			{/* {isIE && (
 				<CustomModal
 					title="Internet Explorer 11"

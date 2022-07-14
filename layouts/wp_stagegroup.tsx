@@ -30,8 +30,6 @@ function WpStageGroup(props: CommonPageProps<WpStageGroupModel>) {
 			<RichText
 				mappings={props.mappings}
 				linkedItems={pageResponse.linkedItems}
-				data-kontent-item-id={page.system.id}
-				data-kontent-element-codename="web_content_rtb__content"
 				richTextElement={page.elements.web_content_rtb__content}
 			/>
 		</Layout>

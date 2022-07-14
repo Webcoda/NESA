@@ -113,6 +113,7 @@ const DownloadList = (props: DownloadListProps): JSX.Element => {
 							<Grid>
 								{file.size && (
 									<p
+										className="text-base"
 										dangerouslySetInnerHTML={{
 											__html: fileSize(file.size),
 										}}

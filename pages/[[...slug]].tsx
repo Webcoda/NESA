@@ -58,7 +58,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, preview = false }) {
 	const _props = await getPageStaticPropsForPath(params, preview)
 	return {
-		props: cleanJson(_props),
+		props: {
+			...cleanJson(_props),
+			params,
+			preview,
+		},
 		// Next.js will attempt to re-generate the page:
 		// https://nextjs.org/docs/basic-features/data-fetching#incremental-static-regeneration
 		// - When a request comes in

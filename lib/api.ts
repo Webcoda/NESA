@@ -301,6 +301,10 @@ async function getAllSyllabusMappings(preview): Promise<Mapping[]> {
 		depth: 0,
 		preview,
 		elementsParameter: ['title', 'syllabus', 'key_learning_area__items'],
+		containsFilter: {
+			element: 'elements.doredirect',
+			value: ['no'],
+		},
 	})
 	return data.items.map((_syllabus) => {
 		const { title, key_learning_area__items, syllabus } = _syllabus.elements

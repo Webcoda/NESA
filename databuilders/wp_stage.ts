@@ -110,10 +110,6 @@ async function buildData({
 			element: 'elements.stages__stages',
 			value: pageStageStages,
 		},
-		allFilter: {
-			element: 'elements.doredirect',
-			value: ['yes'],
-		},
 		notEqualsFilter: {
 			element: 'elements.introduction',
 			value: EMPTY_KONTENT_RICHTEXT,

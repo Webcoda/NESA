@@ -5,6 +5,7 @@ import { Stages } from '../../store/mock/stages'
 import Link from '@/components/Link'
 import SanitisedHTMLContainer from '@/components/SanitisedHTMLContainer'
 import { Icon } from '@iconify/react'
+import { getDataAttributesFromProps } from '@/utils'
 
 export type SyllabusCardColor = 'primary' | 'secondary'
 
@@ -50,38 +51,40 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 		className,
 		codenameHeadline = '',
 		codenameBody = '',
+		...rest
 	} = props
 
 	let shouldBeDisabled = false
+	const dataAttributes = getDataAttributesFromProps(rest)
 
 	// This a MVP requirement https://bostes.atlassian.net/browse/DC-146
-	switch (url.url) {
-		case `/stages/primary/${Stages.stage2.id}`:
-			url.external = true
-			url.url =
-				'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-2'
-			break
-		case `/stages/primary/${Stages.stage3.id}`:
-			url.external = true
-			url.url =
-				'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-3'
-			break
-		case `/stages/secondary/${Stages.stage4.id}`:
-			url.external = true
-			url.url =
-				'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-4'
-			break
-		case `/stages/secondary/${Stages.stage5.id}`:
-			url.external = true
-			url.url =
-				'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-5'
-			break
-		case `/stages/senior/${Stages.stage6.id}`:
-			shouldBeDisabled = true
-			break
-		default:
-			break
-	}
+	// switch (url.url) {
+	// 	case `/stages/primary/${Stages.stage2.id}`:
+	// 		url.external = true
+	// 		url.url =
+	// 			'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-2'
+	// 		break
+	// 	case `/stages/primary/${Stages.stage3.id}`:
+	// 		url.external = true
+	// 		url.url =
+	// 			'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-3'
+	// 		break
+	// 	case `/stages/secondary/${Stages.stage4.id}`:
+	// 		url.external = true
+	// 		url.url =
+	// 			'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-4'
+	// 		break
+	// 	case `/stages/secondary/${Stages.stage5.id}`:
+	// 		url.external = true
+	// 		url.url =
+	// 			'https://educationstandards.nsw.edu.au/wps/portal/nesa/k-10/years/stage-5'
+	// 		break
+	// 	case `/stages/senior/${Stages.stage6.id}`:
+	// 		shouldBeDisabled = true
+	// 		break
+	// 	default:
+	// 		break
+	// }
 
 	if (!url.url) {
 		console.log(
@@ -96,6 +99,7 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 			className={`syllabus-card ${
 				colour ? `syllabus-card--${colour}` : ''
 			} ${className || ''} section-card-disabled `}
+			{...dataAttributes}
 		>
 			<div className="syllabus-card section-card-disabled">
 				<div className="syllabus-card__content">
@@ -128,6 +132,7 @@ const SyllabusCard = (props: SyllabusCardProps): JSX.Element => {
 			className={`syllabus-card ${
 				colour ? `syllabus-card--${colour}` : ''
 			} ${className || ''}`}
+			{...dataAttributes}
 		>
 			<CardActionArea
 				component={url.external ? 'a' : Link}

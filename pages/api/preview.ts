@@ -28,7 +28,7 @@ export default async function preview(req, res) {
 			'🚀 ~ file: preview.ts ~ line 25 ~ preview ~ redirectTo',
 			redirectTo,
 		)
-		res.redirect(redirectTo)
+		res.redirect(redirectTo || '/')
 		return
 	}
 
